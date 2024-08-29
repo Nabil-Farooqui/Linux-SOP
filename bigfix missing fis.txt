@@ -1,0 +1,15 @@
+http://D1PRL2GINTW097.Sklforest.com:52311/bfmirror/downloads/
+
+remove 10.12.26.72 D1PRL2GINTW097.Sklforest.com
+
+goto
+/var/opt/BESClient
+
+make besclinet.cfg copy and open besclinet.cfg
+
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__RelayServer1]
+value                          = http://D1PRL2GINTW097.Sklforest.com:52311/bfmirror/downloads/
+
+
+Test-NetConnection [machine] -port [port]

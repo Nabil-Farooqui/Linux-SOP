@@ -1,0 +1,45 @@
+
+echo $JAVA_HOME
+pwd
+export JAVA_HOME=/app/Java/jdk-17.0.8/
+export PATH=$JAVA_HOME/bin:$PATH
+java -version
+echo $JAVA_HOME
+
+==========================================10.11.29.12=========================================
+ 691  cd /home/linuxadm/
+  692  ll
+  693  mkdir /opt/tomcat
+  694  mv apache-tomcat-10.1.13.tar.gz /opt/tomcat/
+  695  rpm -ivh jdk-17.0.8_linux-x64_bin.rpm
+  696   java -version
+  697   update-alternatives --config java
+  698  ip r
+  699  history
+  700  cd  /opt/tomcat/
+  701  ll
+  702   tar -xzf apache-tomcat-10.1.13.tar.gz
+  703  ll
+  704  realm leave
+  705  realm join --user=Fnhelpdeskit Sklforest.com
+  706   vim /etc/sssd/sssd.conf
+  707  systemctl restart sssd
+  708  realm leave
+  709  realm join --user=Fnhelpdeskit Sklforest.com
+  710  vim /etc/sssd/sssd.conf
+  711  systemctl restart sssd
+  712  passwd root
+  713  ip r
+  714  history
+  715  passwd root
+  716  firewall-cmd --permanent --add-port=3083/udp
+  717  ip r
+  718  systemctl status firewalld.service
+  719  passwd root
+  720  alternatives --config java
+  721  java -V
+  722  java -version
+  723  alternatives --config javac
+  724  alternatives --config java
+  725  java -version
+  726  history

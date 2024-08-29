@@ -1,0 +1,9 @@
+fndbkafka ALL=(ALL)  NOPASSWD:ALL
+
+DYNATRACE instllation
+
+/bin/sh (FILENAME) --set-monitoring-mode=fullstack --set-app-log-content-access=false --set-network-zone=sharekhannetzone01 --set-host-group=infinityHG
+
+IF Changes not on dynatrace console restarts service with set-host-group NAME
+
+/opt/dynatrace/oneagent/agent/tools/lib64/oneagentctl --set-host-group=infinityHG --restart-service

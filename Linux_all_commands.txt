@@ -1,0 +1,23 @@
+
+ps -eo pid,ppid,cmd,comm,%mem,%cpu --sort=-%cpu | head -10
+
+===========================routing add =======================================================
+route add
+                 route ip        getway 
+# ip route add 10.225.0.0/16 via 10.60.34.1 
+
+route delete 
+# ip route del 10.225.0.0/16 via 10.60.34.1
+
+interface down and up 
+                      interface name 
+# nmcli connection down ens256
+# nmcli connection up ens256
+
+
+===============================================================================
+
+          find files as per the size
+#find /Trackwizz_UAT/Trackwizz_PROD/Sharekhan/Latest/ -type f -size 0 | xargs mv -t /mtfiles/
+          find files as per the menstioned date ago modified files 
+#find /Trackwizz_UAT/Trackwizz_UAT/Sharekhan/Latest -type f -newermt 'Jan 31' | xargs ls -ltrh

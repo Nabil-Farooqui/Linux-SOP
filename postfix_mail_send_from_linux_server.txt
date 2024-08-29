@@ -1,0 +1,26 @@
+===================postfix Mail configuration on linux server===========================
+    we need port open from sources ip to send mail server ip ( 10.11.14.64 to Sharekhan-com.mail.protection.outlook.com) 25 port 
+
+1) with the help of postfix services mail send from linux to outlook ( start postfix services )
+2) postfix configuration file location is  /etc/postfix/main.cf
+3) below point need to add in /etc/postfix/main.cf 
+
+# relayhost = Sharekhan-com.mail.protection.outlook.com
+# smtp_sasl_auth_enable = yes
+# smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+# smtp_sasl_security_options = noanonymous
+# smtp_use_tls = yes
+
+4) add secure password in outlook in this file /etc/postfix/sasl_passwd add belwo entry 
+ Sharekhan-com.mail.protection.outlook.com       Sharekhan-com.mail.protection.outlook.com:Qwer@123
+
+5) after the password add in /etc/postfix/sasl_passwd  file than do the encript this password with the help of below command
+
+# postmap sasl_passwd
+
+After this command run there is one file are genrated sasl_passwd.db this file is encript password
+
+all configuration done than send mail from linux server run this command and check mail is recived or not
+
+echo "PFA" | mail -s "Daily_report" -a /root/Report/Onlhyhighdiskspace.txt mohit.unisource@sharekhan.com,linuxadmin@sharekhan.com
+

@@ -1,0 +1,260 @@
+
+First step ----Go to vmware---search hostname---
+click on the server----then right click & go to edit setting-----then change hard disk size(user reqirement if any OS,APP,Log)--1st HDD OS,2nd HDD LOG 3rd HDD BIN(App)
+
+
+
+
+
+
+
+
+
+********************************************************************************************************************************************************************************************
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# df -kh
+Filesystem                           Size  Used Avail Use% Mounted on
+devtmpfs                              32G     0   32G   0% /dev
+tmpfs                                 32G     0   32G   0% /dev/shm
+tmpfs                                 32G  243M   32G   1% /run
+tmpfs                                 32G     0   32G   0% /sys/fs/cgroup
+/dev/mapper/vg_root-root              30G  8.7G   20G  32% /
+/dev/mapper/vg_greekapp-lv_greekapp   98G   20G   74G  21% /greekapp
+/dev/mapper/vg_var-var                25G  3.2G   21G  14% /var
+/dev/mapper/vg_home-home             9.8G  2.3G  7.1G  24% /home
+/dev/sda2                            2.0G  359M  1.5G  20% /boot
+/dev/mapper/vg_tmp-tmp               4.9G   96K  4.6G   1% /tmp
+/dev/mapper/vg_varlog-var_log         14G  2.3G   11G  18% /var/log
+/dev/sda1                            2.0G  5.8M  2.0G   1% /boot/efi
+tmpfs                                6.3G     0  6.3G   0% /run/user/968
+tmpfs                                6.3G     0  6.3G   0% /run/user/0
+tmpfs                                6.3G   52K  6.3G   1% /run/user/1000
+tmpfs                                6.3G   60K  6.3G   1% /run/user/120217893
+tmpfs                                6.3G  4.0K  6.3G   1% /run/user/120201207
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# lsblk
+NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                           8:0    0  100G  0 disk
+├─sda1                        8:1    0    2G  0 part /boot/efi
+├─sda2                        8:2    0    2G  0 part /boot
+├─sda3                        8:3    0   30G  0 part
+│ └─vg_root-root            253:0    0   30G  0 lvm  /
+├─sda4                        8:4    0   25G  0 part
+│ └─vg_var-var              253:4    0   25G  0 lvm  /var
+├─sda5                        8:5    0   14G  0 part
+│ └─vg_varlog-var_log       253:5    0   14G  0 lvm  /var/log
+├─sda6                        8:6    0   12G  0 part
+│ └─vg_swap-swap            253:1    0   12G  0 lvm  [SWAP]
+├─sda7                        8:7    0   10G  0 part
+│ └─vg_home-home            253:2    0   10G  0 lvm  /home
+└─sda8                        8:8    0    5G  0 part
+  └─vg_tmp-tmp              253:3    0    5G  0 lvm  /tmp
+sdb                           8:16   0  100G  0 disk
+└─sdb1                        8:17   0  100G  0 part
+  └─vg_greekapp-lv_greekapp 253:6    0 99.9G  0 lvm  /greekapp
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# echo 1 > /sys/block/sdb/device/rescan
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# lsblk
+NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                           8:0    0  100G  0 disk
+├─sda1                        8:1    0    2G  0 part /boot/efi
+├─sda2                        8:2    0    2G  0 part /boot
+├─sda3                        8:3    0   30G  0 part
+│ └─vg_root-root            253:0    0   30G  0 lvm  /
+├─sda4                        8:4    0   25G  0 part
+│ └─vg_var-var              253:4    0   25G  0 lvm  /var
+├─sda5                        8:5    0   14G  0 part
+│ └─vg_varlog-var_log       253:5    0   14G  0 lvm  /var/log
+├─sda6                        8:6    0   12G  0 part
+│ └─vg_swap-swap            253:1    0   12G  0 lvm  [SWAP]
+├─sda7                        8:7    0   10G  0 part
+│ └─vg_home-home            253:2    0   10G  0 lvm  /home
+└─sda8                        8:8    0    5G  0 part
+  └─vg_tmp-tmp              253:3    0    5G  0 lvm  /tmp
+sdb                           8:16   0  200G  0 disk
+└─sdb1                        8:17   0  100G  0 part
+  └─vg_greekapp-lv_greekapp 253:6    0 99.9G  0 lvm  /greekapp
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# parted /dev/sdb
+GNU Parted 3.2
+Using /dev/sdb
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) p
+Warning: Not all of the space available to /dev/sdb appears to be used, you can fix the GPT to use all of the space (an extra 209715200 blocks) or continue with the current setting?
+Fix/Ignore? Fix
+Model: VMware Virtual disk (scsi)
+Disk /dev/sdb: 215GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End    Size   File system  Name     Flags
+ 1      1049kB  107GB  107GB               primary  lvm
+
+(parted) mkpart primary 107GB 215GB
+(parted) p
+Model: VMware Virtual disk (scsi)
+Disk /dev/sdb: 215GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End    Size   File system  Name     Flags
+ 1      1049kB  107GB  107GB               primary  lvm
+ 2      107GB   215GB  107GB               primary
+
+(parted) p
+Model: VMware Virtual disk (scsi)
+Disk /dev/sdb: 215GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End    Size   File system  Name     Flags
+ 1      1049kB  107GB  107GB               primary  lvm
+ 2      107GB   215GB  107GB               primary
+
+(parted) q
+Information: You may need to update /etc/fstab.
+
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# fdisk /dev/sdb
+
+Welcome to fdisk (util-linux 2.32.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): p
+Disk /dev/sdb: 200 GiB, 214748364800 bytes, 419430400 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: FD3819E4-5CC5-40E9-9EEA-5A38E2C43EFA
+
+Device         Start       End   Sectors  Size Type
+/dev/sdb1       2048 209713151 209711104  100G Linux LVM
+/dev/sdb2  209713152 419428351 209715200  100G Linux filesystem
+
+Command (m for help): t
+Partition number (1,2, default 2):
+Partition type (type L to list all types): 31
+
+Changed type of partition 'Linux filesystem' to 'Linux LVM'.
+
+Command (m for help): p
+Disk /dev/sdb: 200 GiB, 214748364800 bytes, 419430400 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: FD3819E4-5CC5-40E9-9EEA-5A38E2C43EFA
+
+Device         Start       End   Sectors  Size Type
+/dev/sdb1       2048 209713151 209711104  100G Linux LVM
+/dev/sdb2  209713152 419428351 209715200  100G Linux LVM
+
+Command (m for help): w
+The partition table has been altered.
+Syncing disks.
+
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# partprobe
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# lsblk
+NAME                        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                           8:0    0  100G  0 disk
+├─sda1                        8:1    0    2G  0 part /boot/efi
+├─sda2                        8:2    0    2G  0 part /boot
+├─sda3                        8:3    0   30G  0 part
+│ └─vg_root-root            253:0    0   30G  0 lvm  /
+├─sda4                        8:4    0   25G  0 part
+│ └─vg_var-var              253:4    0   25G  0 lvm  /var
+├─sda5                        8:5    0   14G  0 part
+│ └─vg_varlog-var_log       253:5    0   14G  0 lvm  /var/log
+├─sda6                        8:6    0   12G  0 part
+│ └─vg_swap-swap            253:1    0   12G  0 lvm  [SWAP]
+├─sda7                        8:7    0   10G  0 part
+│ └─vg_home-home            253:2    0   10G  0 lvm  /home
+└─sda8                        8:8    0    5G  0 part
+  └─vg_tmp-tmp              253:3    0    5G  0 lvm  /tmp
+sdb                           8:16   0  200G  0 disk
+├─sdb1                        8:17   0  100G  0 part
+│ └─vg_greekapp-lv_greekapp 253:6    0 99.9G  0 lvm  /greekapp
+└─sdb2                        8:18   0  100G  0 part
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# pvcreate /dev/sdb2
+  Physical volume "/dev/sdb2" successfully created.
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# pvs
+  PV         VG          Fmt  Attr PSize    PFree
+  /dev/sda3  vg_root     lvm2 a--    30.00g      0
+  /dev/sda4  vg_var      lvm2 a--    25.00g      0
+  /dev/sda5  vg_varlog   lvm2 a--    14.00g      0
+  /dev/sda6  vg_swap     lvm2 a--    12.00g      0
+  /dev/sda7  vg_home     lvm2 a--    10.00g      0
+  /dev/sda8  vg_tmp      lvm2 a--    <4.98g      0
+  /dev/sdb1  vg_greekapp lvm2 a--  <100.00g  96.00m
+  /dev/sdb2              lvm2 ---   100.00g 100.00g
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# vgextend vg_greekapp /dev/sdb2
+  Volume group "vg_greekapp" successfully extended
+[root@d1prl2gintl039 ~]# vgs
+  VG          #PV #LV #SN Attr   VSize   VFree
+  vg_greekapp   2   1   0 wz--n- 199.99g <100.09g
+  vg_home       1   1   0 wz--n-  10.00g       0
+  vg_root       1   1   0 wz--n-  30.00g       0
+  vg_swap       1   1   0 wz--n-  12.00g       0
+  vg_tmp        1   1   0 wz--n-  <4.98g       0
+  vg_var        1   1   0 wz--n-  25.00g       0
+  vg_varlog     1   1   0 wz--n-  14.00g       0
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# pvs
+  PV         VG          Fmt  Attr PSize    PFree
+  /dev/sda3  vg_root     lvm2 a--    30.00g       0
+  /dev/sda4  vg_var      lvm2 a--    25.00g       0
+  /dev/sda5  vg_varlog   lvm2 a--    14.00g       0
+  /dev/sda6  vg_swap     lvm2 a--    12.00g       0
+  /dev/sda7  vg_home     lvm2 a--    10.00g       0
+  /dev/sda8  vg_tmp      lvm2 a--    <4.98g       0
+  /dev/sdb1  vg_greekapp lvm2 a--  <100.00g   96.00m
+  /dev/sdb2  vg_greekapp lvm2 a--  <100.00g <100.00g
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# lvs
+  LV          VG          Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  lv_greekapp vg_greekapp -wi-ao---- 99.90g
+  home        vg_home     -wi-ao---- 10.00g
+  root        vg_root     -wi-ao---- 30.00g
+  swap        vg_swap     -wi-ao---- 12.00g
+  tmp         vg_tmp      -wi-ao---- <4.98g
+  var         vg_var      -wi-ao---- 25.00g
+  var_log     vg_varlog   -wi-ao---- 14.00g
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# lvextend -L +100.00g /dev/vg_greekapp/lv_greekapp
+  Size of logical volume vg_greekapp/lv_greekapp changed from 99.90 GiB (25575 extents) to 199.90 GiB (51175 extents).
+  Logical volume vg_greekapp/lv_greekapp successfully resized.
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# df -TH /greekapp/
+Filesystem                          Type  Size  Used Avail Use% Mounted on
+/dev/mapper/vg_greekapp-lv_greekapp ext4  105G   21G   80G  21% /greekapp
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# resize2fs /dev/vg_greekapp/lv_greekapp
+resize2fs 1.45.6 (20-Mar-2020)
+Filesystem at /dev/vg_greekapp/lv_greekapp is mounted on /greekapp; on-line resizing required
+old_desc_blocks = 13, new_desc_blocks = 25
+The filesystem on /dev/vg_greekapp/lv_greekapp is now 52403200 (4k) blocks long.
+
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]# df -TH /greekapp/
+Filesystem                          Type  Size  Used Avail Use% Mounted on
+/dev/mapper/vg_greekapp-lv_greekapp ext4  211G   21G  181G  11% /greekapp
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]#
+[root@d1prl2gintl039 ~]#
+

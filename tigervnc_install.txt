@@ -1,0 +1,19 @@
+
+yum install *desktop*
+ yum install *gnome*
+yum install tigervnc*
+yum -y group install GNOME base-x
+yum -y install tigervnc-server tigervnc
+yum groupinstall "Server with GUI"
+yum install screen
+systemctl enable /etc/systemd/system/vncserver@:1.service
+cp /usr/lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:1.service
+cp /usr/lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:2.service
+su -    ( user you want a install vnc )
+vncpasswd
+
+systemctl enable vncserver@\:1.service
+systemctl start vncserver@\:1.service
+systemctl status vncserver@\:1.service
+ vncserver:1
+

@@ -1,0 +1,25 @@
+cd /opt/McAfee/ens/tp/bin/
+
+./mfetpcli --listtasks
+./mfetpcli --runtask --index 3
+./mfetpcli --runtask --index 4
+/opt/McAfee/ens/tp/bin/mfetpcli --version
+
+/etc/init.d/cma  restart
+/opt/McAfee/ens/esp/init/mfeespd-control.sh restart
+/opt/McAfee/ens/tp/init/mfetpd-control.sh restart
+systemctl restart mcafee.ma.service
+
+
+
+cat /var/McAfee/ens/tp/prefs.xml |grep -i fanotify
+
+./mfetpcli --usekernelmodule
+
+server winntp.sharekhan.com iburst minpoll 2 maxpoll 4
+maxdistance 16.0
+
+ps -eo pid,ppid,cmd,comm,%mem,%cpu --sort=-%cpu | head -10
+
+ps -eo pid,ppid,cmd,comm,%mem,%cpu --sort=-%mem | head -10
+

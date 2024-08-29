@@ -1,0 +1,44 @@
+vulnerability pass - R3m3diation@222
+
+
+SKKRLPRBGFIX1.sskikt_nt.com
+BIGFIX Login ID Pass
+pslin2
+Nilsp@2019
+
+PRTG login access
+Nitesh.unisource
+Prt9@monitor
+
+skkrlvmvc1	192.168.10.36	administrator@vsphere.local	P@ssw0rd  -- RIL
+skkmldvmvc1	172.16.1.143	administrator@vsphere.local	P@ssw0rd!  -- LODHA
+/skbtlvmvc1.internal.sharekhan.com/ui/	192.168.55.87	administrator@vsphere.local	P@ssw0rd  -- TCL
+
+Synvm ID & Pass
+rushikesh.unisource
+Qwer@123
+
+Red Hat
+Username - ShareKhan_322322
+pass - Itarea$2020#RedHat
+
+scp dos2unix-6.0.3-7.el7.x86_64.rpm 10.12.15.102:/home/linuxadm/
+
+
+1 } snorkel service start after patching shedule 
+2 } check all scripts in daily basied run and modify the script and update the all script 
+3 } create a new user in linux for local use for the linux team
+4 } sudo access to give new user
+skadmin
+192.168.10.116  SKKRLPRBGFIX1.sskikt_nt.com
+pass: $khan@2000
+su - cisappadmin
+753  ps -eaf | grep snorkelbx
+  754  snorkelbx_standalone start
+  755  ps -eaf | grep snorkelbx
+
+
+stunnel /usr/local/etc/stunnel/stunnel.conf
+
+
+Sharekhan-com.mail.protection.outlook.com       Sharekhan-com.mail.protection.outlook.com:Qwer@123

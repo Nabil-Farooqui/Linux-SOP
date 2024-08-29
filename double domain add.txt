@@ -1,0 +1,87 @@
+# more /etc/resolv.conf
+realm leave
+realm leave
+realm leave
+
+# realm join --user=leap2020image Sklforest.com          password for leap2020image - Int3l!g3ntM3d!aSK New : Aug@2023#hyperv$   
+ ( if user and password fail then run [  service systemd-resolved restart ]
+
+# realm join --user=fnhelpdeskit Sklforest.com    password : Sharekhan@1
+
+# vim /etc/sssd/sssd.conf
+   edit line  use_fully_qualified_names as a False
+
+   use_fully_qualified_names = False
+  
+# systemctl restart sssd
+
+# id leap2020image
+
+# cat /etc/krb5.conf
+  Add this 4 line :
+  sklforest.com = SKLFOREST.COM
+  .sklforest.com = SKLFOREST.COM
+
+  sskikt_nt.com = SSKIKT_NT.COM
+  .sskikt_nt.com = SSKIKT_NT.COM
+
+cat /etc/krb5.conf
+
+# adcli join --host-keytab=/etc/krb5.keytab.sskikt_nt.com sskikt_nt.com --user=linuxadmin         password for linuxadmin ( Current Pass - Jun07@23 )  JANU@22TUE MARU@22tUEs Jun07@23
+
+# vim /etc/sssd/sssd.conf
+
+[sssd]
+domains = Sklforest.com
+config_file_version = 2
+services = nss, pam
+debug_level = 9
+[nss]
+debug_level = 9
+[pam]
+debug_level = 9
+enumerate = true
+
+[domain/Sklforest.com]
+ad_domain = Sklforest.com
+krb5_realm = SKLFOREST.COM
+realmd_tags = manages-system joined-with-adcli
+cache_credentials = True
+id_provider = ad
+krb5_store_password_if_offline = True
+default_shell = /bin/bash
+ldap_id_mapping = True
+use_fully_qualified_names = False
+fallback_homedir = /home/%u
+access_provider = ad
+ad_gpo_access_control = disabled
+
+[domain/sskikt_nt.com]
+ad_domain = sskikt_nt.com
+krb5_realm = SSKIKT_NT.COM
+realmd_tags = manages-system joined-with-samba
+cache_credentials = True
+id_provider = ad
+krb5_store_password_if_offline = True
+default_shell = /bin/bash
+ldap_id_mapping = True
+use_fully_qualified_names = False
+fallback_homedir = /home/%u
+access_provider = ad
+timeout = 3600
+krb5_keytab = /etc/krb5.keytab.sskikt_nt.com
+ldap_krb5_keytab = /etc/krb5.keytab.sskikt_nt.com
+
+
+# systemctl stop sssd ; rm -rf /var/log/sssd/* /var/lib/sss/{db,mc}/* ; systemctl start sssd
+
+# systemctl restart sssd    
+
+sssd -d9 -i      
+  
+realm list
+
+# id mahesh.unisource
+# id siddharth.unisource  
+
+

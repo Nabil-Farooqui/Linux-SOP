@@ -1,0 +1,23 @@
+go to /repodata/ftp/pub/localrepo/RHEL8/AppStream/rhel-8-for-x86_64-appstream-rpms
+
+then run
+
+find /repodata/ftp/pub/localrepo/RHEL8/AppStream/rhel-8-for-x86_64-appstream-rpms -type f -name \*.rpm | grep -vf <(repomanage --new /repodata/ftp/pub/localrepo/RHEL8/AppStream/rhel-8-for-x86_64-appstream-rpms) | xargs -I % rm -v %
+
+go to /repodata/ftp/pub/localrepo/RHEL8/BaseOS/rhel-8-for-x86_64-baseos-rpms
+
+find /repodata/ftp/pub/localrepo/RHEL8/BaseOS/rhel-8-for-x86_64-baseos-rpms -type f -name \*.rpm | grep -vf <(repomanage --new /repodata/ftp/pub/localrepo/RHEL8/BaseOS/rhel-8-for-x86_64-baseos-rpms) | xargs -I % rm -v %
+
+
+
+
+reposync -p /repodata/ftp/pub/localrepo/RHEL8/BaseOS --download-metadata --repo=rhel-8-for-x86_64-baseos-rpms
+reposync -p /repodata/ftp/pub/localrepo/RHEL8/AppStream --download-metadata --repo=rhel-8-for-x86_64-appstream-rpms
+
+
+for 7 path will be /repodata/ftp/pub/localrepo/RHEL7
+
+/repodata/ftp/pub/localrepo/RHEL7/ 
+
+
+find /repodata/ftp/pub/localrepo/RHEL7/ -type f -name \*.rpm | grep -vf <(repomanage --new /repodata/ftp/pub/localrepo/RHEL7/) | xargs -I % rm -v %

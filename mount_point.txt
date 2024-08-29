@@ -1,0 +1,99 @@
+=========================gdisk pertition============s
+gdisk /dev/sdb
+p
+n
+enter
+enter
+enter
+8E00
+p
+w
+q
+
+=====================app===========================
+partprobe
+pvcreate /dev/sdb1
+pvs
+  vgcreate vg_app /dev/sdb1
+vgs
+ lvcreate -L 49.99GB -n lv_app vg_app
+                or 
+ lvcreate -l +100%FREE -n lv_app vg_app
+  
+lvs
+ mkfs.ext4 /dev/vg_app/lv_app
+mkdir /app
+ vim /etc/fstab
+
+  /dev/mapper/vg_app-lv_app   /app                  ext4    defaults        0 0
+wq!
+mount -a
+
+========================logs==========================
+
+pvcreate /dev/sdc1
+pvs
+vgcreate vg_logs /dev/sdc1
+vgs
+lvcreate -L 49.99GB -n lv_logs vg_logs
+
+lvcreate -l +100%FREE -n lv_logs vg_logs
+
+lvs
+mkfs.ext4 /dev/vg_logs/lv_logs
+mkdir /logs
+vim /etc/fstab
+
+/dev/mapper/vg_logs-lv_logs   /logs                  ext4    defaults        0 0
+wq!
+mount -a
+
+=============================backup======================
+
+pvcreate /dev/sdd1
+pvs
+vgcreate vg_backup /dev/sdd1
+vgs
+lvcreate -L 49.99GB -n lv_backup vg_backup
+
+lvcreate -l +100%FREE -n lv_backup vg_backup
+
+lvs
+mkfs.ext4 /dev/vg_backup/lv_backup
+mkdir /backup
+vim /etc/fstab
+
+/dev/mapper/vg_backup-lv_backup   /backup                  ext4    defaults        0 0
+wq!
+mount -a
+
+
+=============================data======================
+
+pvcreate /dev/sdc1
+pvs
+vgcreate vg_data /dev/sdc1
+vgs
+lvcreate -L 49.99GB -n lv_backup vg_backup
+
+lvcreate -l +100%FREE -n lv_data vg_data
+
+lvs
+mkfs.xfs /dev/vg_data/lv_data
+mkdir /data
+vim /etc/fstab
+
+/dev/mapper/vg_data-lv_data   /data                  xfs    defaults        0 0
+wq!
+mount -a
+
+
+
+chown -R fndftapptt: /app
+chown -R fndftapptt: /logs
+
+setfacl -m u:fndftuat:rwx /app
+
+/dev/mapper/vg_app-lv_app   /app                  ext4    defaults        0 0
+/dev/mapper/vg_logs-lv_logs   /logs                  ext4    defaults        0 0
+/dev/mapper/vg_backup-lv_backup   /backup                  ext4    defaults        0 0

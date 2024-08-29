@@ -1,0 +1,23 @@
+hostname
+ip r
+uname -r
+cat /etc/redhat-release
+ntpstat
+systemctl status chronyd.service | egrep 'Loaded|Active'
+chronyc sources
+update-crypto-policies --show
+timedatectl
+df -Th
+who -b
+
+
+week 3
+su  - cisappadmin
+ 
+cd  /data/SnorkelBXV5/bin
+ps -eaf | grep snorkelbx
+snorkelbx_standalone start
+
+week4
+stunnel /usr/local/etc/stunnel/stunnel.conf
+/greekdb  mysqlstart.sh
