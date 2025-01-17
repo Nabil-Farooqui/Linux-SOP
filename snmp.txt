@@ -1,0 +1,53 @@
+#################     SNMP Configuration    #########################
+
+Install PKG 
+
+# yum install net-snmp* net-snmp-libs* net-snmp-utils*
+
+Copy configuration file 
+
+# cp -v /etc/snmp/snmpd.conf /etc/snmp/snmpd.conf_orig_
+
+# vim /etc/snmp/snmpd.conf
+
+#com2sec notConfigUser  default	public	------comment this line
+com2sec notConfigUser  default	roc_sski#ro	------Add this line
+
+Make below 3 lines below -----> "access  notConfigGroup ""      any       noauth    exact  systemview none none"
+
+rocommunity  sski#ro
+syslocation  "RIL_IDC4"
+syscontact  idc.support@sharekhan.com
+
+
+---------Add port in firewall ----------
+# systemctl status firewalld
+# service iptables status
+
+# systemctl firewall stop
+# service iptables stop
+
+
+iptables -A INPUT -m state --state NEW -p tcp --dport 23 -j ACCEPT
+iptables -A INPUT -m state --state NEW -p tcp --dport 161 -j ACCEPT
+iptables -A INPUT -m state --state NEW -p udp --dport 161 -j ACCEPT
+
+
+firewall-cmd --permanent --add-port=23/tcp
+firewall-cmd --permanent --add-port=161/tcp
+firewall-cmd --permanent --add-port=161/udp
+# firewall-cmd --reload
+
+# systemctl status snmpd.service
+# systemctl start snmpd.service
+# systemctl restart snmpd.service
+# systemctl enable snmpd.service
+# systemctl status snmpd.service
+
+
+
+
+rocommunity  sski#ro
+rocommunity     Sbsolv2#nms
+syslocation  "RIL_IDC4"
+syscontact  idc.support@sharekhan.com

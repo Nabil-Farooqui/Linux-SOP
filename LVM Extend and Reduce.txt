@@ -1,0 +1,45 @@
+
+@@@@@@@@@@@@@@@@@@@@@Increase size of LVM 50GB@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+# echo 1 > /sys/block/sdc/device/rescan             {sdc- change as per disk}
+# fdisk -l
+# lsdlk
+# parted /dev/sdc                                   {/dev/sdc- change as per disk}            
+  :p
+  :FIX
+  :FIX
+  :p
+  :mkpart primary (END size) (New size)
+  :p
+# fdisk /dev/sdc
+  :p
+  :t
+  :2
+  :l
+  :31 for rhel 8    :8e for rhel 7
+# partprobe
+# pvcreate /dev/sdc2                                {/dev/sdc2- change as per disk}
+# vgs
+# vgextend vg_logs /dev/sdc2                        {vg_logs-  ap per vg_group}
+# vgs
+# lvextend -L +51.99GB /dev/vg_logs/lv_logs         {vg_logs-  ap per vg_group / lv_logs ap per lv_Name}
+# lvs
+# resize2fs /dev/vg_logs/lv_logs                    {vg_logs-  ap per vg_group / lv_logs ap per lv_Name}
+# df -Th 
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+LVM reduce (reduce 3GB from 10GB)
+
+--take backup if possible
+
+# unmount /data                      {/data- As per folder which you want to reduce}
+
+# e2fsck -ff /dev/vg_name/lv_name
+
+# resize2fs  /dev/vg_name/lv_name  7G        --------------------( 10GB - 3GB = 7GB)
+
+# lvreduce -L -3G /dev/vg_name/lv_name
+
+# mount -a
+---------------------------------------

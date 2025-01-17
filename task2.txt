@@ -1,0 +1,198 @@
+
+ cat /boot/grub/grub.conf
+cat /boot/grub2/user.cfg
+
+hostname
+
+ls -l /etc/yum.repos.d/*
+cat /etc/yum.repos.d/localrepo.repo
+cat /etc/yum.repos.d/myrepo.repo
+cat /etc/yum.repos.d/local.repo
+
+ifconfig
+
+id linuxadm
+
+lvs
+
+more /etc/resolv.conf
+
+service iptables status
+systemctl status firewalld.service 
+
+more /etc/ssh/sshd_config
+
+ls -l /lib/modules/$(uname -r)/kernel/drivers/usb/storage/usb-storage.ko*
+cat /etc/modprobe.d/blacklist.conf
+
+cat /etc/pam.d/su
+
+cat /etc/sudoers | grep -i linux
+
+sestatus
+
+systemctl status ctrl-alt-del.target
+cat /etc/init/control-alt-delete.conf
+
+# systemctl status avahi-daemon.socket
+# systemctl status avahi-daemon.service
+
+cat /etc/services | grep -i telnet
+cat /etc/services | grep -i echo
+cat /etc/services | grep -i daytime
+cat /etc/services | grep -i chargen 
+ cat /etc/services | grep -i smtp 
+more /etc/services | grep -i time | more
+cat /etc/services | grep -i '#time'
+cat /etc/services | grep -i tftp 
+cat /etc/services | grep -i finger
+
+
+chkconfig --list | grep -i rpcbind
+#  systemctl status rpcbind.service
+#  systemctl status rpcbind.socket
+
+ more  /etc/sysctl.conf
+
+net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_max_syn_backlog = 4096
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.conf.default.rp_filter = 1
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv4.conf.default.accept_source_route = 0
+
+ll /etc/crontab
+ll /etc/anacrontab
+
+cat /etc/skel/.bashrc
+cat /root/.bashrc
+cat /home/linuxadm/.bashrc
+
+chkconfig --list | grep -i nmb
+systemctl status nmb.service
+ss -tulnp | grep 137
+ss -tulnp | grep 138
+
+
+more /etc/ntp.conf
+ntpstat
+systemctl status ntpd.service
+service ntpd status
+timedatectl
+
+
+more /etc/snmp/snmpd.conf
+systemctl status snmpd.service
+
+cat /etc/group | grep -i sugroup
+cat /etc/sudoers | grep -i sugroup
+
+/etc/init.d/besclient status
+
+while true ; do df -Th /opt_new ; sleep 60; done
+
+sar  -s 00:01:00 -e 23:59:00 -f /var/log/sa/sa02
+
+sar  -r -s  00:01:00 -e 23:59:00 -f /var/log/sa/sa02
+
+
+sar -P ALL -f /var/log/sa/sa05
+
+sar  -s 00:01:00 -e 23:59:00 -f /var/log/sa/sa02
+
+sar  -s 00:01:00 -e 23:59:00 -r -f /var/log/sa/sa02 | grep Average | awk -F " " '{ sum = ($3-$5-$6)/($2+$3) * 100   } END { print sum "%" }'
+
+sar -f /var/log/sa/sar20 -s 00:00:00 -e 23:59:00
+sar -f /var/log/sa/sa27 -s 02:20:00 -e 03:20:00
+sar -f /var/log/sa/sa27 -s 02:20:00 -e 03:20:00
+
+
+Memory utilization = (kbmemused-kbcached-)*100/(kbmemfree+kbmemused)
+
+Some uses
+Memory utilization = (kbmemused-kbcached-kbbuffers)*100/(kbmemfree+kbmemused)
+
+09:00:02 AM kbmemfree kbmemused  %memused kbbuffers  kbcached  kbcommit   %commit  kbactive   kbinact   kbdirty
+
+Average:      3503711   4499821     56.22      3144   1962528   5117447     20.65   3146442    704935      2031
+
+
+ps aux --sort=-%mem | awk 'NR<=10{print $0}'
+ps -eo pmem,pcpu,rss,vsize,args | sort -k 1 -n -r | less
+
+ fdisk -l 2>/dev/null | egrep '^Disk' | egrep -v 'dm-|type|identifier'
+
+#22724
+
+Ss@1234
+Saf@1234
+
+
+journalctl -b 0 -u sshd
+
+
+ps aux  | awk '{print $6/1024 " MB\t\t" $11}'  | sort -n
+
+journalctl -b 0 -p err
+ 
+
+yum clean all --verbose
+rm -rf /var/cache/yum/x86_64/7/base
+yum clean all --verbose
+
+
+###chown of of domain users#####
+
+chown -R dftadmin@sskikt_nt.com:domain\ users@sskikt_nt.com /redmine
+
+sync; echo 1 > /proc/sys/vm/drop_caches
+sync; echo 2 > /proc/sys/vm/drop_caches
+sync; echo 3 > /proc/sys/vm/drop_caches
+
+#firewall-cmd --permanent --zone=public --add-rich-rule=' rule family="ipv4" source address="192.168.70.145/24" port protocol="udp" port="161" accept'
+firewall-cmd --permanent --zone=public --add-rich-rule=' rule family="ipv4" source address="192.168.87.22/24" port protocol="tcp" port="50000" accept'
+firewall-cmd --permanent --zone=public --remove-rich-rule=' rule family="ipv4" source address="192.168.87.22/24" port protocol="tcp" port="50000" accept'
+
+
+route add -net 192.168.13.0 netmask 255.255.255.0 gw 10.180.57.65 em4
+
+
+ps -eo size,pid,user,command --sort -size |     awk '{ hr=$1/1024 ; printf("%13.2f Mb ",hr) } { for ( x=4 ; x<=NF ; x++ ) { printf("%s ",$x) } print "" }' |    cut -d "" -f2 | cut -d "-" -f1
+
+
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
+
+
+setfacl -m u:tabaop@sskikt_nt.com:rwx /dir
+setfacl -R -m u:vishwesh.satapute@sskikt_nt.com:r-- /dir
+
+
+firewall-cmd --permanent --zone=public --add-rich-rule=' rule family="ipv4" source address="192.168.70.145/24" port protocol="udp" port="161" accept'
+firewall-cmd --add-rich-rule "rule family=ipv4 source address=192.168.86.191 forward-port port=80 protocol=tcp to-port=5601" --permanent
+
+
+
+ /var/cache/yum/x86_64/7Server/rhel-7-server-optional-beta-rpms /var/cache/yum/x86_64/7Server/timedhosts /var/cache/yum/x86_64/7Server/rhel-7-server-rpms
+
+
+df -Th
+
+top
+
+free -t | awk 'NR == 2 {print "Current Memory Utilization is : " $3/$2*100}'
+
+top -b -n1 | grep ^%Cpu | awk '{printf("Current CPU Utilization is : %.2f%"), 100-$8}' 
+
+timedatectl
+
+
+ps aux  | awk '{print $6/1024 " MB\t\t" $11}'  | sort -n
+ps aux --sort=-%mem | awk 'NR<=10{print $0}'
+ps -eo pmem,pcpu,rss,vsize,args | sort -k 1 -n -r | less
+
+
+

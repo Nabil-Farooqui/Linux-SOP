@@ -1,0 +1,16 @@
+vim /etc/fstab
+umount /greekbuat
+lvchange -an /dev/vg_greekbuat/lv_greekbuat
+lvremove /dev/vg_greekbuat/lv_greekbuat
+vgchange -an vg_greekbuat
+vgremove vg_greekbuat
+ pvremove /dev/sdb1
+
+go in the above /dev/sd* by using fdisk command
+fdisk /dev/sd*
+p
+m
+d
+w 
+Fire below to check
+fdisk -l /dev/sd*

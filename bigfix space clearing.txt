@@ -1,0 +1,23 @@
+df -Th
+
+cd /var/opt/BESClient/rhsmdnf/cache/
+
+rm -rf RedHatEnterpriseLinux8forx8664*
+rm -rf expired_repos.json
+rm -rf tempfiles.json
+
+cd /var/opt/BESClient/__BESData/__Global/
+/etc/init.d/besclient stop
+pwd
+
+rm -rf A*
+rm -rf  __*
+rm -rf  i*
+rm -rf  l*
+rm -rf  L*
+rm -rf   R*
+rm -rf  U*
+ls -ltrh
+/etc/init.d/besclient start
+/etc/init.d/besclient restart
+df -TH

@@ -1,0 +1,18 @@
+
+                     **********************FOR CentOS7 / RHEL7 *****************************
+
+# mkdir -vp /repodata/ftp/pub/localrepo/RHEL7/
+# reposync --gpgcheck -l --repoid=rhel-7-server-rpms --download_path=/repodata/ftp/pub/localrepo/RHEL7/ --downloadcomps --download-metadata
+# createrepo -v /repodata/ftp/pub/localrepo/RHEL7/rhel-7-server-rpms/ -g comps.xml
+# yum clean all
+# 
+#
+
+
+                     **********************FOR RHEL8 *****************************
+
+# mkdir -vp /repodata/ftp/pub/localrepo/RHEL8/AppStream
+
+# reposync -p /repodata/ftp/pub/localrepo/RHEL8/AppStream --download-metadata --repo=rhel-8-for-x86_64-appstream-rpms
+
+# reposync -p /repodata/ftp/pub/localrepo/RHEL8/BaseOS --download-metadata --repo=rhel-8-for-x86_64-baseos-rpms

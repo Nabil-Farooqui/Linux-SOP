@@ -1,0 +1,108 @@
+ Memory from buffer zone has been clean.
+find / -name spring-webflux-*.jar
+find / -name spring-webmvc-*.jar
+10.12.29.10
+patch fail 
+issue 
+iccendent
+no ettfect no prodcution server 
+solution 1 wwek
+next week new ki hech
+incident raise for 2nd week
+bigfix end se issue tha incident or issue to be raise?
+production has no effect 
+solution will be till this week
+week 2 ticket - 47988
+raise a new ticket or previous 1? 
+
+echo 1 > /proc/sys/vm/drop_caches
+
+netstat -a |grep tcp |grep :${SFTP_port} |wc -l
+netstat -anp | grep :22
+#######################################################
+https://sharekhan.webex.com/join/nipul.patel
+itdesk - appsupport / Rizw@2018
+Big FIx
+pslin
+Nilsp@2019
+l1 external
+l2 internal
+
+
+++++++++++++++++++++++++++++++++++++++++++++++BIGFIX+++++++++++++++++++++++++++++++++++++++++++++++++++
+cd /var/opt/BESClient/rhsmdnf/cache/
+rm -rf RedHatEnterpriseLinux8forx8664*
+rm -rf expired_repos.json
+rm -rf tempfiles.json
+
+cd /var/opt/BESClient/__BESData/__Global/
+/etc/init.d/besclient stop
+
+rm -rf A*
+rm -rf  __*
+rm -rf  i*
+rm -rf  l*
+rm -rf  L*
+rm -rf   R*
+rm -rf  U*
+ls -ltrh
+/etc/init.d/besclient start
+/etc/init.d/besclient restart
+df -TH
+
+
+=========================================================================
+at 8.30 done info prashal.
+73.33 prashal
+run cmd 
+more sh /root/stunnel.sh
+
+sh /root/stunnel.sh
+
+/root/mem.sh
+
+sh /root/mem.sh
+=======================================================================
+tcpdump -s 0 -vvv -C 10 -W 500 -w /tmp/skdrl2gintl006_22-10-21/skdrl2gintl006.pcap &
+cd /tmp 
+mkdir skdrl2gintl006_27-10-21
+skdrl2gintl006_22-10-21
+cp -v skdrl2gintl006_10-1-22 /home/fnlinuxinfra/
+cd /home/fnlinuxinfra/
+ chown fnlinuxinfra skdrl2gintl006_21_10_21
+
+ps -ef |grep tcpdump
+==========================================================================
+
+df -Th
+ntpstat
+timedatectl
+date
+logout
+
+df -Th
+du -sh /sftp/*	
+repquota -augs
+
+
+/etc/init.d/besclient stop
+cd /var/opt/BESClient/__BESData/__Global/__Download/
+Rushi@1998
+
+==========================================================================
+tcpdump -s 0 -vvv -C 10 -W 100 -w /tmp/skdrl2gintl006.pcap
+tcpdump -s 0 -vvv -C 10 -W 500 -w /tmp/skdrl2gintl006.pcap
+cd /tmp
+cd /tmp/
+ls -ltrh
+mkdir skdrl2gintl006_22-10-21
+ls -ltrh
+chown tcpdump skdrl2gintl006_22-10-21
+ls -ltrh
+
+10.12.26.105
+
+72080 32577 and his email id is sachin.inspira@sharekhan.com .
+
+7350754770
+d2utl2gintl004 10.11.37.85

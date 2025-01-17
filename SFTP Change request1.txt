@@ -1,0 +1,51 @@
+Dear Team,
+Please note the below mail on priority.
+We have planned for SFTP Folder Migration Plan on a Dedicated Mount Point.
+Activity is scheduled in this weekend ( 05-04-2021 , after 11.00AM).
+
+Server IP - 172.16.1.93
+Current Folder - /sftp/KYC_UAT
+New Folder - /KYC_UAT/KYC_UAT
+Downtime - 24-04-2021 , after 11.00AM
+
+NEW Server IP - 10.12.26.104
+
+Change reason - Corrective action
+Type of change - normal
+Justification - SFTP Folder migration on new server with new mount point as old server is obsolete
+Planned end date - Saturday
+Rollback - Revoke all activity.
+Affected Locations - HO_LODha
+Implement team - Linuxadmin
+Group -app support
+Sanity - We will confirm form team that the can access the folder with data
+Configuration - Backoffice
+change impact - minor
+Appliation name - KR Search
+Technician - Sunadmin
+Live date- sunday
+Change plan - Ø  Mail communication to SFTP folder owner for downtime. ( Downtime will depends on folder size. for e.g. 5GB, 2hrs ).
+
+Ø  After the confirmation from SFTP folder owner raise a change request.
+
+Ø  Create mount points as per SFTP folder.
+
+Ø  Configure SFTP on new mount point as per current configuration.
+
+Ø  Stop current SFTP folder sharing.
+
+Ø  Take tar backup of current SFTP folder.
+
+Ø  untar SFTP folder tar into new mount point.
+
+Ø  Compare the Permission, Size & Count of folder & files.
+
+Ø  Take backup of “/etc/ssh/sshd_config” file and change the SFTP path in “/etc/ssh/sshd_config” file.
+
+Ø  Restart the sshd service.
+
+Ø  Provide new SFTP path to owner and ask to check from there end for SFTP Connection, Permission & Data.
+
+
+Affected CI - SFTP server
+Change Category - Infra

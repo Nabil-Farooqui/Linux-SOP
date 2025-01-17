@@ -1,0 +1,1 @@
+subscription-manager repos --disable=rhel-7-server-rpms

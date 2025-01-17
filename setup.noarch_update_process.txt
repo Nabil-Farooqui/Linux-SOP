@@ -1,0 +1,31 @@
+For update "setup.noarch" process 
+
+
+# cd /opt/McAfee/ens/tp/bin/
+# ./mfetpcli --setapstatus disable
+
+yum update -y
+
+# ./mfetpcli --setapstatus enable
+
+
+
+
+Bigfix client
+systemctl status firewalld
+firewall-cmd --permanent --add-port=52311/udp
+ # firewall-cmd --reload
+ # /etc/init.d/besclient status
+ # /etc/init.d/besclient restart
+ systemctl restart besclient
+ systemctl status besclient
+ # /etc/init.d/besclient status
+
+
+
+
+service iptables status
+# iptables -A INPUT -p udp --dport 52311 -j ACCEPT
+# iptables-save
+# service iptables restart
+# service iptables status

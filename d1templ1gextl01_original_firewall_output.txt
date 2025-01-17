@@ -1,0 +1,184 @@
+[root@d1templ1gextl01 ~]# firewall-cmd --list-all-zones
+block
+  target: %%REJECT%%
+  icmp-block-inversion: no
+  interfaces:
+  sources:
+  services:
+  ports:
+  protocols:
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+
+dmz
+  target: default
+  icmp-block-inversion: no
+  interfaces:
+  sources:
+  services: ssh
+  ports:
+  protocols:
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+
+drop
+  target: DROP
+  icmp-block-inversion: no
+  interfaces:
+  sources:
+  services:
+  ports:
+  protocols:
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+
+external
+  target: default
+  icmp-block-inversion: no
+  interfaces:
+  sources:
+  services: ssh
+  ports:
+  protocols:
+  forward: no
+  masquerade: yes
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+
+home
+  target: default
+  icmp-block-inversion: no
+  interfaces:
+  sources:
+  services: cockpit dhcpv6-client mdns samba-client ssh
+  ports:
+  protocols:
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+
+internal
+  target: default
+  icmp-block-inversion: no
+  interfaces:
+  sources:
+  services: cockpit dhcpv6-client mdns samba-client ssh
+  ports:
+  protocols:
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+
+libvirt (active)
+  target: ACCEPT
+  icmp-block-inversion: no
+  interfaces: virbr0
+  sources:
+  services: dhcp dhcpv6 dns ssh tftp
+  ports:
+  protocols: icmp ipv6-icmp
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+        rule priority="32767" reject
+
+mysshzone (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces:
+  sources: 192.168.86.50/24 192.168.86.57/24 192.168.86.166/24 192.168.86.3/24 192.168.86.192/24 10.11.3.23/24 10.11.3.31/24 10.12.3.23/24 192.168.101.53/24 10.11.3.21/24 10.12.3.21/24 10.11.14.185/24 10.12.14.60/24 10.12.3.38/24 192.168.55.42/24 10.12.15.54/24 10.11.29.23/24 10.11.29.31/24 10.11.29.35/24 10.12.29.23/24 10.12.29.38/24 10.12.29.39/24 10.12.1.82/24
+  services: ssh
+  ports:
+  protocols:
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+
+nm-shared
+  target: ACCEPT
+  icmp-block-inversion: no
+  interfaces:
+  sources:
+  services: dhcp dns ssh
+  ports:
+  protocols: icmp ipv6-icmp
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+        rule priority="32767" reject
+
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: ens192
+  sources:
+  services: cockpit dhcpv6-client ntp ssh
+  ports: 514/tcp 23/tcp 161/tcp 161/udp 52311/udp
+  protocols:
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+
+trusted
+  target: ACCEPT
+  icmp-block-inversion: no
+  interfaces:
+  sources:
+  services:
+  ports:
+  protocols:
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+
+work
+  target: default
+  icmp-block-inversion: no
+  interfaces:
+  sources:
+  services: cockpit dhcpv6-client ssh
+  ports:
+  protocols:
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+
+[root@d1templ1gextl01 ~]#

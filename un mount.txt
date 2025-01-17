@@ -1,0 +1,18 @@
+1) Take copy of /etc/fstab
+	cp -v /etc/fstab /etc/fstab_date_time
+
+2) Hash out the mount points /etc/fstab
+ 	vim /etc/fstab
+
+3) Unmount the requested directories by following command
+	umount <directory name>
+
+4) mount -a
+
+5) Check if the mounts are still visible on the server
+	df -Th
+
+
+6) Check the /etc/fstab file for hashed out lines for confirmation
+	more /etc/fstab
+

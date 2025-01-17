@@ -1,0 +1,9 @@
+1) Copy DCLinuxAgent via winscp on the server
+2) move the folder to /opt
+3) unzip the DCLinuxAgent folder
+	-> unzip -e DCLinuxAgent.zip
+4) Verify if,  "DesktopCentral_LinuxAgent.bin" & "serverinfo.json" are located in the same path;here it is - /opt
+
+5) chmod +x DesktopCentral_LinuxAgent.bin
+6) Run the Installer using "./DesktopCentral_LinuxAgent.bin". Agent will be installed by default in "/usr/local/desktopcentralagent" directory.
+7)  telnet 10.12.3.37 8383

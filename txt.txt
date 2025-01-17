@@ -1,0 +1,12 @@
+fnbmcsun
+/usr/sbin/lsof
+/usr/bin/netstat
+/usr/sbin/dmidecode
+/usr/sbin/ethtool
+
+10.73
+55.43
+server is in sskikt domain and id in sklforest to do this we require approval from 
+
+
+ 

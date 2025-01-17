@@ -1,0 +1,12 @@
+check whether below entry is present 
+rocommunity     Sbsolv2#nms
+
+cat /etc/snmp/snmpd.conf | grep community
+
+if not then take backup of above file and then add the entry
+cp -v /etc/snmp/snmpd.conf /etc/snmp/snmpd.conf_datetime
+
+vim /etc/snmp/snmpd.conf
+
+restart the service
+systemctl restart snmpd.service

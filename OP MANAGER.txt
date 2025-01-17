@@ -1,0 +1,12 @@
+OP MANAGER
+
+
+1)search IP in the search bar.
+2)copy the IP whose utilization is required.
+3)once you press enter you will receive an output below, click on the output.
+4) on the bar above meters you will see "monitors" click on it.
+5) now if u want CPU utilization, click on it.
+5.a) now if u want custom output for eg utilization of a specific date then
+5.b)click on "today"(Top right corner) - custom-set date and time- OK.
+
+6) same goes for Memory utilization.

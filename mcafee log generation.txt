@@ -1,0 +1,12 @@
+Command
+
+/opt/McAfee/ens/tp/scripts/mfetp-mer.sh
+log location is given after the file is generated
+
+
+
+below link to generate logs :
+https://kc.mcafee.com/corporate/index?page=content&id=KB88197
+
+below link to upload logs :
+https://support.mcafee.com/webcenter/portal/supportportal/pages_upload

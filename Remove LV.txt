@@ -1,0 +1,18 @@
+umount /opt_old_bkp
+df -Th
+lvs
+lvchange -an /dev/vgrhel_opt/lvrhel_opt
+lvs
+lvremove /dev/vgrhel_opt/lvrhel_opt
+lvs
+df -TH
+vgs
+vgchange -an vgrhel_opt
+vgremove vgrhel_opt
+vgs
+pvs
+pvremove /dev/sdb1
+pvremove /dev/sdb2
+pvs
+df -TH
+fdisk -l

@@ -1,0 +1,617 @@
+
+##############  1st collect and store  ###########################
+
+Karnel Ver. and OS Ver. in Notepad
+
+  # cat /etc/redhat-release
+  # uname -r
+  # uname -a
+
+#################### Set GRUB Password ###########################
+
+
+CentOS 7 
+
+Method 1:
+
+# cd /boot/grub2
+# cp -v grub.cfg grub.cfg_Org_Date_time
+
+# grub2-setpassword 				-it will generate passwd file in /boot/grub2/user.cfg
+
+toor@123
+
+# grub2-mkconfig -o /boot/grub2/grub.cfg
+
+-------------------------------------------------------------------------
+Method 2: 
+
+# grub2-mkpasswd-pbkdf2		-Use this command to Generate Encrypted Password {toor@123}
+
+Enter password:
+Reenter password:
+PBKDF2 hash of your password is grub.pbkdf2.sha512.10000.1ED0600F42AB090C3CABEA74A9B90AE05F417813E5890897A11DE390BD1E8F4B3C6E3257BC3ABB05C6B64DDC95199A4618F14FDD26BB6DCEC2DFD6CF91DDE359.5F0D783E9960A9A9DE8B56234DA0EB693D3F74AE9911BE2C4637E11346D519805487DFB52E76F4431AA10006E23BB598503E88268E52CA06B2B98561795BB123
+
+# cd /etc/grub.d/
+
+# cp -v 40_custom 40_custom_orig
+
+# vim 40_custom
+
+--Add following lines
+set superusers="root"
+password_pbkdf2 root <Hash Password>
+
+wq					-save and exit
+
+# grub2-mkconfig -o /boot/grub2/grub.cfg
+
+than Verify 
+
+# cat /etc/grub.d/40_custom
+
+######################### Setting Host name ############################
+
+//1st method
+# vim /etc/hostname
+<new Host Name>
+
+
+//2nd method 
+
+# hostnamectl status			-to view current status and hostname
+
+# hostnamectl set-hostname <NewHostname>
+
+################### CREATE USER linuxadm=> linuxadm@123  ########
+
+# useradd linuxadm
+# passwd linuxadm
+Changing password for user linuxadm.
+New password: linuxadm@123
+BAD PASSWORD: The password contains the user name in some form
+Retype new password: linuxadm@123
+passwd: all authentication tokens updated successfully.
+
+linuxadm:x:1001:1001::/home/linuxadm:/bin/bash
+
+
+
+######################## Setting IP Address and DNS ####################
+
+//1st method
+
+# nmtui 
+
+--Select
+Edit Connection
+  |
+ethX
+  |
+edit 
+  | 
+DNS Servers <Add..>
+  |
+<Assign DNS IP Adds>
+  |
+<Assign  search domains = sskikt_nt.com > 
+ OK
+
+-- If "_" not getting chooes below method
+
+//2nd method
+
+# vim /etc/sysconfig/network-scripts/ifcfg-ethX
+
+Add Following 4 lines
+DNS1=192.168.2.200		
+DNS2=192.168.2.201			
+DOMAIN=sskikt_nt.com
+ONBOOT=yes
+wq!				-save and exit
+
+# systemctl restart network
+
+// check entry in /etc/resolv.conf
+
+# cat /etc/resolv.conf
+Add following lines
+nameserver 192.168.x.x
+search xyz.com
+
+eg:
+search sskikt_nt.com
+nameserver 192.168.2.200
+nameserver 192.168.2.201
+
+################### FIREWALLD #########################################
+Check Firewall status 
+
+# systemctl status firewalld
+or
+# firewall-cmd --state
+----------------------------
+1. List the firewall detail.
+# firewall-cmd --list-all
+
+2. Add and Enable TCP Port on Firewall
+#  firewall-cmd --permanent --add-port=<port>/tcp
+
+--To add new service in firewall
+# firewall-cmd --add-service=<service name>  --permanent
+
+--To Remove any port in firewall
+# firewall-cmd --permanent --remove-port=<port>/tcp
+
+3. --To reload firewall
+# firewall-cmd --reload 
+# firewall-cmd --list-all
+
+################### TCP Wrapper ############
+
+ cp -v /etc/hosts.allow /etc/hosts.allow_org_date_time
+ cp -v /etc/hosts.deny /etc/hosts.deny_org_date_time
+
+
+# vim /etc/hosts.allow
+#vsftpd :
+sshd : 192.168.86.50,192.168.86.57,192.168.86.166,192.168.86.3,192.168.26.120,192.168.26.121,192.168.165.26,192.168.86.192,192.168.86.135,192.168.36.150,192.168.87.101,10.11.3.23,10.11.3.31,10.12.3.23,192.168.101.53,10.11.3.21,10.12.3.21,192.168.26.122,10.12.3.35,192.168.55.42
+
+# vim /etc/hosts.deny
+#vsftpd : ALL
+sshd : ALL
+
+
+################ Cipher ####################
+-- SSH Weak MAC Algorithms Enabled	
+
+cp -v /etc/ssh/sshd_config /etc/ssh/sshd_config_org_
+
+# vim /etc/ssh/sshd_config	add below 2 line at below SFTP entry
+
+Ciphers aes128-ctr,aes192-ctr,aes256-ctr
+MACs hmac-sha1,hmac-ripemd160
+
+-- Restart service 
+#  systemctl restart sshd.service
+
+##################   USB Disable  ##########################
+# ls -l /lib/modules/$(uname -r)/kernel/drivers/usb/storage/usb-storage.ko or so
+
+# cd /etc/modprobe.d/
+
+--now type following command
+# echo 'install usb-storage /bin/true' >> disable-usb-storage.conf
+
+Now the driver will not load. You can also remove USB Storage driver without rebooting the system, enter:
+
+--Next remove the USB storage driver without rebooting the system
+
+# modprobe -r usb-storage
+# mv -v /lib/modules/$(uname -r)/kernel/drivers/usb/storage/usb-storage.ko /root/
+
+--Verify the configuration
+# modinfo usb-storage
+# lsmod | grep -i usb-storage
+
+Edit /etc/modprobe.d/blacklist.conf, enter:
+# vim /etc/modprobe.d/blacklist.conf
+blacklist usb-storage
+
+Note : If blacklist.conf file is not there than create file.
+
+
+############### preventing SU  ##################################
+
+cp -v /etc/pam.d/su /etc/pam.d/su_org_13Dec2018_14_46
+
+Now open /etc/pam.d/su PAM config file:
+# vim /etc/pam.d/su
+
+Append line as follows:
+
+auth required pam_wheel.so use_uid
+
+Save and close the file.
+
+##################  Create a /etc/skbanner   ################
+
+# vim /etc/skbanner
+Add the following line
+~~~~~~~~~ Unauthorized access to this system is prohibited ~~~~~~~~~~~
+~~~ Only authorized System Administrator can access to this system ~~~
+
+-- for ssh Edit /etc/ssh/sshd_config, to look like this Banner /etc/skbanner
+End of the file add folowing lines
+
+# vim /etc/ssh/sshd_config
+
+# default banner path
+Banner /etc/skbanner
+
+# systemctl restart sshd.service
+
+##################### Create SUDO User ###############################
+
+cp -v /etc/sudoers /etc/sudoers_org_13Dec2018_14_52
+
+# visudo
+## Allow linuxadm to run any commands anywhere
+
+root    ALL=(ALL)       ALL
+linuxadm  ALL=(ALL)     ALL
+
+take linuxadm access from putty and switch to root account to verify . 
+
+########## Disabling Selinux Permanently #################
+
+# cp -v /etc/selinux/config /etc/selinux/config_Org_date_time
+
+# vim /etc/selinux/config
+--Edit line no 7
+# SELINUX=disabled
+:wq					-to save and exit
+
+Verify  through # sestatus cmmand
+
+################ Disable Ctrl-Alt-Del Reboot Activation  ###############
+
+-- Disable Ctrl-Alt-Del Reboot Activation
+# ln -sf /dev/null /etc/systemd/system/ctrl-alt-del.target
+or
+# systemctl mask ctrl-alt-del.target
+
+
+# systemctl status ctrl-alt-del.target
+
+############################ Disabling mDNS #############################
+
+# systemctl status avahi-daemon.socket
+# systemctl stop avahi-daemon.socket
+# systemctl disable avahi-daemon.socket
+
+# systemctl status avahi-daemon.service
+# systemctl stop avahi-daemon.service
+# systemctl disable avahi-daemon.service
+
+##################### Disable Unwanted Services #########################
+
+# cp -v /etc/services /etc/services_org_13Dec2018_15_02
+
+# vim /etc/services
+
+--Comment both TCP/UDP following services
+
+echo 
+daytime 
+chargen 
+telnet 
+smtp 
+time 
+tftp 
+finger
+
+##########################  rpcbind.service  ##########################
+# systemctl status rpcbind.service
+# systemctl stop rpcbind.service
+# systemctl disable rpcbind.service
+
+# systemctl status rpcbind.socket
+# systemctl stop rpcbind.socket
+# systemctl disable rpcbind.socket
+
+
+######### configured kernal security parameter  ########################
+
+cp -v /etc/sysctl.conf /etc/sysctl.conf_org_13Dec2018_15_06 
+
+vim /etc/sysctl.conf      /// add below lines 
+
+net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_max_syn_backlog = 4096
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.conf.default.rp_filter = 1
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv4.conf.default.accept_source_route = 0
+
+########  change permission crontab and anacron that is 600  #########
+
+# chmod 600 /etc/crontab
+# chmod 600 /etc/anacrontab
+
+########## set umask #####################
+
+
+# vim /home/linuxadm/.bashrc                    	----- User specific aliases and functions for user that already added
+
+umask 027
+
+
+# vim /etc/skel/.bashrc 				----- User specific aliases and functions for new user will added in future
+
+umask 027
+
+# vim /root/.bashrc				        ----- umask for root 077
+
+umask 077
+
+############## Disable netbios/smb service #########################
+
+Check port are listen on server 
+#  netstat -tulnp | grep 137
+#  netstat -tulnp | grep 138
+
+### Stop nmb service on server ####
+# systemctl stop nmb.service
+
+### Disable service in boot time ###
+# systemctl disable nmb.service
+
+#### Check port, port must be close ####
+#  netstat -tulnp | grep 137
+#  netstat -tulnp | grep 138
+
+
+
+####################  ntp client configuration  #############
+
+Install pkg
+
+# yum install ntp*
+	
+# ping sunntp.internal.sharekhan.com
+
+# cp -v /etc/ntp.conf /etc/ntp.conf_Date_Time  --take backup of ntp conf file.
+
+# vim /etc/ntp.conf
+
+# comment(hash) below line
+
+#server 0.centos.pool.ntp.org iburst
+#server 1.centos.pool.ntp.org iburst
+#server 2.centos.pool.ntp.org iburst
+#server 3.centos.pool.ntp.org iburst
+
+## Add below two lines down the above lines.
+server sunntp.internal.sharekhan.com iburst
+
+OR
+
+server 192.168.40.150 iburst
+
+logfile /var/log/ntp.log  ----- add line end of the file.
+
+# wq! --------------- save and quite.
+
+
+# Adding firewall ruls and start NTP deamon.
+
+# systemctl status firewalld.service
+# firewall-cmd --add-service=ntp --permanent
+# firewall-cmd --reload
+# firewall-cmd --list-all
+
+
+## restart and enable the ntpd service.
+
+# systemctl status ntpd.service
+# systemctl start ntpd.service
+# systemctl enable ntpd.service
+# systemctl restart ntpd.service
+# systemctl status ntpd.service
+
+# more /var/log/ntp.log
+
+## varify server time sync
+# ntpq -p
+# date -R
+# timedatectl
+
+#################     SNMP Configuration    #########################
+
+Install PKG 
+
+# yum install net-snmp* net-snmp-libs* net-snmp-utils*
+
+Copy configuration file 
+
+# cp -v /etc/snmp/snmpd.conf /etc/snmp/snmpd.conf_bkp
+
+# vim /etc/snmp/snmpd.conf
+
+Make below 3 lines below -----> "access  notConfigGroup ""      any       noauth    exact  systemview none none"
+
+rocommunity  sski#ro
+syslocation  "RIL_IDC4"
+syscontact  idc.support@sharekhan.com
+#       sec.name  source          community    add here 1 line below 
+#com2sec notConfigUser  default       public  ------ hashout this line
+com2sec notConfigUser  default       sski#ro ----- this line
+
+---------Add port in firewall ----------
+# systemctl status firewalld.service
+# firewall-cmd --list-all
+# firewall-cmd --permanent --add-port=23/tcp
+# firewall-cmd --permanent --add-port=161/tcp
+# firewall-cmd --permanent --add-port=161/udp
+# firewall-cmd --reload
+# systemctl restart firewalld.service
+# systemctl status firewalld.service
+
+# systemctl status snmpd.service     service snmpd status
+# systemctl start snmpd.service       service snmpd start
+# systemctl restart snmpd.service
+# systemctl enable snmpd.service      chkconfig snmpd on
+# systemctl status snmpd.service
+
+
+###################   DOMAIN Configuration    ###########################
+
+# yum install sssd realmd oddjob oddjob-mkhomedir adcli samba-common samba-common-tools krb5-workstation openldap-clients policycoreutils-python
+
+
+############   now edit /etc/hosts file  ###########################
+
+# vim /etc/hosts
+192.168.79.85   dftmysqldbdr -------- Add server hostname 
+    <IP ADD>	<Hostname>
+
+
+############### check DNS entry using nmtui command ################# 
+# cat /etc/resolv.conf
+
+search sskikt_nt.com
+nameserver 192.168.2.200
+nameserver 192.168.2.201
+
+########## next run following command to join into domain ###########
+linuxadmin		passwd=> Linux@2k20 ----- Sharekhan@2k20
+
+# realm join --user=linuxadmin sskikt_nt.com                                   
+Password for tech: 
+
+-- verify whether our server has joined the Windows domain or not
+# realm list
+
+###################-- edit following file sssd Authentication to windows domain without @doamin.com ########################################################
+# cp -v /etc/sssd/sssd.conf /etc/sssd/sssd.conf_14NOV2018
+# vim /etc/sssd/sssd.conf
+
+[sssd]
+domains = sskikt_nt.com
+config_file_version = 2
+services = nss, pam
+default_domain_suffix = sskikt_nt.com ------ add this Line
+
+[domain/sskikt_nt.com]
+ad_domain = sskikt_nt.com
+krb5_realm = SSKIKT_NT.COM
+realmd_tags = manages-system joined-with-samba
+cache_credentials = True
+id_provider = ad
+krb5_store_password_if_offline = True
+default_shell = /bin/bash
+ldap_id_mapping = True
+use_fully_qualified_names = True
+#fallback_homedir = /home/%d@%u
+fallback_homedir = /home/%u ----------- Add This Line
+access_provider = ad
+
+# systemctl status sssd
+# systemctl start sssd
+# systemctl daemon-reload
+# systemctl enable sssd
+
+#################### Add group ###########################
+
+# groupadd sugroup
+
+multiple user add in grp
+
+[root@dftmysqldbdr ~]# gpasswd -M nukul.hinger@sskikt_nt.com,shakir.khan@sskikt_nt.com,paresh.gijam@sskikt_nt.com,pradip.prajapati@sskikt_nt.com sugroup
+
+singlr user add in grp
+
+# usermod -aG sugroup mahesh.unisource@sskikt_nt.com
+
+[root@dftmysqldbdr ~]# more /etc/group | grep sugroup
+sugroup:x:1007:nukul.hinger@sskikt_nt.com,shakir.khan@sskikt_nt.com,paresh.gijam@sskikt_nt.com,pradip.prajapati@sskikt_nt.com
+
+
+###################  sudo file  ###########################
+
+# visudo
+
+## Allow access for su command
+ Cmnd_Alias SU = /bin/su	
+ %sugroup   ALL=SU
+
+wq!				-save and exit
+
+*********** Macfee installation on server ************ 
+
+  1) copy 1st application using WINscp app
+# mkdir -vp /antivirus/epo
+# mkdir -vp /antivirus/scanner
+# mv -v /root/agentPackages.zip /antivirus/epo/
+# cd /antivirus/epo/
+# ll
+# unzip agentPackages.zip
+# ll
+# sh install.sh -i
+# /etc/init.d/cma status ---- addiation
+#  systemctl status cma
+#  systemctl restart cma
+#  systemctl status cma
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**************** Rsyslog ***************
+
+# rpm -qa |grep rsyslog ------------------First check rsyslog package install or not
+
+# yum install rsyslog  ------------------ If package not install then install rsyslog package
+
+---------Now configure rsyslog, Add below line at end in /etc/rsyslog.conf
+# vi /etc/rsyslog.conf
+*.* @SmartConnector_IP:514  ------ add ip as per location of server for reliance- 10.11.3.12:514, TCL-10.12.3.12:514  Lodha- 10.13.3.12.:514  
+
+---------After adding line, restart service
+# systemctl restart rsyslog.service
+
+-------------For start service while booting, Run below command.
+# systemctl enable rsyslog.service
+
+# tcpdump -A -i any dst 10.12.3.12 and port 514
+
+**************** BigFIx Agent ******************
+
+# mkdir /etc/opt/BESClient/
+
+# cd /home/linuxadm 
+
+# cp -v BESAgent-9.5.12.68-rhe6.x86_64.rpm actionsite.afxm /etc/opt/BESClient/
+
+# rpm -ivh /etc/opt/BESClient/BESAgent-9.5.12.68-rhe6.x86_64.rpm
+
+# /etc/init.d/besclient start
+
+# /etc/init.d/besclient status
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*****************   Manage Engine    ******************
+
+# cp ae_scan_linux_new.sh /root
+
+# cd /root
+
+# chmod 740 ae_scan_linux_new.sh
+
+# crontab -e
+
+# schedule cron 
+
+  0 5 14,28 * *  sh /root/ae_scan_linux_new.sh
+
+  :wq!
+
+######## Software Up to Date - OS patches installation ##########
+
+# yum update
+
+If no Internet than configure local repo.
+
+#### How to patch server without kernal, redhat-release patch ####
+#### Edit /etc/yum.conf file and add below lines. ####
+
+
+# vim /etc/yum.conf
+# exclude=kernel* redhat-release* initscripts*  -----add this line
+
+
+  %%%%%%%%%%%%%%%  Restart Sever   %%%%%%%%%%%%%%%%%%%%%%%.
+
+#  init 6 

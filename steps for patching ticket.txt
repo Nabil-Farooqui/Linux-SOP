@@ -1,0 +1,23 @@
+CHANGE REASON - Updates
+TYPE OF CHANGE - Standard
+JUSTIFICATION - Security patch deployment for vulnerability close.
+TYPE OF RISK - Low
+PLANNED END DATE - SUNDAY 23:50 PM
+ROLLBACK PLAN - Revoke version
+AFFECTED LOCATIONS - DC-RELIANCE, DC-TATA , HO-LODHA
+IMPLEMENT TEAM - Linuxadmin
+GROUP - Appsupport
+PROCESS STEPS - Open(Pending Live Manager Approval)
+SANITY TEST - We will do health check of server after patching and ask application owner to check application.
+CONFIGURATION ITEM - TRADE TIGER
+CHANGE IMPACT - Minor
+CHANGE CATEGORY - Security
+AFFECTED CI - servers as per list
+PLANNED START DATE - SATURDAY 00:01 AM 
+CHANGE PLAN -1.E-Mail to owners for down time of server and get the approval.
+2.Update the patch on server
+3.After successful command execution, restart server and check updated patch version.
+4.Mail to owner after successful patch update on server and to check application.
+ACTUAL LIVE DATE - MONDAY 00:01 AM
+TECHNICIAN - SUNADMIN
+APPLICATION NAME - BIGFIX

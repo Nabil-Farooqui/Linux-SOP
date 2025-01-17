@@ -1,0 +1,235 @@
+exit
+
+
+**bigfix**
+pslin
+Nilsp@2019
+
+**portal**
+rizwan
+Rizw@2018
+
+172.16.1.93
+
+10.11.26.104
+
+
+df -Th
+timedatectl
+ip r
+
+
+sudo su -
+df -Th
+du -sh /sftp/*
+repquota -augs
+
+
+df -Th
+ntpstat
+date
+timedatectl
+
+systemctl restart ntpd
+
+date -R
+ntpq -p
+timedatectl
+
+
+******REFER AXIOM SHEET WITH THIS******
+PATH- Z:\ashtech activity\2019
+putty -10.12.15.193
+login as: acladm 
+PAssword :- acladm@123
+
+sudo su - acladm
+
+cd /acl/AxiomLite/RECEIVER/httpReceiver/logs
+
+tail -fn 200 catalina.out
+
+cd /acl/AxiomLite/DLR/logs 
+
+tail -fn 200 catalina.out 
+
+cd /acl/AxiomLite/RECEIVER/httpReceiver/logs
+
+tail -fn 100 catalina.out 
+
+cd /acl/AxiomLite/DLR/logs 
+
+grep 919881176783 catalina.out 
+
+ps -ef |grep httpReceiver 
+
+ps -ef |grep DLR
+
+
+
+packages removed from 10.12.15.193 (15-11-21) - libwbclient-4.8.3-4.el7.x86_64 , libsmbclient-4.8.3-4.el7.x86_64
+
+
+
+firewall-cmd --permanent --add-port=9463/tcp
+firewall-cmd --reload
+firewall-cmd --list-ports
+systemctl restart firewalld.service
+
+sudo firewall-cmd --list-ports
+
+10.11.15.159
+
+
+mahesh.unisource
+share@123
+
+top
+siddharth.unisource
+sharekhan@2
+
+chown -R santoshpdg@sskikt_nt.com:alternauat /sftp/alternaUAT
+setfacl -m santoshpdg@sskikt_nt.com:rwx -R /sftp/alternaUAT
+setfacl -m tstdbadmin@sskikt_nt.com:rwx -R /sftp/alternaUAT
+setfacl -m khyati.jain@sskikt_nt.com:rwx -R /sftp/alternaUAT
+setfacl -m alternauat@sskikt_nt.com:rwx -R /sftp/alternaUAT
+
+
+Update curl to version 7.71.0 or later.
+
+192.168.10.57
+192.168.59.16
+
+
+/dev/mapper/centos_netsyslog--ril1-syslog_firewall
+
+Filesystem                                         Type      Size  Used Avail Use% Mounted on
+devtmpfs                                           devtmpfs  1.9G     0  1.9G   0% /dev
+tmpfs                                              tmpfs     1.9G     0  1.9G   0% /dev/shm
+tmpfs                                              tmpfs     1.9G  183M  1.7G  10% /run
+tmpfs                                              tmpfs     1.9G     0  1.9G   0% /sys/fs/cgroup
+/dev/mapper/centos_netsyslog--ril1-root            ext4       50G  5.7G   41G  13% /
+/dev/sda2                                          ext4      2.0G  323M  1.5G  18% /boot
+/dev/mapper/centos_netsyslog--ril1-home            ext4      9.8G  152M  9.1G   2% /home
+/dev/mapper/centos_netsyslog--ril1-var             ext4       20G  6.2G   13G  33% /var
+tmpfs                                              tmpfs     379M     0  379M   0% /run/user/0
+/dev/mapper/centos_netsyslog--ril1-syslog_firewall ext4      365G  2.7G  343G   1% /Syslog_Firewall
+
+[root@Hadoop-Server1 ~]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+ACCEPT     all  --  anywhere             anywhere            state RELATED,ESTABLISHED
+ACCEPT     icmp --  anywhere             anywhere
+ACCEPT     all  --  anywhere             anywhere
+ACCEPT     tcp  --  anywhere             anywhere            state NEW tcp dpt:ssh
+REJECT     all  --  anywhere             anywhere            reject-with icmp-host-prohibited
+ACCEPT     tcp  --  anywhere             anywhere            tcp dpt:snmp
+ACCEPT     udp  --  SKKRLOPMAN.sskikt_nt.com  anywhere            udp dpt:snmp
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+REJECT     all  --  anywhere             anywhere            reject-with icmp-host-prohibited
+
+systemctl restart ntpd.service
+
+ntpq -p
+
+date -R
+
+timedatectl
+
+
+more /etc/redhat-release
+rpm -qa --last | grep -i kernel
+uname -r
+
+
+
+	
+Relaince
+
+
+
+telnet 10.11.14.64 21
+
+
+TCL
+	
+
+telnet 10.12.14.60 21
+
+
+firewall-cmd --permanent --add-port=9333/tcp
+
+firewall-cmd --permanent --add-port=9476/tcp
+
+firewall-cmd --permanent --add-port=9485/tcp
+
+firewall-cmd --reload
+
+systemctl restart firewalld.service
+
+firewall-cmd --list-ports
+
+
+
+
+
+ip r
+more /etc/redhat-release
+uname -r
+ntpstat
+timedatectl
+
+
+
+
+realm list
+
+
+192.168.55.42,
+
+cat /etc/hosts.allow
+
+
+cat /etc/hosts.allow | grep 192.168.55.42
+
+
+
+cp -v /etc/hosts.allow  /etc/hosts.allow_23032021_15_29
+
+
+vim /etc/hosts.allow
+
+
+systemctl restart ntpd
+
+date -R
+
+
+
+ntpq -p
+
+
+timedatectl
+
+
+
+sh /root/ae_scan_linux_new.sh
+
+
+telnet itdesk.sharekhan.com 443
+
+
+telnet 10.12.3.37 443
+
+Completed	None	d1prl2gintl003	<multiple results>	Linux Red Hat Enterprise Linux 8.4 (4.18.0-305.3.1.el8_4.x86_64)	3100 MHz Xeon Gold 6254	24-06-2021 07:38:27	No	Manual	SKKRLPRBGFIX1.sskikt_nt.com:52311	linuxadm	64128 MB	28300 MB	35021 MB	<multiple results>	
+
+
+
+
+lsblk -io KNAME,TYPE,SIZE,MODEL
+
+dmidecode --type 17
+
+

@@ -1,0 +1,39 @@
+
+cd /report/output/
+
+cp skdrl1gextl022_14Jun2021_085001.txt /home/fnlinuxinfra/
+cp skdrl1gextl022_14Jun2021_090001.txt /home/fnlinuxinfra/
+cp skdrl1gextl022_14Jun2021_091001.txt /home/fnlinuxinfra/
+cp skdrl1gextl022_14Jun2021_092001.txt /home/fnlinuxinfra/
+cp skdrl1gextl022_14Jun2021_093001.txt /home/fnlinuxinfra/
+cp skdrl1gextl022_14Jun2021_094002.txt /home/fnlinuxinfra/
+cp skdrl1gextl022_14Jun2021_095001.txt /home/fnlinuxinfra/
+cp skdrl1gextl022_14Jun2021_100001.txt /home/fnlinuxinfra/
+
+cd /home/fnlinuxinfra/
+
+
+cat skdrl1gextl022_14Jun2021_090001.txt >> skdrl1gextl022_14Jun2021_085001.txt
+cat skdrl1gextl022_14Jun2021_091001.txt >> skdrl1gextl022_14Jun2021_085001.txt
+cat skdrl1gextl022_14Jun2021_092001.txt >> skdrl1gextl022_14Jun2021_085001.txt
+cat skdrl1gextl022_14Jun2021_093001.txt >> skdrl1gextl022_14Jun2021_085001.txt
+cat skdrl1gextl022_14Jun2021_094002.txt >> skdrl1gextl022_14Jun2021_085001.txt
+cat skdrl1gextl022_14Jun2021_095001.txt >> skdrl1gextl022_14Jun2021_085001.txt
+cat skdrl1gextl022_14Jun2021_100001.txt >> skdrl1gextl022_14Jun2021_085001.txt
+
+chown fnlinuxinfra skdrl1gextl022_14Jun2021_085001.txt
+
+
+
+10.12.15.115------ 
+10.12.15.116------
+10.12.15.117------ 
+10.12.15.118------ 
+10.12.15.119------
+10.12.15.120------ 
+10.12.15.121------ 
+10.12.15.122------ 
+
+
+
+

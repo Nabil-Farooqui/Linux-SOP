@@ -1,0 +1,36 @@
+VMware
+172.16.1.141	root	P@ssw0rd
+172.16.1.142	root	P@ssw0rd
+192.168.55.82	root	P@ssw0rd!
+192.168.55.83	root	P@ssw0rd!
+192.168.10.87	root	pass@123
+192.168.10.86	root	pass@123
+
+skkrlvmvc1	192.168.10.36	administrator@vsphere.local	P@ssw0rd  -- RIL
+skkmldvmvc1	172.16.1.143	administrator@vsphere.local	P@ssw0rd!  -- LODHA
+/skbtlvmvc1.internal.sharekhan.com/ui/	192.168.55.87	administrator@vsphere.local	P@ssw0rd  -- TCL
+
+
+192.168.81.97					(Dell EMC Unity 450F) - LODHA
+SAN Console User:-admin
+Password:-San@emc@450
+
+172.16.1.62					(Dell EMC Unity 550) - LODHA
+SAN Console User:-admin
+Password:-P@ssw0rd!
+
+192.168.70.53					(Dell EMC Unity 550) - RIL
+SAN Console User:-admin
+Password:-S$san@rdc1
+
+192.168.55.110					(Dell EMC Unity 550) - TCL
+SAN Console User:-admin
+Password:-P@ssw0rd!
+
+10.11.1.33					(Dell EMC Unity 650F) - RIL
+SAN Console User:-admin
+Password:-Passw0rd@123
+
+10.11.1.53					(Dell EMC Unity 300F) - RIL
+SAN Console User:-admin
+Password:-Passw0rd@123

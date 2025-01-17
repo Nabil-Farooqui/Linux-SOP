@@ -1,0 +1,3 @@
+edquota -g < sftp folder name >
+
+then increase the size of the folder 

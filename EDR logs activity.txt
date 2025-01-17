@@ -1,0 +1,19 @@
+@@@@@@@@@@@@@@@@@ EDR Logs @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+ # cd /var/opt/BESClient/EDRDeployData/
+ # cp -v EDR_DeploymentResults.txt /root/
+ # take winscp and rename EDR_DeploymentResults.txt in attached in mail
+
+
+ # cd /var/opt/BESClient/EDRDeployData/
+ # cp -v EDR_DeploymentResults.txt /home/fnlinuxinfra
+ # cd /home/fnlinuxinfra
+ # ls -l
+ # chown -R fnlinuxinfra EDR_DeploymentResults.txt  
+ # take winscp and rename EDR_DeploymentResults.txt in attached in mail
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+/var/opt/BESClient/__BESData/__Global/Logs
+
+Logs are generated in above location date wise.
+Give all ".log" files

@@ -1,0 +1,30 @@
+lsblk
+parted /dev/sdd
+p
+mklabel
+gpt
+mkpart primary 0.00GB 2999.99GB
+p
+q
+fdisk /dev/sdd
+p
+t
+l
+q
+31
+p
+w
+partprobe
+pvcreate /dev/sdd1
+pvs
+vgcreate vg_branch /dev/sdd1
+vgs
+lvcreate -L 299.00GB -n lv_branch vg_branch  / lvcreate -l 100%FREE -n lv_branch vg_branch
+lvs
+mkfs.ext4 /dev/vg_branch/lv_branch
+mkdir /branch
+vim /etc/fstab
+
+/dev/mapper/vg_branch-lv_branch   /branch                  ext4    defaults        0 0
+wq!
+mount -a

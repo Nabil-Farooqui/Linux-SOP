@@ -1,0 +1,246 @@
+echo 1 > /sys/block/sda/device/rescan
+[root@d1prl1gextl011 ~]# lsblk
+NAME                             MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                                8:0    0  115G  0 disk
+├─sda1                             8:1    0    2G  0 part /boot/efi
+├─sda2                             8:2    0    2G  0 part /boot
+├─sda3                             8:3    0   35G  0 part
+│ └─vg_root-root                 253:0    0   35G  0 lvm  /
+├─sda4                             8:4    0   16G  0 part
+│ └─vg_swap-swap                 253:1    0   16G  0 lvm  [SWAP]
+├─sda5                             8:5    0   10G  0 part
+│ └─vg_var-var                   253:2    0   10G  0 lvm  /var
+├─sda6                             8:6    0   10G  0 part
+│ └─vg_home-home                 253:8    0   10G  0 lvm  /home
+├─sda7                             8:7    0   10G  0 part
+│ └─vg_varlog-var_log            253:9    0   10G  0 lvm  /var/log
+├─sda8                             8:8    0    5G  0 part
+│ └─vg_tmp-tmp                   253:4    0    5G  0 lvm  /tmp
+├─sda9                             8:9    0    5G  0 part
+│ └─vg_vartmp-var_tmp            253:7    0    5G  0 lvm  /var/tmp
+└─sda10                            8:10   0    5G  0 part
+  └─vg_varlogaudit-var_log_audit 253:6    0    5G  0 lvm  /var/log/audit
+sdb                                8:16   0  800G  0 disk
+├─sdb1                             8:17   0   50G  0 part
+│ └─vg_app-lv_app                253:3    0  800G  0 lvm  /app
+└─sdb2                             8:18   0  750G  0 part
+  └─vg_app-lv_app                253:3    0  800G  0 lvm  /app
+sdc                                8:32   0   50G  0 disk
+└─sdc1                             8:33   0   50G  0 part
+  └─vg_logs-lv_logs              253:5    0   50G  0 lvm  /logs
+sr0                               11:0    1 1024M  0 rom
+[root@d1prl1gextl011 ~]#
+[root@d1prl1gextl011 ~]# parted /dev/sda
+GNU Parted 3.2
+Using /dev/sda
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) p
+Warning: Not all of the space available to /dev/sda appears to be used, you
+can fix the GPT to use all of the space (an extra 31457280 blocks) or
+continue with the current setting?
+Fix/Ignore? Fix
+Model: VMware Virtual disk (scsi)
+Disk /dev/sda: 123GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name                  Flags
+ 1      1049kB  2104MB  2103MB  fat32        EFI System Partition  boot, esp
+ 2      2104MB  4252MB  2147MB  ext4
+ 3      4252MB  41.8GB  37.6GB                                     lvm
+ 4      41.8GB  59.0GB  17.2GB                                     lvm
+ 5      59.0GB  69.8GB  10.7GB                                     lvm
+ 6      69.8GB  80.5GB  10.7GB                                     lvm
+ 7      80.5GB  91.2GB  10.7GB                                     lvm
+ 8      91.2GB  96.6GB  5373MB                                     lvm
+ 9      96.6GB  102GB   5373MB                                     lvm
+10      102GB   107GB   5373MB                                     lvm
+
+(parted) mkpart primary 107GB 123GB
+(parted) p
+Model: VMware Virtual disk (scsi)
+Disk /dev/sda: 123GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name                  Flags
+ 1      1049kB  2104MB  2103MB  fat32        EFI System Partition  boot, esp
+ 2      2104MB  4252MB  2147MB  ext4
+ 3      4252MB  41.8GB  37.6GB                                     lvm
+ 4      41.8GB  59.0GB  17.2GB                                     lvm
+ 5      59.0GB  69.8GB  10.7GB                                     lvm
+ 6      69.8GB  80.5GB  10.7GB                                     lvm
+ 7      80.5GB  91.2GB  10.7GB                                     lvm
+ 8      91.2GB  96.6GB  5373MB                                     lvm
+ 9      96.6GB  102GB   5373MB                                     lvm
+10      102GB   107GB   5373MB                                     lvm
+11      107GB   123GB   16.1GB               primary
+
+(parted) q
+Information: You may need to update /etc/fstab.
+
+[root@d1prl1gextl011 ~]#
+[root@d1prl1gextl011 ~]# fdisk /dev/sda
+
+Welcome to fdisk (util-linux 2.32.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): p
+Disk /dev/sda: 115 GiB, 123480309760 bytes, 241172480 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 0DDE2DD2-FA6B-4A29-BC30-93849CB27B0E
+
+Device         Start       End  Sectors Size Type
+/dev/sda1       2048   4110335  4108288   2G EFI System
+/dev/sda2    4110336   8304639  4194304   2G Linux filesystem
+/dev/sda3    8304640  81713151 73408512  35G Linux LVM
+/dev/sda4   81713152 115275775 33562624  16G Linux LVM
+/dev/sda5  115275776 136255487 20979712  10G Linux LVM
+/dev/sda6  136255488 157235199 20979712  10G Linux LVM
+/dev/sda7  157235200 178214911 20979712  10G Linux LVM
+/dev/sda8  178214912 188708863 10493952   5G Linux LVM
+/dev/sda9  188708864 199202815 10493952   5G Linux LVM
+/dev/sda10 199202816 209696767 10493952   5G Linux LVM
+/dev/sda11 209696768 241170431 31473664  15G Linux filesystem
+
+Command (m for help): t
+Partition number (1-11, default 11):
+Partition type (type L to list all types): 31
+
+Changed type of partition 'Linux filesystem' to 'Linux LVM'.
+
+Command (m for help): p
+Disk /dev/sda: 115 GiB, 123480309760 bytes, 241172480 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 0DDE2DD2-FA6B-4A29-BC30-93849CB27B0E
+
+Device         Start       End  Sectors Size Type
+/dev/sda1       2048   4110335  4108288   2G EFI System
+/dev/sda2    4110336   8304639  4194304   2G Linux filesystem
+/dev/sda3    8304640  81713151 73408512  35G Linux LVM
+/dev/sda4   81713152 115275775 33562624  16G Linux LVM
+/dev/sda5  115275776 136255487 20979712  10G Linux LVM
+/dev/sda6  136255488 157235199 20979712  10G Linux LVM
+/dev/sda7  157235200 178214911 20979712  10G Linux LVM
+/dev/sda8  178214912 188708863 10493952   5G Linux LVM
+/dev/sda9  188708864 199202815 10493952   5G Linux LVM
+/dev/sda10 199202816 209696767 10493952   5G Linux LVM
+/dev/sda11 209696768 241170431 31473664  15G Linux LVM
+
+Command (m for help): w
+The partition table has been altered.
+Syncing disks.
+
+[root@d1prl1gextl011 ~]# partprobe
+[root@d1prl1gextl011 ~]# fdisk -l /dev/sda
+
+Welcome to fdisk (util-linux 2.32.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+
+Command (m for help): p
+Disk /dev/sda: 115 GiB, 123480309760 bytes, 241172480 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 0DDE2DD2-FA6B-4A29-BC30-93849CB27B0E
+
+Device         Start       End  Sectors Size Type
+/dev/sda1       2048   4110335  4108288   2G EFI System
+/dev/sda2    4110336   8304639  4194304   2G Linux filesystem
+/dev/sda3    8304640  81713151 73408512  35G Linux LVM
+/dev/sda4   81713152 115275775 33562624  16G Linux LVM
+/dev/sda5  115275776 136255487 20979712  10G Linux LVM
+/dev/sda6  136255488 157235199 20979712  10G Linux LVM
+/dev/sda7  157235200 178214911 20979712  10G Linux LVM
+/dev/sda8  178214912 188708863 10493952   5G Linux LVM
+/dev/sda9  188708864 199202815 10493952   5G Linux LVM
+/dev/sda10 199202816 209696767 10493952   5G Linux LVM
+/dev/sda11 209696768 241170431 31473664  15G Linux LVM
+
+Command (m for help): q
+
+
+[root@d1prl1gextl011 ~]# pvcreate /dev/sda11
+  Physical volume "/dev/sda11" successfully created.
+[root@d1prl1gextl011 ~]# pvs
+  PV         VG             Fmt  Attr PSize    PFree
+  /dev/sda10 vg_varlogaudit lvm2 a--     5.00g      0
+  /dev/sda11                lvm2 ---   <15.01g <15.01g
+  /dev/sda3  vg_root        lvm2 a--    35.00g      0
+  /dev/sda4  vg_swap        lvm2 a--    16.00g      0
+  /dev/sda5  vg_var         lvm2 a--    10.00g      0
+  /dev/sda6  vg_home        lvm2 a--    10.00g      0
+  /dev/sda7  vg_varlog      lvm2 a--    10.00g      0
+  /dev/sda8  vg_tmp         lvm2 a--     5.00g      0
+  /dev/sda9  vg_vartmp      lvm2 a--     5.00g      0
+  /dev/sdb1  vg_app         lvm2 a--   <50.00g      0
+  /dev/sdb2  vg_app         lvm2 a--  <750.00g      0
+  /dev/sdc1  vg_logs        lvm2 a--   <50.00g   4.00m
+
+[root@d1prl1gextl011 ~]# vgs
+  VG             #PV #LV #SN Attr   VSize   VFree
+  vg_app           2   1   0 wz--n- 799.99g    0
+  vg_home          1   1   0 wz--n-  10.00g    0
+  vg_logs          1   1   0 wz--n- <50.00g 4.00m
+  vg_root          1   1   0 wz--n-  35.00g    0
+  vg_swap          1   1   0 wz--n-  16.00g    0
+  vg_tmp           1   1   0 wz--n-   5.00g    0
+  vg_var           1   1   0 wz--n-  10.00g    0
+  vg_varlog        1   1   0 wz--n-  10.00g    0
+  vg_varlogaudit   1   1   0 wz--n-   5.00g    0
+  vg_vartmp        1   1   0 wz--n-   5.00g    0
+[root@d1prl1gextl011 ~]# vgextend vg_var /dev/sda11
+  Volume group "vg_var" successfully extended
+[root@d1prl1gextl011 ~]# vgs
+  VG             #PV #LV #SN Attr   VSize   VFree
+  vg_app           2   1   0 wz--n- 799.99g     0
+  vg_home          1   1   0 wz--n-  10.00g     0
+  vg_logs          1   1   0 wz--n- <50.00g  4.00m
+  vg_root          1   1   0 wz--n-  35.00g     0
+  vg_swap          1   1   0 wz--n-  16.00g     0
+  vg_tmp           1   1   0 wz--n-   5.00g     0
+  vg_var           2   1   0 wz--n-  25.00g 15.00g
+  vg_varlog        1   1   0 wz--n-  10.00g     0
+  vg_varlogaudit   1   1   0 wz--n-   5.00g     0
+  vg_vartmp        1   1   0 wz--n-   5.00g     0
+[root@d1prl1gextl011 ~]# lvs
+  LV            VG             Attr       LSize   Pool Origin Data%  Meta%                                                                                   Move Log Cpy%Sync Convert
+  lv_app        vg_app         -wi-ao---- 799.99g                                                                                                            
+  home          vg_home        -wi-ao----  10.00g                                                                                                            
+  lv_logs       vg_logs        -wi-ao----  49.99g                                                                                                            
+  root          vg_root        -wi-ao----  35.00g                                                                                                            
+  swap          vg_swap        -wi-ao----  16.00g                                                                                                            
+  tmp           vg_tmp         -wi-ao----   5.00g                                                                                                            
+  var           vg_var         -wi-ao----  10.00g                                                                                                            
+  var_log       vg_varlog      -wi-ao----  10.00g                                                                                                            
+  var_log_audit vg_varlogaudit -wi-ao----   5.00g                                                                                                            
+  var_tmp       vg_vartmp      -wi-ao----   5.00g                                                                                                            
+[root@d1prl1gextl011 ~]# lvextend -L +14.95G /dev/vg_var/var
+  Rounding size to boundary between physical extents: 14.95 GiB.
+  Size of logical volume vg_var/var changed from 10.00 GiB (2560 extents) to                                                                                  24.95 GiB (6388 extents).
+  Logical volume vg_var/var successfully resized.
+[root@d1prl1gextl011 ~]# df -Th /var/
+Filesystem             Type  Size  Used Avail Use% Mounted on
+/dev/mapper/vg_var-var ext4  9.8G  3.4G  6.0G  37% /var
+[root@d1prl1gextl011 ~]# resize2fs /dev/vg_var/var
+resize2fs 1.45.6 (20-Mar-2020)
+Filesystem at /dev/vg_var/var is mounted on /var; on-line resizing required
+old_desc_blocks = 2, new_desc_blocks = 4
+The filesystem on /dev/vg_var/var is now 6541312 (4k) blocks long.
+
+[root@d1prl1gextl011 ~]# df -Th /var
+Filesystem             Type  Size  Used Avail Use% Mounted on
+/dev/mapper/vg_var-var ext4   25G  3.4G   20G  15% /var

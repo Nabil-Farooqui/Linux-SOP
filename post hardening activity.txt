@@ -1,0 +1,17 @@
+POST Hardening activity
+1) mcafee reinstall
+2) restart bigfix service
+3) mount point add, change owner
+4) subscription manager
+5) add hostname and IP in /etc/hosts
+6) add ENTRY in FINAL INVENTORY
+7) add ENTRY in PATCHING CALENDER
+8) Run MANAGE ENGINE scripts
+9) BMC discovery
+10) check whether the server can be see in bigfix console.
+	-> bigfix console
+		-> computers
+			-> search hostname
+				-> right click and add in group
+
+nmtui

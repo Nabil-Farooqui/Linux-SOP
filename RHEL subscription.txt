@@ -1,0 +1,27 @@
+
+1) 
+# telnet subscription.rhn.redhat.com 443
+# telnet subscription.rhsm.redhat.com 443
+
+2)
+# subscription-manager unregister
+# subscription-manager clean
+
+3)
+# subscription-manager register --username ShareKhan_322322 --auto-attach --force
+Pass - Itarea$2020#RedHat
+**check status**
+# subscription-manager status				---- current
+# subscription-manager list --consumed			---- Status Details:      Subscription is current
+
+If not..then
+
+# subscription-manager unregister
+# subscription-manager clean
+# subscription-manager register --username ShareKhan_322322 --force
+Pass - Itarea$2020#RedHat
+# subscription-manager attach --pool=8a85f99f7574b71501758d11b13c486f
+**check status**
+# subscription-manager status				---- current
+# subscription-manager list --consumed			---- Status Details:      Subscription is current
+

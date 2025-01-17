@@ -1,0 +1,25 @@
+FOR EMERGENCY PATCHES SANITY.
+sudo su - 
+rpm -qa | grep -i sudo
+sudoedit -s /
+uname -r
+cat /etc/redhat-release
+ip r
+ntpstat
+
+
+
+FOR HARDENING SANITY TEST
+cat /etc/redhat-release
+ip r
+ntpstat
+timedatectl
+
+
+FOR PATCHING SANITY TEST
+uname -r
+cat /etc/redhat-release
+ip r
+ntpstat
+timedatectl
+

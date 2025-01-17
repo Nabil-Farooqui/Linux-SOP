@@ -1,0 +1,4 @@
+to restart nginx command
+go in /app/Nginx
+run following comman
+./nginx

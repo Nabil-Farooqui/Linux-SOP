@@ -1,0 +1,23 @@
+if /var/opt is full what is to be done???
+#######################################
+1) find / -iname BES*(find the following .rpm package)
+	> /etc/opt/BESClient/BESAgent-9.5.12.68-rhe6.x86_64.rpm
+
+2) cd /root
+	> rpm -qa | grep BES*
+	> rpm -e BESAgent-9.5.15.71-rhe6.x86_64
+
+3) cd /var/opt/
+	> rm -rf BESClient
+	> rm -rf BESCommon
+
+4) df -Th
+
+5) Install BESClient again
+	> rpm -ivh /etc/opt/BESClient/BESAgent-9.5.12.68-rhe6.x86_64.rpm
+
+6) restart the service
+	> /etc/init.d/besclient restart
+		-> output should be OK OK
+
+7) yum update -y

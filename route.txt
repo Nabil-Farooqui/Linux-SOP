@@ -1,0 +1,143 @@
+ifconfig -a
+ping 10.11.15.1
+ping 192.168.20.1
+ip route show
+history | grep route
+cat /etc/sysctl.conf
+ip route add 172.19.0.0/16 via 10.222.112.225 dev ens224
+ip route add 10.12.29.0/24 via 10.11.15.1 dev eth0
+ip route show
+route show
+route -n
+ip route show
+traceroute 10.11.29.35
+cat /etc/sysctl.conf | grep accept_source_route
+route -n
+netstat -an
+netstat -i
+netstat -nr | more
+
+
+
+Greek new server routing
+172.19.0.0
+mask - 255.255.0.0
+gateway - 10.222.112.225
+
+ip route add 172.19.0.0/16 via 10.222.112.225 dev ens224
+
+Add below line in the file
+vim /etc/sysconfig/network-scripts/route-e***
+172.19.0.0/16 via 10.222.112.225 dev ens224
+systemctl restart NetworkManager
+
+
+
+
+ ip route del 10.12.26.0/24 via 0.0.0.0 dev ens256
+
+ip route del 10.12.26.0/24 via 0.0.0.0 dev ens192
+
+
+
+[root@option_greek ~]# netstat -nr
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+10.255.255.6    10.112.20.1     255.255.255.255 UGH       0 0          0 em3
+10.255.255.7    10.112.20.1     255.255.255.255 UGH       0 0          0 em3
+10.180.57.64    0.0.0.0         255.255.255.192 U         0 0          0 em4
+172.19.12.0     10.222.147.33   255.255.255.0   UG        0 0          0 em2
+172.19.13.0     10.222.147.33   255.255.255.0   UG        0 0          0 em2
+10.255.241.0    10.112.20.1     255.255.255.0   UG        0 0          0 em3
+10.222.147.0    0.0.0.0         255.255.255.0   U         0 0          0 em2
+192.168.13.0    10.180.57.65    255.255.255.0   UG        0 0          0 em4
+10.255.254.0    10.112.20.1     255.255.255.0   UG        0 0          0 em3
+10.112.20.0     0.0.0.0         255.255.255.0   U         0 0          0 em3
+172.19.18.0     10.222.147.33   255.255.255.0   UG        0 0          0 em2
+172.19.19.0     10.222.147.33   255.255.255.0   UG        0 0          0 em2
+192.168.10.0    0.0.0.0         255.255.255.0   U         0 0          0 em1
+10.255.0.0      10.112.20.1     255.255.0.0     UG        0 0          0 em3
+169.254.0.0     0.0.0.0         255.255.0.0     U         0 0          0 em1
+169.254.0.0     0.0.0.0         255.255.0.0     U         0 0          0 em2
+169.254.0.0     0.0.0.0         255.255.0.0     U         0 0          0 em3
+169.254.0.0     0.0.0.0         255.255.0.0     U         0 0          0 em4
+192.168.0.0     192.168.10.1    255.255.0.0     UG        0 0          0 em1
+0.0.0.0         192.168.10.1    0.0.0.0         UG        0 0          0 em1
+
+
+[root@option_greek network-scripts]# more route-em1
+10.11.0.0/16 via 10.11.15.1
+192.168.0.0/16 via 192.168.10.1
+[root@option_greek network-scripts]# more route-em2
+172.19.12.0/24 via 10.222.147.33
+172.19.13.0/24 via 10.222.147.33
+172.19.18.0/24 via 10.222.147.33
+172.19.19.0/24 via 10.222.147.33
+[root@option_greek network-scripts]# more route-em3
+10.255.255.6/32 via 10.112.20.1
+10.255.255.7/32 via 10.112.20.1
+10.255.241.0/24 via 10.112.20.1
+10.255.254.0/24 via 10.112.20.1
+10.255.0.0/16 via 10.112.20.1
+[root@option_greek network-scripts]# more route-em4
+192.168.13.0/24 via 10.180.57.65
+[root@option_greek network-scripts]#
+
+[root@option_greek network-scripts]# ifconfig -a
+em1       Link encap:Ethernet  HWaddr D0:94:66:1C:3E:4B
+          inet addr:192.168.10.144  Bcast:192.168.10.255  Mask:255.255.255.0
+          inet6 addr: fe80::d294:66ff:fe1c:3e4b/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:26429003443 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:704556596 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:11666902398682 (10.6 TiB)  TX bytes:696382715103 (648.5 GiB)
+          Interrupt:18
+
+em2       Link encap:Ethernet  HWaddr D0:94:66:1C:3E:4C
+          inet addr:10.222.147.38  Bcast:10.222.147.255  Mask:255.255.255.0
+          inet6 addr: fe80::d294:66ff:fe1c:3e4c/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:22554127 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:1225709 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1677270696 (1.5 GiB)  TX bytes:153625069 (146.5 MiB)
+          Interrupt:19
+
+em3       Link encap:Ethernet  HWaddr D0:94:66:1C:3E:4D
+          inet addr:10.112.20.145  Bcast:10.112.20.255  Mask:255.255.255.0
+          inet6 addr: fe80::d294:66ff:fe1c:3e4d/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:381530111 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:48695 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:27490794696 (25.6 GiB)  TX bytes:6933270 (6.6 MiB)
+          Interrupt:19
+
+em4       Link encap:Ethernet  HWaddr D0:94:66:1C:3E:4E
+          inet addr:10.180.57.70  Bcast:10.180.57.127  Mask:255.255.255.192
+          inet6 addr: fe80::d294:66ff:fe1c:3e4e/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:167871325 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:395666 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:41817725362 (38.9 GiB)  TX bytes:80690703 (76.9 MiB)
+          Interrupt:16
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:4273621531 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4273621531 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:2424778450826 (2.2 TiB)  TX bytes:2424778450826 (2.2 TiB)
+
+
+broad 235.1.2.5
+
+ifconfig ens256 10.12.26.143/24 broadcast 233.1.2.42 
+
+ ip link set multicast on dev ens224
+ip link show ens224
+

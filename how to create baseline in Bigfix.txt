@@ -1,0 +1,25 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@IMP baseline create@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Step- 1 1st open bigfix console.
+step- 2 2nd click on Fixlets and Task >>> search multiple and select Enable multiple patch baseline feature- RHEL-X / CentOS-x
+Step- 3 right click on that and select the new baseline 
+Step- 4 Edit name eg. RHEL8_IMP and see is this available Enable multiple patch baseline feature- RHEL-X / CentOS-x. and press OK.
+step- 5 Then go Fixlets and Task >>> Fixlets only >>> BY sites >>> select Patches for RHEL-X / CentOS-x. and then filter Source relise date vise.
+Step- 6 search this IMP patches 1st Kernel, Firmware, Vault, Glibc, GCC >>>>> after search right click on that and select add Exiting baseline.
+step- 7 After select add Exiting baseline.>>>> select our baseline eg. RHEL8_IMP. >>>>> PRESS OK
+Step- 8 After final patch go to Fixlets and Task search this Multiple-Package Baseline Installation RHEL-X / CentOS-x. select add Exiting baseline.
+Step- 9 After select add Exiting baseline.>>>> select our baseline eg. RHEL8_IMP. >>>>> PRESS OK 
+
+
+@@@@@@@@@@@@@@@@@@Normal baseline create@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+Step- 1 1st open bigfix console.
+step- 2 2nd click on Fixlets and Task >>> search multiple and select Enable multiple patch baseline feature- RHEL-X / CentOS-x
+Step- 3 right click on that and select the new baseline 
+Step- 4 Edit name eg. RHEL8_Base1 and see is this available Enable multiple patch baseline feature- RHEL-X / CentOS-x. and press OK.
+step- 5 Then go Fixlets and Task >>> Fixlets only >>> BY sites >>> select Patches for RHEL-X / CentOS-x. and then filter Source relise date vise.
+Step- 6 search patches >>>>> after search select all Except IMP patches right click on that and select add Exiting baseline.
+step- 7 After select add Exiting baseline.>>>> select our baseline eg. RHEL8_base1. >>>>> PRESS OK
+Step- 8 After final patch go to Fixlets and Task search this Multiple-Package Baseline Installation RHEL-X / CentOS-x. select add Exiting baseline.
+Step- 9 After select add Exiting baseline.>>>> select our baseline eg. RHEL8_base1. >>>>> PRESS OK 
+

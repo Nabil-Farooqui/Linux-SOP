@@ -1,0 +1,40 @@
+FOR RHEL 7
+cat /etc/redhat-release
+cat /etc/hosts.allow |grep 192.168.36.150
+cat /etc/hosts.allow |grep 10.12.3.35
+cp -v /etc/hosts.allow /etc/hosts.allow_05-07-21
+
+vim /etc/hosts.allow
+esc
+/192.168.36.150		OLD IP
+
+/10.12.3.35		OLD IP
+
+	NEW			OLD
+
+TCL	10.12.15.54		10.12.3.35
+
+RIL	10.11.15.62		192.168.36.150
+
+Lodha	172.16.1.76
+
+Add new IP
+cat /etc/hosts.allow |grep 10.11.15.62
+cat /etc/hosts.allow |grep 192.168.36.150
+cat /etc/hosts.allow |grep 10.12.3.35
+
+
+
+FOR RHEL 8
+firewall-cmd --list-all-zones |grep 192.168.36.150
+firewall-cmd --list-all-zones |grep 10.12.3.35
+firewall-cmd --list-all-zones |grep 10.12.15.54
+
+firewall-cmd --permanent --zone=mysshzone --remove-source=192.168.36.150/24
+firewall-cmd --permanent --zone=mysshzone --remove-source=10.12.3.35/24
+firewall-cmd --permanent --zone=mysshzone --add-source=10.12.15.54/24
+firewall-cmd --reload
+
+
+
+

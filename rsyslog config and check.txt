@@ -1,0 +1,27 @@
+# yum install update rsyslog*
+ # cp -v /etc/rsyslog.conf /etc/rsyslog.conf_orig_date_time
+ # vim /etc/rsyslog.conf
+	------ make below entry # remote host is: name/ip:port,
+		*.* @10.11.3.12:514			---- for RIL server
+		*.* @10.12.3.12:514			---- for TCL server
+		*.* @10.13.3.12:514			---- for LODHA server
+
+tcpdump -A -i any dst 10.11.3.12
+tcpdump -A -i any dst 10.12.3.12
+tcpdump -A -i any dst 10.13.3.12
+
+
+ # firewall-cmd --permanent --add-port=514/tcp
+ # firewall-cmd --reload
+ # systemctl status rsyslog.service 
+ # systemctl enable rsyslog.service
+ # systemctl restart rsyslog.service
+ # systemctl status rsyslog.service 
+
+
+
+
+service iptables status
+
+service rsyslog status
+chkconfig rsyslog on

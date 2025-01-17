@@ -1,0 +1,29 @@
+to check McAfee status
+
+systemctl status cma
+systemctl restart cma
+
+/etc/init.d/cma  status
+
+
+touch /root/.profile
+1}yum remove MFE*
+
+2}cd /antivirus/epo
+3}sh install.sh -i
+
+
+4}systemctl status cma
+
+5}/etc/init.d/cma  status
+6}/etc/init.d/cma  restart
+
+=====================NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO+++++++++++++++++++++++++++++++++
+After restarting the service
+/opt/McAfee/cma/bin/cmdagent -p
+/opt/McAfee/cma/bin/cmdagent -e
+/opt/McAfee/cma/bin/cmdagent -c
+/opt/McAfee/cma/bin/cmdagent -f
+/opt/McAfee/cma/bin/cmdagent -i
+/opt/McAfee/cma/bin/cmdagent -h
+/opt/McAfee/cma/bin/cmdagent -l

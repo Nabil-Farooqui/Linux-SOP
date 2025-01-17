@@ -1,0 +1,8 @@
+/       30 Gb
+var     25 gb
+home    10 gb
+boot    2 gb
+/var/log 15gb
+tmp     5 gb
+swap    12 gb
+/boot/efi 2gb

@@ -1,0 +1,17 @@
+port -22 ssh
+ 23 -telnet
+513 rlogin
+4
+id - BMC
+sudo access for commands 
+lsof -l -n -p -F -ptPTn -i
+hwinfo
+netstat
+dmidecode
+ethtool*
+mii-tool -v*
+If the estate includes Veritas clustering- /usr/bin/cat /etc/VRTSvcs/conf/config/main.cf
+
+Commands are on the default $PATH. 
+If they are not then we can either extend the PATH variable of the Discovery process or 
+include full path names in the Discovery commands

@@ -1,0 +1,41 @@
+
+create folder
+# /dft_logs
+
+For RIL
+# mount -t nfs 10.11.30.14:/DFT_LOG_BACKUP_RIL /dft_logs
+
+FOR TCL
+# mount -t nfs 10.12.30.14:/DFT_LOG_BACKUP_TCL /dft_logs
+
+# cp -v /etc/fstab /etc/fstab_22-04-2021
+# vim /etc/fstab 
+
+
+For RIL
+10.11.30.14:/DFT_LOG_BACKUP_RIL /dft_logs        nfs     defaults        0 0
+
+FOR TCL
+10.12.30.14:/DFT_LOG_BACKUP_TCL /dft_logs        nfs     defaults        0 0
+
+:wq!
+
+# mount -a
+# df -Th
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+# mkdir /dft_logs
+chown  fndftapptt /dft_logs
+
+# mount -t 10.11.30.14:/DFT_LOG_BACKUP_RIL /dft_logs
+
+# cp -v /etc/fstab /etc/fstab_28-06-2021
+
+# vim /etc/fstab 
+
+10.12.30.14:/DFT_LOG_BACKUP_TCL /dft_logs        nfs     defaults        0 0
+
+:wq!
+
+# mount -a
+# df -Th

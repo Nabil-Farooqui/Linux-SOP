@@ -1,0 +1,53 @@
+########## SFTP conf ###########
+
+Domain IDs - 	abc@domain.com
+		xyz@domain.com
+
+SFTP folder - 	/sftp/sftp-folder
+
+Group	    -	local_group
+
+1. set /sftp folder permission as below. ( 1 time changes )
+	chmod 755 /sftp
+	chown root:root /sftp
+
+2. Create folder under /sftp
+	# mkdir -p /sftp/sftp-folder
+
+3. Create group in sftp server.
+	# groupadd local_group
+
+4. Add both domain id in group
+	# usermod -aG local_group abc@domain.com
+	# usermod -aG local_group xyz@domain.com
+
+5. Set acl on /sftp/sftp-folder for domain ids.
+	# setfacl -m u:abc@domain.com:rwx -R /sftp/sftp-folder
+	# setfacl -m u:xyz@domain.com:rwx -R /sftp/sftp-folder
+
+6. Make entry in /etc/ssh/sshd_config that domain user can directly land in sftp folder.
+	# cp -v /etc/ssh/sshd_config /etc/ssh/sshd_config_date_time
+	# vim /etc/ssh/sshd_config
+		Subsystem       sftp    /usr/libexec/openssh/sftp-server	----------- comment this entry
+		Subsystem 	sftp 	internal-sftp				----------- add this line
+
+		Match Group local_group
+		X11Forwarding no
+		AllowTcpForwarding no
+		ChrootDirectory /<sftpfolder>/
+		ForceCommand internal-sftp
+		PermitTunnel no
+		AllowAgentForwarding no
+
+	# systemctl restart sshd.service
+
+7. Allow source IP in /etc/hosts.allow for server access.
+	# cp -v /etc/hosts.allow /etc/hosts.allow_date_time
+	# vim /etc/hosts.allow
+		sshd : IP1,IP2,IP3..........
+
+######## check that we can login with doamin ID in sftp server and create file/folder under /sftp/sftp-folder #####################
+
+# tar -cvf SFTP_FOLDER-14-02-2021.tar /SFTP/SFTP-FOLDER
+
+# tar -xvf SFTP_FOLDER-14-02-2021.tar

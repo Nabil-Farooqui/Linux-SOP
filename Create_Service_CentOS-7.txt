@@ -1,0 +1,51 @@
+
+#!/bin/bash
+#
+# description: DFT Server
+#
+
+# Get function from functions library
+. /etc/init.d/functions
+
+# Start the service DFT
+start() {
+        /dft/dftsrv/bin/startup.sh
+        success $"DFT Server Started"
+        echo "DFT Server Started"
+}
+
+# Restart the service DFT
+stop() {
+        /dft/dftsrv/bin/shutdown.sh
+        success $"DFT Server Stopped"
+        echo "DFT Server Stopped"
+}
+
+# Status the service DFT
+status() {
+        netstat -apn | grep 9459
+        success $"DFT Server Running Status"
+        echo "DFT Server Running Status"
+}
+
+### main logic ###
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status DFT
+        ;;
+  restart|reload|condrestart)
+        stop
+        start
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart|reload|status}"
+        exit 1
+esac
+
+exit 0

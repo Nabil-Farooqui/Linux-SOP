@@ -1,0 +1,48 @@
+# yum install samba-client cifs-utils
+
+# mkdir /app/jamoon/trade-files/MCX/
+
+# mkdir app/jamoon/trade-files/BSE/
+
+# firewall-cmd --permanent --add-port=137/tcp
+# firewall-cmd --permanent --add-port=138/tcp
+# firewall-cmd --permanent --add-port=139/tcp
+# firewall-cmd --permanent --add-port=445/tcp
+
+# smbclient -L 192.168.86.113 -U sharekhan 
+# smbclient -L 192.168.2.206 -U sharekhan
+
+# mount -t cifs -o username=sharekhan,password=pass@1234 //192.168.86.113/C/Users/ /app/jamoon/trade-files/MCX/
+
+# mount -t cifs -o username=Administrator,password=x3amp5 //192.168.2.206/Export /app/jamoon/trade-files/BSE/
+
+# mount -t cifs -o username=sharekhan,password=p@55w0rd //172.16.1.42/RiskTiger_Reports /app/jamoon/trade-files/NSE/
+
+*************PERMENTMOUTING************
+# vim /etc/cifs_credfile1
+username=sharekhan
+password=pass@1234
+
+# vim /etc/cifs_credfile2
+username=Administrator
+password=x3amp5
+
+# vim /etc/cifs_credfile3
+username=sharekhan
+password=p@55w0rd
+
+# chmod 0600 /etc/cifs_credfile1; chmod 0600 /etc/cifs_credfile2
+
+# vim /etc/fstab
+
+//192.168.86.113/C/Users/    /app/jamoon/trade-files/MCX/   cifs  _netdev,credentials=/etc/cifs_credfile1  0  0
+
+//192.168.2.206/Export    /app/jamoon/trade-files/BSE/   cifs  _netdev,credentials=/etc/cifs_credfile2  0  0
+
+//172.16.1.42/RiskTiger_Reports /app/jamoon/trade-files/NSE/ cifs _netdev,credentials=/etc/cifs_credfile3  0   0
+
+:wq
+
+# mount -a
+
+

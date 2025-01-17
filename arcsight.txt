@@ -1,0 +1,28 @@
+//192.168.2.130/LogFiles      cifs       41G   37G  3.5G  92% /opt/IISLogs/192.168.2.130_File                                                                                                sLogs
+//172.16.1.50/LogFiles        cifs       64G   43G   22G  67% /opt/IISLogs/172.16.1.50_FilesL                                                                                                ogs
+//172.16.1.51/LogFiles        cifs       96G   57G   40G  60% /opt/IISLogs/172.16.1.51_FilesL                                                                                                ogs
+//192.168.82.72/LogFiles      cifs      137G   51G   87G  37% /opt/IISLogs/192.168.82.72_File                                                                                                sLogs
+//192.168.81.80/LogFiles      cifs      137G  117G   21G  86% /opt/IISLogs/192.168.81.80_File                                                                                                sLogs
+//192.168.2.12/LogFiles       cifs      101G   56G   45G  56% /opt/IISLogs/192.168.2.12_Files                                                                                                Logs
+
+
+333  mount -t cifs -o vers=2.0,username=arcsightlinux,domain=sskikt_nt.com,dir_mode=0755,file_mode=0755 //192.168.2.130/LogFiles /opt/IISLogs/192.168.2.130_FilesLogs
+  335  mount -t cifs -o vers=2.0,username=arcsightlinux,domain=sskikt_nt.com,dir_mode=0755,file_mode=0755 //172.16.1.50/LogFiles /opt/IISLogs/172.16.1.50_FilesLogs
+  337  mount -t cifs -o vers=2.0,username=arcsightlinux,domain=sskikt_nt.com,dir_mode=0755,file_mode=0755 //172.16.1.51/LogFiles /opt/IISLogs/172.16.1.51_FilesLogs
+  338  mount -t cifs -o vers=2.0,username=arcsightlinux,domain=sskikt_nt.com,dir_mode=0755,file_mode=0755 //192.168.82.72/LogFiles /opt/IISLogs/192.168.82.72_FilesLogs
+  339  mount -t cifs -o vers=2.0,username=arcsightlinux,domain=sskikt_nt.com,dir_mode=0755,file_mode=0755 //192.168.81.80/LogFiles /opt/IISLogs/192.168.81.80_FilesLogs
+  340  mount -t cifs -o vers=2.0,username=arcsightlinux,domain=sskikt_nt.com,dir_mode=0755,file_mode=0755 //192.168.2.12/LogFiles /opt/IISLogs/192.168.2.12_FilesLogs
+  341  mount -t cifs -o vers=2.0,username=arcsightlinux,domain=sskikt_nt.com,dir_mode=0755,file_mode=0755 //192.168.2.35/LogFiles /opt/IISLogs/192.168.2.35_FilesLogs
+
+
+//192.168.2.130/LogFiles       /opt/IISLogs/192.168.2.130_FilesLogs   cifs    _netdev,username=arcsightlinux@sskikt_nt.com,password=Sharekhan@345,dir_mode=0755,file_mode=0755     0       0
+//172.16.1.50/LogFiles       /opt/IISLogs/172.16.1.50_FilesLogs   cifs    _netdev,username=arcsightlinux@sskikt_nt.com,password=Sharekhan@345,dir_mode=0755,file_mode=0755     0       0
+//172.16.1.51/LogFiles       /opt/IISLogs/172.16.1.51_FilesLogs  cifs    _netdev,username=arcsightlinux@sskikt_nt.com,password=Sharekhan@345,dir_mode=0755,file_mode=0755     0       0
+//192.168.82.72/LogFiles        /opt/IISLogs/192.168.82.72_FilesLogs    cifs    _netdev,username=arcsightlinux@sskikt_nt.com,password=Sharekhan@345,dir_mode=0755,file_mode=0755     0
+0
+//192.168.81.80/LogFiles        /opt/IISLogs/192.168.81.80_FilesLogs    cifs    _netdev,username=arcsightlinux@sskikt_nt.com,password=Sharekhan@345,dir_mode=0755,file_mode=0755     0
+0
+//192.168.2.12/LogFiles         /opt/IISLogs/192.168.2.12_FilesLogs     cifs    _netdev,username=arcsightlinux@sskikt_nt.com,password=Sharekhan@345,dir_mode=0755,file_mode=0755     0
+0
+#//192.168.2.35/LogFiles                /opt/IISLogs/192.168.2.35_FilesLogs     cifs    _netdev,username=arcsightlinux@sskikt_nt.com,password=Sharekhan@345,dir_mode=0755,file_mode=0755
+0       0

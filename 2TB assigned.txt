@@ -1,0 +1,34 @@
+ mkdir /var/spool/imap
+  615  cp /etc/fstab /etc/fstab
+  616  cp /etc/fstab /etc/fstab_05_JAN_21
+  617  vim /etc/fstab
+  618  ip r
+  619  mount -a
+  620  mkfs.ext4 /dev/vg_smtpdata/lv_smtpdata
+  621  mount -a
+  622  df -T
+  623  df -Th
+  624  id cyrus
+  625  fdisk /dev/sdc
+  626  exit
+  627  history
+[root@d2drl1gextl029 ~]# cat /etc/fstab
+
+#
+# /etc/fstab
+# Created by anaconda on Fri Jan 10 04:43:48 2020
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/vg_root-root /                       ext4    defaults        1 1
+UUID=14ab49ba-1ea6-4a5f-a1b1-d6a19d030da2 /boot                   ext4    defaults        1 2
+/dev/mapper/vg_home-home /home                   ext4    defaults,nodev        1 2
+/dev/mapper/vg_tmp-tmp  /tmp                    ext4    defaults        1 2
+/dev/mapper/vg_var-var  /var                    ext4    defaults,nodev        1 2
+/dev/mapper/vg_var--log-var_log /var/log                ext4    defaults        1 2
+/dev/mapper/vg_var--log--audit-var_log_audit /var/log/audit          ext4    defaults        1 2
+/dev/mapper/vg_var--tmp-var_tmp /var/tmp                ext4    defaults        1 2
+/dev/mapper/vg_swap-swap swap                    swap    defaults        0 0
+/dev/mapper/vg_app-lv_app /app                  ext4    defaults        0 0
+/dev/mapper/vg_smtpdata-lv_smtpdata     /var/spool/imap                 ext4    defaults        0 0

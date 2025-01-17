@@ -1,0 +1,26 @@
+exec -1
+login -1
+klogin -2
+shell -1
+kshell -2
+
+
+discard -4
+bootps -2
+who -1
+echo -1
+dtspcd -2
+
+
+https://pim.sharekhan.com/PasswordVault/v10/logon/ldap
+https://itdesk.sharekhan.com/
+http://192.168.70.145:9095/
+https://skkrlprbgfix1.sskikt_nt.com:8083/webreports
+https://192.168.10.116:9081/session/new?request_uri=%2Fscm#
+https://192.168.26.224:1003/fgtauth?178042816e2efc36
+https://skkrlvmvc1.internal.sharekhan.com/
+https://10.12.3.19:8443/core/orionSplashScreen.do - mcafee
+
+
+=VLOOKUP(B9,'[Golden source (Server data) (4).xlsx]Complete Golden Source - June'!$A1:$A30000,1,FALSE)
+=VLOOKUP(A9,'[Solaris Servers Patch Calender v1.0.xls]Servers Details'!$B$9:$B$156,1,FALSE)

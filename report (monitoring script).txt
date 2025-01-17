@@ -1,0 +1,53 @@
+
+######## Apply script for monitoring ############
+
+upload folder "report" in server from "\linuxadmin\MAHESH\"
+
+copy folder "report" in /
+
+# cp -v "report_folder_path" /
+
+-----------------------------------------------
+
+change owner/grp & permission
+
+# chown -R root:root /report
+# chmod 740 /report/*.sh
+
+------------------------------------------------
+
+redirect hostname in file
+# echo `hostname` > /report/HostName_file
+
+--------------------------------------------------
+
+Set cronjob
+
+take backup 1st
+
+# crontab -l > crontab_bkp_datetime
+
+# crontab -e
+
+##### Locate System Every 10 MIN Output #####
+00,10,20,30,40,50 00-23 * * * /usr/bin/sh /report/final_report.sh
+##### Blank CSV File Creation #####
+10 00 * * * /usr/bin/sh /report/blank_csv_file_creation.sh > /report/output/Live_Servers_final1_`date +\%d\%m\%Y`.xls
+##### Host Output Insert in CSV File #####
+05,15,25,35,45,55 00-23 * * * /usr/bin/sh /report/host_output_insert_in_csv_and_mail.sh
+
+-----------------------------
+
+Try to run script manually. output should be empty 
+
+# /usr/bin/sh /report/final_report.sh
+# /usr/bin/sh /report/blank_csv_file_creation.sh > /report/output/Live_Servers_final1_`date +\%d\%m\%Y`.xls
+# /usr/bin/sh /report/host_output_insert_in_csv_and_mail.sh
+
+
+
+
+
+
+
+

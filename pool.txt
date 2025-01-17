@@ -1,0 +1,39 @@
+subscription-manager repo-override --help
+  962  sudo subscription-manager repos --list-enabled
+  963  history | grep sub
+  964  subscription-manager status
+  965  subscription-manager unregister
+  966  subscription-manager clean
+  967  ubscription-manager register --username ShareKhan_322322 --force
+  968  subscription-manager register --username ShareKhan_322322 --force
+  969  subscription-manager status
+  970  subscription-manager attach --pool=8a85f99f7574b71501758d11b13c486f
+  971  subscription-manager status
+  972  yum repolist
+  973  subscription-manager repos --list-enabled
+  974  subscription-manager repos --list
+  975  subscription-manager list --available
+  976  subscription-manager list --available | grep 8a85f99f7574b71501758d11b13c486f*
+  977  subscription-manager repos --list-enabled
+  978   rm -r /var/cache/yum
+  979  yum clean all
+  980  yum-config-manager --enable
+  981  subscription-manager list --consumed
+  982  subscription-manager attach --pool=8a85f99968b92c370168e65589b359f3
+  983  subscription-manager list --consumed
+  984  subscription-manager repos --enable
+  985  yum repolist all
+  986  yum clean all
+  987  yum install openssl
+  988  yum install openssl*
+  989  yum install compat*
+  990  yum install compat-openssl10*
+  991  rpm -qa | grep -i compat*
+  992  subscription-manager status
+  993  subscription-manager list --consumed
+  994  history | grep sub
+  995  subscription-manager unregister
+  996  subscription-manager clean
+  997  subscription-manager register --username ShareKhan_322322 --force
+  998  subscription-manager status
+  999  subscription-manager list --consumed

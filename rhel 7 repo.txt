@@ -1,0 +1,30 @@
+[RHEL7]
+name=RHEL7-$releasever
+baseurl=ftp://10.11.14.64/pub/localrepo/RHEL7/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+gpgcheck=1
+enabled=1
+
+
+
+
+
+
+
+
+[RHEL7]
+name=RHEL7-$releasever
+baseurl=ftp://10.11.14.64/pub/localrepo/RHEL7/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
+gpgcheck=1
+enabled=1
+
+
+
+
+
+CHANGE IP ACCORDING TO SITE.
+
+RHEL 7(RIL) - 10.11.14.64
+RHEL 7(TCL) - 10.12.14.60
+RHEL 6(any location) - 10.11.14.49

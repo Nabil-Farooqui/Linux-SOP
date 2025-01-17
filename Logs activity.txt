@@ -1,0 +1,32 @@
+@@@@@@@@@@@@@@@@@ EDR Logs @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+ # cd /var/opt/BESClient/EDRDeployData/
+ # cp -v EDR_DeploymentResults.txt /root/
+ # take winscp and rename EDR_DeploymentResults.txt in attached in mail
+
+
+ # cd /var/opt/BESClient/EDRDeployData/
+ # cp -v EDR_DeploymentResults.txt /home/fnlinuxinfra
+ # cd /home/fnlinuxinfra
+ # chown -R fnlinuxinfra EDR_DeploymentResults.txt  
+ # take winscp and rename EDR_DeploymentResults.txt in attached in mail
+
+@@@@@@@@@@@@@@@@ BES CLIENT @@@@@@@@@@@@@@@@@@@@@@@@@@
+
+/var/opt/BESClient/__BESData/__Global/Logs
+
+Logs are generated in above location date wise.
+Give all ".log" files
+
+
+@@@@@@@@@@@@@@@@ Mcafee @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+below link to generate log
+https://kc.mcafee.com/corporate/index?page=content&id=KB881972
+
+run the below command to generate log
+/opt/McAfee/ens/tp/scripts/mfetp-mer.sh
+
+below link to upload log
+https://support.mcafee.com/webcenter/portal/supportportal/pages_upload
+
+Mcafee member will give us a number which has to be put while uploading the log.

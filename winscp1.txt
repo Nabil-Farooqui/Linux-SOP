@@ -1,0 +1,56 @@
+10.11.14.64  RIL -  L1
+10.11.26.104  RIL L2
+10.12.14.60 TCL L1
+10.12.26.104 TCL L2
+192.168.82.32 Lodha	-lodharepo
+
+scp /report/output/Live_Servers_final1_08032021.xls 10.12.14.60:/root
+scp /report/output/Live_Servers_final1_09032021.xls 10.12.14.60:/root
+scp /report/output/Live_Servers_final1_10032021.xls 10.12.14.60:/root
+scp /report/output/Live_Servers_final1_12032021.xls 10.12.14.60:/root
+scp /report/output/Live_Servers_final1_12032021.xls 10.12.14.60:/root
+scp /report/output/Live_Servers_final1_12032021.xls 10.12.14.60:/root
+scp /report/output/Live_Servers_final1_12032021.xls 10.12.14.60:/root
+
+scp /report/output/Live_Servers_final1_02032021.xls 10.11.14.64:/root
+
+
+
+ssh 10.11.26.104  mv Live_Servers_final1_08032021.xls 10.12.14.101_08032021.xls
+ssh 10.11.26.104  mv Live_Servers_final1_09032021.xls 10.12.14.101_09032021.xls
+ssh 10.11.26.104  mv Live_Servers_final1_10032021.xls 10.12.14.101_10032021.xls
+ssh 10.11.26.104  mv Live_Servers_final1_12032021.xls 10.12.14.101_12032021.xls
+
+
+
+ssh 10.11.14.64  mv Live_Servers_final1_02032021.xls 10.11.15.103_02032021.xls
+
+
+cp -v skprl1gextl002_3Mar2021_* /home/fnlinuxinfra/
+
+
+chown  fnlinuxinfra skprl1gextl001*
+
+
+
+cp -v /report/output/Live_Servers_final1_05072021.xls /root/
+cp -v /report/output/Live_Servers_final1_06072021.xls /root/
+cp -v /report/output/Live_Servers_final1_07072021.xls /root/
+cp -v /report/output/Live_Servers_final1_08072021.xls /root/
+cp -v /report/output/Live_Servers_final1_09072021.xls /root/
+cp -v /report/output/Live_Servers_final1_12072021.xls /root/
+cp -v /report/output/Live_Servers_final1_13072021.xls /root/
+
+mv Live_Servers_final1_05072021.xls 10.12.15.127_05072021.xls
+mv Live_Servers_final1_06072021.xls 10.11.15.127_06072021.xls
+mv Live_Servers_final1_07072021.xls 10.11.15.127_07072021.xls
+mv Live_Servers_final1_08072021.xls 10.11.15.127_08072021.xls
+mv Live_Servers_final1_09072021.xls 10.11.15.127_09072021.xls
+mv Live_Servers_final1_12072021.xls 10.11.15.127_12072021.xls
+mv Live_Servers_final1_13072021.xls 10.11.15.127_13072021.xls
+
+
+ cd /home/fnlinuxinfra/
+ls -l
+
+ chown fnlinuxinfra <filename>*

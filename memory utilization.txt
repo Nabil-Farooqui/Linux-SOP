@@ -1,0 +1,6 @@
+ps -o pid,user,%mem,command ax | sort -b -k3 -r
+
+buffer clear
+
+echo 1 > /proc/sys/vm/drop_caches
+

@@ -3,10 +3,8 @@ realm leave
 realm leave
 realm leave
 
-# realm join --user=leap2020image Sklforest.com          password for leap2020image - Int3l!g3ntM3d!aSK New : Aug@2023#hyperv$   
+# realm join --user=leap2020image Sklforest.com          password for leap2020image -( Current Pass - Aug@2023 ) Int3l!g3ntM3d!aSK Aug@2023#Host@18 Aug@2023#hyperv$
  ( if user and password fail then run [  service systemd-resolved restart ]
-
-# realm join --user=fnhelpdeskit Sklforest.com    password : Sharekhan@1
 
 # vim /etc/sssd/sssd.conf
    edit line  use_fully_qualified_names as a False
@@ -21,18 +19,17 @@ realm leave
   Add this 4 line :
   sklforest.com = SKLFOREST.COM
   .sklforest.com = SKLFOREST.COM
-
   sskikt_nt.com = SSKIKT_NT.COM
   .sskikt_nt.com = SSKIKT_NT.COM
 
 cat /etc/krb5.conf
 
-# adcli join --host-keytab=/etc/krb5.keytab.sskikt_nt.com sskikt_nt.com --user=linuxadmin         password for linuxadmin ( Current Pass - Jun07@23 )  JANU@22TUE MARU@22tUEs Jun07@23
+# adcli join --host-keytab=/etc/krb5.keytab.sskikt_nt.com sskikt_nt.com --user=linuxadmin         password for linuxadmin ( Current Pass - Aug@2023 )  JANU@22TUE MARU@22tUEs Jun07@23
 
 # vim /etc/sssd/sssd.conf
 
 [sssd]
-domains = Sklforest.com
+domains = Sklforest.com,sskikt_nt.com
 config_file_version = 2
 services = nss, pam
 debug_level = 9
@@ -75,9 +72,7 @@ ldap_krb5_keytab = /etc/krb5.keytab.sskikt_nt.com
 
 # systemctl stop sssd ; rm -rf /var/log/sssd/* /var/lib/sss/{db,mc}/* ; systemctl start sssd
 
-# systemctl restart sssd    
-
-sssd -d9 -i      
+# systemctl restart sssd          
   
 realm list
 

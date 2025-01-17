@@ -1,0 +1,15 @@
+STOP the BIGFIX client process
+service BESClient stop
+
+Run the following RPM command to find the installed package name
+rpm -qa |grep -i BESAgent
+
+Uninstall the installed RPM package retunred in step 2
+rpm -e BESAgent-XXX
+
+Manually remove the following directories
+rm -rf /etc/opt/BESClient
+rm -rf	/opt/BESClient
+rm -rf	/tmp/BES
+rm -rf	/var/opt/BESClient
+rm -rf	/var/opt/BESCommon

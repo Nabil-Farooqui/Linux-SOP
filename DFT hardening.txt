@@ -1,0 +1,34 @@
+firewall-cmd --permanent --add-port=9091/tcp ; firewall-cmd --permanent --add-port=9090/tcp ; firewall-cmd --permanent --add-port=9459/tcp
+firewall-cmd --reload ; firewall-cmd --list-all
+
+
+
+TAKE COPY OF  /etc/security/limits.conf  AND ADD BELOW ENTRIES IN IT 
+
+fndftapptt@Sklforest.com  soft    nofile  200000
+fndftapptt@Sklforest.com  hard    nofile  200000
+fndftapptt@Sklforest.com  soft    nproc   50000
+fndftapptt@Sklforest.com  hard    nproc   50000
+
+fndftuat  soft    nofile  200000
+fndftuat  hard    nofile  200000
+fndftuat  soft    nproc   50000
+fndftuat  hard    nproc   50000
+
+********************************************************
+for setting ulimit vi /home/fndftapptt/.bashrc and add following line.
+free -g
+Mem = 32 >ulimit -u 16000
+Mem = 24 >ulimit -u 12000
+Mem = 64 >ulimit -u 32000
+to check run following command
+ulimit -u
+********************************************************
+chown -R  fnomsuat@Sklforest.com:domain\ users@Sklforest.com /logs ; chown -R  fnomsuat@Sklforest.com:domain\ users@Sklforest.com /app
+chown -R  fnomsuat@Sklforest.com:domain\ users@Sklforest.com /logs ; chown -R  fnnexpose@Sklforest.com:domain\ users@Sklforest.com /app
+
+COPY /etc/sudoers AND ADD BELOW ENTRY
+
+
+fndftapptt ALL=(ALL) NOPASSWD: /sbin/reboot
+fndftuat ALL=(ALL) NOPASSWD: /sbin/reboot

@@ -1,0 +1,13 @@
+1) Take confirmation from folder owner for decommissioning of the folder.
+2) Hashout the following from /etc/ssh/sshd_config of the related folder.
+		Match Group local_group
+		X11Forwarding no
+		AllowTcpForwarding no
+		ChrootDirectory /sftp/
+		ForceCommand internal-sftp
+		PermitTunnel no
+		AllowAgentForwarding no
+3) restart sshd service
+	> systemctl restart sshd.service
+4) Wait for a day or 2 if any of the folder users complain about no access.
+5)

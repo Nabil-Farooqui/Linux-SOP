@@ -1,0 +1,54 @@
+physical - give details to data center
+they will format the servers.
+Normal releasing ticket from application team with approval.
+1) change request from linuxadmin
+2) releasing ticket id to be added in the change request
+	 content -"As per this <ticket> application team has released the server;we are decommissioning the server"
+4) inform - ast , mcafee(baglesh,narendra) ,bigfix, brijesh(siem), anis(pam), vishwesh,skvapt
+	cc - sysadmin(, netadmin(ip), sunadmin,linuxadmin, 
+5) data center owner -deven , narendra khyatam
+6
+
+AST/ME/Bigfix - ast team and rekir
+McAfee - baglesh and narendra
+security - brijesh,vishwesh,anis skvapt
+Sysadmin - sysadmin
+Netadmin - netadmin
+datacenter - deven and narendra
+CC-
+	Sunadmin - sunadmin linuxadmin mark nukul seperately always
+	Management - niraj,akhil,amit vaidya,(ajinkya diwan)
+
+Once decommissioned
+inform the application owner and respective teams.
+################################################
+Subject - Decommissioning of obsolete DFT servers.
+As per ticket #<ticket>, application team have released the servers
+These servers are obsolete and it will not be in use hence we are decommissioning the same
+
+
+
+Change Reason - Preventive Action
+Type of Change - Standard
+Justification - Obsolete servers have been released by application team
+Type of risk - Low
+Planned end date - <<date_time>>
+Rollback Plan - NO ROLLBACK plan as server are decommissioning
+
+Affected Locations - AS per location in the FINAL INVENTORY
+Implement team - Linuxadmin
+Group - Appsupport
+Process steps - Hod approved (pending implementation)
+Sanity - We will check the ping status after they are formatted and shutdown
+Configuration item - Mobile
+Change Impact - Minor
+Department - sunadmin
+Change Category - Infra
+Affected CI - Please refer the table(server list).
+Change Plan -	1) Remove the network cable
+		2) Format the servers
+		3) Shutdown the servers
+		4) Mark the servers as scrap
+Technician - Group- Sunadmin
+Application name - Dft server
+

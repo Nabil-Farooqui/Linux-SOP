@@ -1,0 +1,65 @@
+lsblk
+parted /dev/sdb
+p
+mklabel
+gpt
+mkpart primary 0.00GB 53.7GB
+p
+q
+fdisk /dev/sdb
+p
+t
+l
+q
+31
+p
+w
+partprobe
+pvcreate /dev/sdb1
+pvs
+vgcreate vg_app /dev/sdb1
+vgs
+lvcreate -L 49.99GB -n lv_app vg_app
+lvs
+mkfs.ext4 /dev/vg_app/lv_app
+mkdir /app
+vim /etc/fstab
+
+/dev/mapper/vg_app-lv_app   /app                  ext4    defaults        0 0
+wq!
+mount -a
+==================================================================
+lsblk
+parted /dev/sdc
+p
+mklabel
+gpt
+mkpart primary 0.00GB 53.7GB
+p
+q
+fdisk /dev/sdc
+p
+t
+l
+q
+31
+p
+w
+partprobe
+pvcreate /dev/sdc1
+pvs
+vgcreate vg_logs /dev/sdc1
+vgs
+lvcreate -L 49.99GB -n lv_logs vg_logs
+lvs
+mkfs.ext4 /dev/vg_logs/lv_logs
+mkdir /logs
+vim /etc/fstab
+
+/dev/mapper/vg_logs-lv_logs   /logs                  ext4    defaults        0 0
+wq!
+mount -a
+
+
+======================================================================================
+df -Th

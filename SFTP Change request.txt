@@ -1,0 +1,29 @@
+REQUEST TYPE - CHANGE
+CHANGE REASON -  Corrective Action
+TYPE - Standard
+JUSTIFICATION - SFTP Folder Migration Plan on a Dedicated Mount Point for Better Monitoring
+TYPE OF RISK - LOW
+ROLLBACK PLAN - Ø  Restore “/etc/ssh/sshd_config” file.
+		Ø  Restart the sshd service.
+		Ø  Ask owner to check.
+
+IMPLEMENT TEAM - Linuxadmin
+GROUP - Appsupport
+PROCESS STEPS - Open(pending Line Manager Approval)
+SANITY TEST - We will confirm from team that they can access the folder with data
+CONFIGURATION ITEM - <foldername>
+CHANGE IMPACT - Minor
+CHANGE CATEGORY - Infra
+AFFECTED CI - STFP Server
+CHANGE PLAN - Ø  Mail communication to SFTP folder owner for downtime. ( Downtime will depends on folder size. for e.g. 5GB, 2hrs ).
+		Ø  After the confirmation from SFTP folder owner raise a change request.
+		Ø  Create mount points as per SFTP folder.
+		Ø  Configure SFTP on new mount point as per current configuration.
+		Ø  Stop current SFTP folder sharing.
+		Ø  Take tar backup of current SFTP folder.
+		Ø  untar SFTP folder tar into new mount point.
+		Ø  Compare the Permission, Size & Count of folder & files.
+		Ø  Take backup of “/etc/ssh/sshd_config” file and change the SFTP path in “/etc/ssh/sshd_config” file.
+		Ø  Restart the sshd service.
+		Ø  Provide new SFTP path to owner and ask to check from there end for SFTP Connection, Permission & Data.
+
