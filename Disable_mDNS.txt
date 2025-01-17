@@ -1,0 +1,9 @@
+## Disabling mDNS ##
+
+# systemctl status avahi-daemon.socket
+# systemctl stop avahi-daemon.socket
+# systemctl disable avahi-daemon.socket
+
+# systemctl status avahi-daemon.service
+# systemctl stop avahi-daemon.service
+# systemctl disable avahi-daemon.service

@@ -1,0 +1,12 @@
+Refer Link
+https://www.tecmint.com/disable-or-enable-ssh-root-login-and-limit-ssh-access-in-linux/
+
+#### go to /etc/ssh/ and take copy of sshd_config file.
+# cp -v /etc/ssh/sshd_config /etc/ssh/sshd_config_orig_date&time
+
+##### edit /etc/ssh/sshd_config with vim editor and change below parameter.
+# PermitRootLogin no
+# wq -- save and quit
+
+#### reload the sshd service.
+# systemctl reload sshd.service

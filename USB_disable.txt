@@ -1,0 +1,24 @@
+Refer Link
+https://www.cyberciti.biz/faq/linux-disable-modprobe-loading-of-usb-storage-driver/
+
+# ls -l /lib/modules/$(uname -r)/kernel/drivers/usb/storage/usb-storage.ko
+
+# cd /etc/modprobe.d/
+
+--now type following command
+# echo 'install usb-storage /bin/true' >> disable-usb-storage.conf
+
+Now the driver will not load. You can also remove USB Storage driver without rebooting the system, enter:
+
+--Next remove the USB storage driver without rebooting the system
+
+# modprobe -r usb-storage
+# mv -v /lib/modules/$(uname -r)/kernel/drivers/usb/storage/usb-storage.ko /root/
+
+--Verify the configuration
+# modinfo usb-storage
+# lsmod | grep -i usb-storage
+
+Edit /etc/modprobe.d/blacklist.conf, enter:
+# vim /etc/modprobe.d/blacklist.conf
+blacklist usb-storage

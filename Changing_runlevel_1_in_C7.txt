@@ -1,0 +1,19 @@
+## how access run-level 1 in centos 7 for T-Shoot ##
+
+// reboot the system
+
+// during linux advance startup-menu pres ESC key
+
+// press "e" key to edit the first boot option
+
+// find "ro" in kernal selection menu and replace with rw init=/sysroot/bin/sh
+or
+// use the Down arrow key to find the kernel line (starts with “linux16“), then change the argument "ro" to  rw init=/sysroot/bin/sh
+
+// press Ctrl-X or F10 to boot into single user mode 
+
+// Now mount root (/) filesystem using the following command.
+
+# chroot /sysroot/
+
+# reboot -f 		-it will reboot the system in normal mode

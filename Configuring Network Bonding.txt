@@ -1,0 +1,79 @@
+﻿## Configure Network Teaming Using nmcli ##
+The combining or aggregating together of network links in order to provide a logical link with higher throughput, or to provide redundancy, is known by many names such as “channel bonding”, “Ethernet bonding”, “port trunking”, “channel teaming”, “NIC teaming”, “link aggregation”, and so on
+
+// CONFIGURE BONDING USING THE TEXT USER INTERFACE, NMTUI
+link: https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Configure_Bonding_Using_the_Text_User_Interface_nmtui.html
+
+Type -> nmtui
+Select -> Edit a connection
+Select -> Add
+
+New connection screen
+Select -> Bond from drop down menu (press enter)
+
+Edit connection screen
+	Profile name -> bonding0
+    Device -> bond0
+
+Select -> Add (to add slave interfaces)
+
+New connection screen
+Select -> Ethernet (press enter)
+
+Edit Connection
+	Profile name -> bond-slave-enp0s3
+	Device -> enp0s3 (assign mac address in brackets)
+	Review and confirm the settings before selecting OK button
+	
+Repeat the above steps to add further slave connections
+Once the bote slave-connection has added it will get beck to 
+Edit connection screen
+Select -> Mode <Active Backup>
+		 Monitoring fre.. 100
+		 Link up delay 	 0
+		 Link down delay 0
+
+Select IPv4 Conf <manual> and select <show>
+		and assign static ip address as per your requirement
+Take review and select OK 
+
+TSHOOT
+# nmcli c show
+# nmcli c up bond-slave-enp0s3; nmcli c up bond-slave-enp0s8;
+# nmcli c up bonding0
+# ifdown bond0; ifup bond0 (if it doesn't ping to GW)
+
+
+## 18 command line tools to monitor network
+http://www.binarytides.com/linux-commands-monitor-network/
+-------------------------------------------------------------------------------
+
+##Creating Bonding using NMCLI tools##
+
+RefLink:
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Network_Bonding_Using_the_NetworkManager_Command_Line_Tool_nmcli.html
+
+--To create a bond, named mybond0, issue a command as follows:
+# nmcli con add type bond con-name bonding0 ifname bond0 mode active-backup
+or(with ip address)
+# nmcli con add type bond con-name bonding0 ifname bond0 mode active-backup ip4 192.168.x.x/24 gw4 x.x.x.x
+
+Now add both interface to connection bonding0
+--To add a slave interface, issue a command in the following form:
+# nmcli con add type bond-slave ifname enp0s3 master bond0
+
+--To add additional slaves, repeat the previous command with a new interface, for example:
+# nmcli con add type bond-slave ifname enp0s4 master bond0
+
+--In order to bring up a bond, the slaves must be brought up first as follows:
+# nmcli con up bond-slave-enp0s3
+# nmcli con up bond-slave-enp0s3
+
+--Now bring up the bond as follows:
+# nmcli con up bonding0
+
+--To view the devices available on the system 
+# nmcli con show or # nmcli c s 
+
+To configure static ip for bonding0 follow L3.1
+

@@ -1,0 +1,170 @@
+
+#Mirror List Link
+https://www.centos.org/download/mirrors/
+
+--Create Directory
+
+# mkdir -p /reposrv/ftp/pub/localrepo/rh_7/{media,os,updates,extras}/x86_64
+or 
+# mkdir -p /reposrv/ftp/pub/localrepo/C7/{media,os,updates,extras}/x86_64
+
+# chmod -R 755 /reposrv/ftp/pub/localrepo
+
+--next mount DVD or /dev/sr0
+# mount -t iso9660 /dev/sr0 /media/cdrom/
+
+# rsync -azvh /media/cdrom/Packages/*.* /reposrv/ftp/pub/localrepo/C7/media/x86_64/
+or
+# cp -ar /mnt/Packages/*.* /reposrv/ftp/pub/localrepo/
+# cp -v /media/cdrom/RPM-GPG-KEY-CentOS-7 /reposrv/ftp/pub/localrepo/C7/media/x86_64/
+
+# cd /reposrv/ftp/pub/localrepo/C7/media/x86_64/
+
+--If you did a minimal CentOS installation, then you might need to install the following dependencies first:
+# rpm -ivh libxml2-python-2.9.1-5.el7.x86_64.rpm 
+# rpm -ivh deltarpm-3.6-3.el7.x86_64.rpm 
+# rpm -ivh python-deltarpm-3.6-3.el7.x86_64.rpm
+
+--Now install “createrepo” package:
+# rpm -ivh createrepo-0.9.9-23.el7.noarch.rpm
+
+------------------------------------------------------------------------
+--Once you copied all the files, create a repository file called “localrepo.repo” under /etc/yum.repos.d/ 
+
+# vi /etc/yum.repos.d/localrepo.repo
+
+--Add following lines in localrepo.repo file
+[media]
+name=CentOS-$releasever - media
+baseurl=file:///reposrv/ftp/pub/localrepo/C7/media/x86_64/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+gpgcheck=1
+enabled=1
+
+[os]
+name=CentOS-$releasever - os
+baseurl=file:///reposrv/ftp/pub/localrepo/C7/os/x86_64/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+gpgcheck=1
+enabled=1
+
+[updates]
+name=CentOS-$releasever - updates
+baseurl=file:///reposrv/ftp/pub/localrepo/C7/updates/x86_64/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+gpgcheck=1
+enabled=1
+
+[extras]
+name=CentOS-$releasever - extras
+baseurl=file:///reposrv/ftp/pub/localrepo/C7/extras/x86_64/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+gpgcheck=1
+enabled=1
+
+
+--create metadata repositories
+# createrepo /reposrv/ftp/pub/localrepo/C7/media/x86_64/
+# createrepo /reposrv/ftp/pub/localrepo/C7/os/x86_64/
+# createrepo /reposrv/ftp/pub/localrepo/C7/updates/x86_64/
+# createrepo /reposrv/ftp/pub/localrepo/C7/extras/x86_64/
+
+
+
+
+
+--------------------------------------------------------------
+
+//Client End Configuration
+
+Next go to client machine and creat new repo in /etc/yum.repos.d/
+
+# vi /etc/yum.repos.d/localrepo.repo
+
+and add the following contents:
+
+[media]
+name=CentOS-$releasever - media
+baseurl=ftp://192.168.10.23/pub/localrepo/C7/media/x86_64/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+gpgcheck=1
+enabled=1
+
+[os]
+name=CentOS-$releasever - os
+baseurl=ftp://192.168.10.23/pub/localrepo/C7/os/x86_64/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+gpgcheck=1
+enabled=1
+
+[updates]
+name=CentOS-$releasever - updates
+baseurl=ftp://192.168.10.23/pub/localrepo/C7/updates/x86_64/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+gpgcheck=1
+enabled=1
+
+[extras]
+name=CentOS-$releasever - extras
+baseurl=ftp://192.168.10.23/pub/localrepo/C7/extras/x86_64/
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+gpgcheck=1
+enabled=1
+
+wq!			-to save and exit
+
+Next disable or rename default repo
+--------------------------------------------------------------
+//configuring firewall setting
+
+# firewall-cmd --add-service=ftp --permanent
+# firewall-cmd --add-port=21/tcp --permanent
+# firewall-cmd --reload
+# firewall-cmd --list-all
+
+---------------------------------------------------------------Centos 7-------------
+--copy from official repo
+
+rsync -avz --delete --exclude='repodata' rsync://repos.del.extreme-ix.org/centos/7.6.1810/os/x86_64/ /reposrv/ftp/pub/localrepo/C7/os/x86_64/
+
+rsync -avz --delete --exclude='repodata' rsync://repos.del.extreme-ix.org/centos/7.6.1810/updates/x86_64/ /reposrv/ftp/pub/localrepo/C7/updates/x86_64/
+
+rsync -avz --delete --exclude='repodata' rsync://repos.del.extreme-ix.org/centos/7.6.1810/extras/x86_64/ /reposrv/ftp/pub/localrepo/C7/extras/x86_64/
+
+----------------------------------------------------------Centos 6-----------------------
+
+
+rsync -avz --delete --exclude='repodata' rsync://del-repos.extreme-ix.org/centos/6/os/x86_64/ /reposrv/ftp/pub/localrepo/C6/os/x86_64/
+
+rsync -avz --delete --exclude='repodata' rsync://del-repos.extreme-ix.org/centos/6/updates/x86_64/ /reposrv/ftp/pub/localrepo/C6/updates/x86_64/
+
+rsync -avz --delete --exclude='repodata' rsync://del-repos.extreme-ix.org/centos/6/extras/x86_64/ /reposrv/ftp/pub/localrepo/C6/extras/x86_64/
+
+
+
+
+
+
+rsync -avz --delete --exclude='repodata' rsync://repos.del.extreme-ix.org/centos/6.10/updates/x86_64/ /reposrv/ftp/pub/localrepo/C6/updates/x86_64/
+
+rsync -avz --delete --exclude='repodata' rsync://repos.del.extreme-ix.org/centos/6.10/os/x86_64/ /reposrv/ftp/pub/localrepo/C6/os/x86_64/
+
+rsync -avz --delete --exclude='repodata' rsync://repos.del.extreme-ix.org/centos/6.10/extras/x86_64/ /reposrv/ftp/pub/localrepo/C6/extras/x86_64/
+
+
+
+
+--Add copy task to daily jobs.
+#!/bin/bash
+
+VER='C7'
+ARCH='x86_64'
+REPOS=(os updates extras)
+
+for REPO in ${REPOS[@]}
+do
+    rsync -avz --delete --exclude='repodata' \
+    rsync://mirrors.fibergrid.in/7/${REPO}/${ARCH}/ /reposrv/ftp/pub/localrepo/${VER}/${REPO}/${ARCH}/
+    createrepo /reposrv/ftp/pub/localrepo/${VER}/${REPO}/${ARCH}/
+done
+---------------------------------------------------------------------------------------

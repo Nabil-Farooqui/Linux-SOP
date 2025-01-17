@@ -1,0 +1,7 @@
+#### Check permission of crontab anacron ####
+# ll /etc/crontab
+# ll /etc/anacron
+
+#### permissoins must be 600.if not, then change permission of both file.###
+# chmod 600 /etc/crontab
+# chmod 600 /etc/anacron

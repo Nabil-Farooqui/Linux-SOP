@@ -1,0 +1,48 @@
+Refer link:-
+https://www.slashroot.in/modify-your-swap-space-configuring-your-linux-machine-use-lvm-swap-space-0
+
+##### First check swap are in lvm aur not.if swap is in lvm the follow the below steps.
+# more /etc/fstab
+/dev/mapper/ol-swap     swap                    swap    defaults        0 0
+
+##### First swap off.
+# swapoff -a
+# free -m
+swap	0	0	0
+
+##### add new disk and create new lvm on that disk.
+# fdisk -l ----- find new disk
+# fdisk /dev/sdx
+type below commands one by one.
+n
+enter
+give size here like +2G
+p
+t
+put partition number here
+8e ----- this is lvm code
+p
+w
+partprobe /dev/sdx or
+partex 
+
+#### Now create lvm partition.
+# pvcreate /dev/sdx
+# pvs
+# vgcreate vgname /dev/sdx
+# vgs
+# lvcreate -L -2G -n lvswap vgname
+# lvs
+
+##### create file system.
+# mkfs.xfs /dev/mapper/lvswap
+
+##### Now configured logical volume to be used as a swap space.
+# mkswap /dev/mapper/lvswap
+# swapon -a
+
+##### check swap is inreased or not.
+# free -m
+swap	2G	0	150M
+and
+# top

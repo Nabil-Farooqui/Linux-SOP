@@ -1,0 +1,52 @@
+﻿## Configuring NTP Server ##
+
+Network Time Protocol – 
+	NTP- is a protocol which runs over port 123 UDP at Transport Layer and allows computers to synchronize time over networks for an accurate time. While time is passing by, computers internal clocks tend to drift which can lead to inconsistent time issues, especially on servers and clients logs files or if you want to replicate servers resources or databases.
+	
+# yum install ntp
+
+## Next go to NTP Public Pool Time Server --> http://www.pool.ntp.org/en/
+							|
+				Choose CONTINENT area where the server is located
+							|
+				Search ur COUNTRY location (list of NTP servers should appear)
+							|
+				http://www.pool.ntp.org/zone/in
+			To use this pool zone, add the following to your ntp.conf files
+			server 1.in.pool.ntp.org 	iburst
+			server 1.asia.pool.ntp.org	iburst
+			server 2.asia.pool.ntp.org	iburst
+			
+## comment out line number 21 to 24 and add above lines 
+
+# line 19&20: add the network range you allow to receive requests
+
+Allow 192.168.1.0/24 network clients to synchronize time with this server
+restrict 192.168.1.0 netmask 255.255.255.0 nomodify notrap
+
+## at the end add following line for troubleshooting
+
+logfile /var/log/ntp.log
+
+:wq			-save and exit
+
+Note: The nomodify notrap statements suggest that your clients are not allowed to configure the server or be used as peers for time sync
+
+// Adding firewall ruls and start NTP deamon
+
+# firewall-cmd --add-service=ntp --permanent
+# firewall-cmd --reload
+# firewall-cmd --list-all
+
+# systemctl start ntpd.service
+# systemctl enable ntpd.service
+# systemctl status ntpd.service
+
+
+// varify server time sync
+
+# ntpq -p
+# date -R
+
+//If you want to query and synchronize against a pool
+# ntpdate -q  0.ro.pool.ntp.org  1.ro.pool.ntp.org

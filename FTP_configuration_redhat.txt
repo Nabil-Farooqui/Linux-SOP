@@ -1,0 +1,365 @@
+How to configure FTP Server (vsftp) in RHEL 6 ? 
+
+Install the necessary packages.
+
+[root@ora ~]#  yum –y install vsftp* Open the file and edit and add as mentioned below:
+
+[root@ora ~]#  vi /etc/vsftpd/vsftpd.conf
+
+# At line 12
+
+Anonymous_enable=no
+
+# At line 80 and 81 uncomment the following.
+
+ascii_upload_enable=YES
+ascii_download_enable=YES
+
+# At line 95,96 uncomment the following.
+
+chroot_local_user=YES
+chroot_list_enable=YES
+
+# At line 98 uncomment the following.
+
+chroot_list_file=/etc/vsftpd/chroot_list
+
+# At line 104 uncomment the following.
+ls_recurse_enable=YES
+
+# Add the following at the last line
+local_root=public_html
+
+[root@ora ~]#  vi /etc/vsftpd/chroot_list  # jail users or limits users to only their home directory.
+
+donald
+
+#  service  vsftpd  restart		## redhat 6.7
+OR
+# systemctl restart vsftpd.service	## redhat 7.5
+
+
+Configure the service to start with other services after every reboot.
+
+# chkconfig vsftpd on			## redhat 6.7
+OR
+# systemctl enable vsftpd.service	## redhat 7.5
+
+# system-config-firewall - disable firewall for ftp enable	## redhat 6.7
+OR
+# systemctl stop firewalld.service				## redhat 7.5
+# systemctl disable firewalld.service
+
+system-config-selinux
+sestatus --- Check the selinux status
+cp /etc/sysconfig/selinux /etc/sysconfig/selinux_01July2013
+vi /etc/sysconfig/selinux - disable SELINUX
+setenforce 0
+sestatus --- Check the selinux status
+
+==========================================================
+
+Red Hat / CentOS VSFTPD FTP Server Configuration
+by nixCraft on May 21, 2009 · 42 comments· LAST UPDATED April 30, 2012
+
+in CentOS, FTP Server, Howto
+
+Vsftpd (Very Secure FTP Daemon) is an FTP server for UNIX-like systems, including CentOS / RHEL / Fedora and other Linux distributions. It supports IPv6, SSL, locking users to their home directories and many other advanced features.
+
+In this guide you will learn:
+
+Setup vsftpd to Provide FTP Service.
+Configure vsftpd.
+Configure Firewalls to Protect the FTP Server.
+Configure vsftpd with SSL/TLS.
+Setup vsftpd as Download Only Anonymous Internet Server.
+Setup vsftpd With Virtual Users and Much More.
+
+VSFTPD offer security, performance and stability over other servers. A quick list of vsftpd features:
+
+Virtual IP configurations
+Virtual users
+Run as standalone or inetd / xinetd operation
+Per-user configuration
+Bandwidth throttling
+Per-source-IP configurability
+Per-source-IP limits
+IPv6 ready
+Encryption support through SSL integration
+And much more.
+Install Vsftpd FTP Server
+Install the vsftpd package via yum command:
+# yum install vsftpd
+Vsftpd Defaults
+Default port: TCP / UDP - 21 and 20
+The main configuration file: /etc/vsftpd/vsftpd.conf
+Users that are not allowed to login via ftp: /etc/vsftpd/ftpusers
+Configure Vsftpd Server
+Open the configuration file, type:
+# vi /etc/vsftpd/vsftpd.conf
+Turn off standard ftpd xferlog log format:
+
+xferlog_std_format=NOTurn on verbose vsftpd log format. The default vsftpd log file is /var/log/vsftpd.log:
+
+log_ftp_protocol=YESAbove to directives will enable logging of all FTP transactions. Lock down users to their home directories:
+
+chroot_local_user=YESCreate warning banners for all FTP users:
+
+banner_file=/etc/vsftpd/issueCreate /etc/vsftpd/issue file with a message compliant with the local site policy or a legal disclaimer:
+
+NOTICE TO USERS
+Use of this system constitutes consent to security monitoring and testing.
+All activity is logged with your host name and IP address.
+Turn On Vsftpd Service
+Turn on vsftpd on boot:
+# chkconfig vsftpd on
+Start the service:
+# service vsftpd start
+# netstat -tulpn | grep :21
+Configure Iptables To Protect The FTP Server
+Open file /etc/sysconfig/iptables, enter:
+# vi /etc/sysconfig/iptables
+Add the following lines, ensuring that they appear before the final LOG and DROP lines for the RH-Firewall-1-INPUT:
+
+-A RH-Firewall-1-INPUT -m state --state NEW -p tcp --dport 21 -j ACCEPTOpen file /etc/sysconfig/iptables-config, enter:
+# vi /etc/sysconfig/iptables-config
+Ensure that the space-separated list of modules contains the FTP connection tracking module:
+
+IPTABLES_MODULES="ip_conntrack_ftp"Save and close the file. Restart firewall:
+# service iptables restart
+Tip: View FTP Log File
+Type the following command:
+# tail -f /var/log/vsftpd.log 
+Sample output:
+
+Thu May 21 11:40:31 2009 [pid 42298] FTP response: Client "10.1.3.108", "530 Please login with USER and PASS."
+Thu May 21 11:40:36 2009 [pid 42298] FTP command: Client "10.1.3.108", "USER vivekda"
+Thu May 21 11:40:36 2009 [pid 42298] [vivek] FTP response: Client "10.1.3.108", "331 Please specify the password."
+Thu May 21 11:40:38 2009 [pid 42298] [vivek] FTP command: Client "10.1.3.108", "PASS "
+Thu May 21 11:40:38 2009 [pid 42297] [vivek] OK LOGIN: Client "10.1.3.108"
+Thu May 21 11:40:38 2009 [pid 42299] [vivek] FTP response: Client "10.1.3.108", "230 Login successful."
+Thu May 21 11:40:38 2009 [pid 42299] [vivek] FTP command: Client "10.1.3.108", "SYST"
+Thu May 21 11:40:38 2009 [pid 42299] [vivek] FTP response: Client "10.1.3.108", "215 UNIX Type: L8"
+Thu May 21 11:40:39 2009 [pid 42299] [vivek] FTP command: Client "10.1.3.108", "PORT 10,1,3,108,162,253"
+Thu May 21 11:40:39 2009 [pid 42299] [vivek] FTP response: Client "10.1.3.108", "200 PORT command successful. Consider using PASV."
+Thu May 21 11:41:05 2009 [pid 42299] [vivek] FTP response: Client "10.1.3.108", "150 Ok to send data."
+Thu May 21 11:41:06 2009 [pid 42299] [vivek] OK UPLOAD: Client "10.1.3.108", "/windows-7-too-many-programs.png", 8957 bytes, 6.70Kbyte/sec
+Thu May 21 11:41:06 2009 [pid 42299] [vivek] FTP response: Client "10.1.3.108", "226 File receive OK."
+Thu May 21 11:41:10 2009 [pid 42299] [vivek] FTP command: Client "10.1.3.108", "TYPE A"
+Thu May 21 11:41:10 2009 [pid 42299] [vivek] FTP response: Client "10.1.3.108", "200 Switching to ASCII mode."
+Thu May 21 11:41:11 2009 [pid 42299] [vivek] FTP command: Client "10.1.3.108", "PORT 10,1,3,108,217,96"
+Thu May 21 11:41:11 2009 [pid 42299] [vivek] FTP response: Client "10.1.3.108", "200 PORT command successful. Consider using PASV."
+Thu May 21 11:41:11 2009 [pid 42299] [vivek] FTP command: Client "10.1.3.108", "LIST"
+Thu May 21 11:41:11 2009 [pid 42299] [vivek] FTP response: Client "10.1.3.108", "150 Here comes the directory listing."
+Thu May 21 11:41:11 2009 [pid 42299] [vivek] FTP response: Client "10.1.3.108", "226 Directory send OK."Tip: Restrict Access to Anonymous User Only
+Edit the vsftpd configuration file /etc/vsftpd/vsftpd.conf and add the following:
+
+local_enable=NOTip: Disable FTP Uploads
+Edit the vsftpd configuration file /etc/vsftpd/vsftpd.conf and add the following:
+
+write_enable=NOSecurity Tip: Place the FTP Directory on its Own Partition
+Separation of the operating system files from FTP users files may result into a better and secure system. Restrict the growth of certain file systems is possible using various techniques. For e.g., use /ftp partition to store all ftp home directories and mount ftp with nosuid, nodev and noexec options. A sample /etc/fstab enter:
+
+/dev/sda5  /ftp          ext3    defaults,nosuid,nodev,noexec,usrquota 1 2Disk quota must be enabled to prevent users from filling a disk used by FTP upload services. Edit the vsftpd configuration file. Add or correct the following configuration options to represents a directory which vsftpd will try to change into after an anonymous login:
+anon_root=/ftp/ftp/pub
+
+=====================================================================================
+
+How to Configure FTP Server in Linux RHEL 6
+How to Install FTP Server in Linux ?
+
+1. Install vsftpd, rpcbind and xinetd service using the following command :
+
+# yum install vsftpd rpcbind xinetd -y
+
+2. Check vsftpd, xinetd and rpcbind/portmap exist and installed on the server :
+
+# rpm -qa vsftpd
+vsftpd-2.2.2-6.el6.i686
+
+# rpm -qa xinetd
+xinetd-2.3.14-29.el6.i686
+
+# rpm -qa rpcbind
+rpcbind-0.2.0-8.el6.i686
+
+3. Make all these services auto start at boot :
+
+# chkconfig vsftpd on
+# chkconfig xinetd on
+# chkconfig rpcbind on
+
+4. Check the xinetd and rpcbind status :
+
+# service xinetd status
+xinetd (pid  1326) is running...
+
+# service rpcbind status
+rpcbind (pid  1178) is running...
+
+5. Create the a new user named ftpuser and set password :
+
+# useradd ftpuser
+# passwd ftpuser
+Changing password for user ftpuser.
+New password:
+Retype new password:
+passwd: all authentication tokens updated successfully.
+
+6. Login as ftpuser on other terminal and create a new files named “files”.
+
+# su - ftpuser
+[ftpuser@rhel6 ~]$ cat > files
+This is file created on RHEL 6 ftp server
+
+7. Start the vsftpd service :
+
+# service vsftpd start
+Starting vsftpd for vsftpd:                                [  OK  ]
+
+8. Stop the iptables linux firewall and disabled selinux :
+
+# service ip6tables stop
+ip6tables: Flushing firewall rules:                        [  OK  ]
+ip6tables: Setting chains to policy ACCEPT: filter         [  OK  ]
+ip6tables: Unloading modules:                              [  OK  ]
+
+# service iptables stop
+iptables: Flushing firewall rules:                         [  OK  ]
+iptables: Setting chains to policy ACCEPT: filter          [  OK  ]
+iptables: Unloading modules:                               [  OK  ]
+# setenforce 0
+setenforce: SELinux is disabled
+
+How to Configure FTP Server in Linux ?
+
+9. It’s good to make backup of your original configuration file.
+
+[root@rhel6 ~]# cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf-bak
+
+10. login from user account and download the files :
+
+D:\>ftp 192.168.1.43
+Connected to 192.168.1.43.
+220 (vsFTPd 2.2.2)
+User (192.168.1.43:(none)): ftpuser
+331 Please specify the password.
+Password:
+230 Login successful.
+ftp> get files
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for files (42 bytes).
+226 Transfer complete.
+ftp: 42 bytes received in 0.00Seconds 42000.00Kbytes/sec.
+ftp> quit
+221 Goodbye.
+
+11. Check the contain of downloaded files :
+
+D:\>type files
+This is file created on RHEL 6 ftp server
+
+12. By default root account is not allowed to login the vsftpd server as it’s exist in /etc/vsftpd/ftpusers.
+
+D:\>ftp 192.168.1.43
+Connected to 192.168.1.43.
+220 (vsFTPd 2.2.2)
+User (192.168.1.43:(none)): root
+530 Permission denied.
+Login failed.
+ftp>
+
+13. Open /etc/vsftpd/ftpusers file. Remove or comment out the line for user “root” and add “ftpuser” instead. Users whose name are set in this file will not allowed to login from ftp.
+
+[root@rhel6 ~]# vi /etc/vsftpd/ftpusers
+
+# Users that are not allowed to login via ftp
+#root
+ftpuser
+bin
+daemon
+adm
+lp
+sync
+shutdown
+halt
+mail
+news
+uucp
+operator
+games
+nobody
+
+14. Open /etc/vsftpd/user_list file. Remove or comment out entry in /etc/vsftpd/user_list files. Remove or comment out the line for user “root” and add “ftpuser” instead. Users whose names are set in this file are also not allowed to login from ftp even they are not prompt for password.
+
+# vi /etc/vsftpd/user_list
+
+# vsftpd userlist
+# If userlist_deny=NO, only allow users in this file
+# If userlist_deny=YES (default), never allow users in this file, and
+# do not even prompt for a password.
+# Note that the default vsftpd pam config also checks /etc/vsftpd/ftpusers
+# for users that are denied.
+#root
+ftpuser
+bin
+daemon
+adm
+lp
+sync
+shutdown
+halt
+mail
+news
+uucp
+operator
+games
+nobody
+
+15. Root now allowed to access ftp server :
+
+D:\>ftp 192.168.1.43
+Connected to 192.168.1.43.
+220 (vsFTPd 2.2.2)
+User (192.168.1.43:(none)): root
+331 Please specify the password.
+Password:
+230 Login successful.
+ftp> quit
+221 Goodbye.
+
+16. ftpuser now not allowed to access ftp server :
+
+D:\>ftp 192.168.1.43
+Connected to 192.168.1.43.
+220 (vsFTPd 2.2.2)
+User (192.168.1.43:(none)): ftpuser
+530 Permission denied.
+Login failed.
+ftp>
+
+17. How to set login banner for ftp server :
+Open /etc/vsftpd/vsftpd.conf look for “ftpd_banner” :
+
+# vi /etc/vsftpd/vsftpd.conf
+
+Uncomment ftpd_banner and customize the login banner string as below :
+
+# You may fully customise the login banner string:
+ftpd_banner=Welcome to eHowStuff.com RHEL6 FTP server
+#
+
+18 Restart the ftp service :
+
+# service vsftpd restart
+Shutting down vsftpd:                                      [  OK  ]
+Starting vsftpd for vsftpd:                                [  OK  ]
+
+19. Try login to ftp server. Check the banner, it will appear before user login as below :
+
+D:\>ftp 192.168.1.43
+Connected to 192.168.1.43.
+220 Welcome to eHowStuff.com RHEL6 FTP server
+User (192.168.1.43:(none)):
+
+If you encounter any issues on how to configure ftp server in linux, you can put a few questions in the comments below.

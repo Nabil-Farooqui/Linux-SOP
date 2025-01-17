@@ -1,0 +1,13 @@
+22-May-2018
+
+1-- 172.16.10.23 host file entry
+mchsiuat.wsrv.hunter.uk.experian.com  194.60.188.225
+demo.perfios.com  35.154.198.217
+
+2 --- 172.16.10.24
+Indus required separate shared SFTP folder with full access.
+Please provide one SFTP folder named “indus” on with full access same as you have created for DMS.
+Also create a user “indus” to access this folder.
+
+
+

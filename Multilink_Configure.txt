@@ -1,0 +1,55 @@
+[root@greek ~]# more /etc/sysconfig/network-scripts/ifcfg-eth0
+DEVICE=eth0
+TYPE=Ethernet
+UUID=16d61d5b-386e-4a3e-9052-f40c4491b28e
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=none
+IPADDR=192.168.20.146 ------- Add IP
+GATEWAY=192.168.20.1 ------- Gateway of Local IP
+DNS1=192.168.2.200
+DEFROUTE=no -------------- replace yes to no
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME="System eth0"
+NETMASK=255.255.255.0 ------ Netmask
+DNS2=192.168.2.201 -------- Add DNS IP
+USERCTL=no
+HWADDR=9E:E8:14:A2:89:33
+LAST_CONNECT=1545194659
+PEERDNS=yes
+[root@greek ~]#
+
+[root@greek ~]# more /etc/sysconfig/network-scripts/ifcfg-eth1
+DEVICE=eth1
+TYPE=Ethernet
+UUID=16d61d5b-386e-4a3e-9052-f40c4491b28e
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=none
+IPADDR=10.112.20.155 --------- Add Multilink IP
+GATEWAY=10.112.20.1  --------- Add Gateway for multilink IP
+#DNS1=192.168.2.200
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME="System eth1"
+NETMASK=255.255.255.0 ------Netmask for multilink.
+#DNS2=192.168.2.201
+USERCTL=no
+#HWADDR=9E:E8:14:A2:89:33
+LAST_CONNECT=1545194659
+HWADDR=ee:76:89:aa:45:d7
+PEERDNS=yes
+[root@greek ~]#
+[root@greek ~]# more /etc/rc.d/rc.local
+#!/bin/sh
+#
+# This script will be executed *after* all the other init scripts.
+# You can put your own initialization stuff in here if you don't
+# want to do the full Sys V style init stuff.
+
+touch /var/lock/subsys/local
+#route add -net 10.112.20.0 netmask 255.255.255.0 gw 10.112.20.1
+route add -net 192.168.0.0 netmask 255.255.0.0 gw 192.168.20.1  ----- Add route for local IP
+[root@greek ~]#

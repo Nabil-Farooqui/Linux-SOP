@@ -1,0 +1,4 @@
+-- Disable Ctrl-Alt-Del Reboot Activation
+# ln -sf /dev/null /etc/systemd/system/ctrl-alt-del.target
+or
+# systemctl mask ctrl-alt-del.target

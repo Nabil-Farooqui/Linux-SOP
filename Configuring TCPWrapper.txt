@@ -1,0 +1,31 @@
+## Configuring Linux TCPWrapper ##
+
+RefLink:
+https://www.tecmint.com/secure-linux-tcp-wrappers-hosts-allow-deny-restrict-access/
+
+# yum -y install tcp_wrappers 	(install tcp wrappers if it is not installed in Centos)
+
+# ls -l /etc/hosts.allow /etc/hosts.deny (check the tcp wrappers files are created or not)
+
+// Run following commands to check installed liberary of sshd and vsftpd
+
+# ldd $(which sshd) | grep libwrap
+
+# ldd $(which vsftpd) | grep libwrap
+
+// How to Use TCP Wrappers to Restrict Access to Services
+
+Note: Copy original files before editing.
+
+# vim /etc/hosts.deny				- Edit host.deny file first
+
+vsftpd : 192.168.10.x,192.168.x.x
+sshd : 192.168.10.x,192.168.x.x
+
+wq!						- save and exit
+
+# vim /etc/hosts.allow
+vsftpd : 192.168.10.x,192.168.x.x
+sshd : 192.168.10.x,192.168.x.x
+
+wq!						- save and exit

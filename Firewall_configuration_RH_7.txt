@@ -1,0 +1,42 @@
+## configuring Firewall ##
+
+--To check status of firewall
+# systemctl status firewalld
+or
+# firewall-cmd --state
+-------------------------------------------------------------------
+
+--To view default zone
+# firewall-cmd --get-default-zone
+
+--To view running active zone
+# firewall-cmd --get-active-zones
+
+--To view enabled services
+# firewall-cmd --get-services
+or
+# firewall-cmd --get-service
+
+--To add new service in firewall
+# firewall-cmd --add-service=https --permanent
+
+--To remove servie from zone
+# firewall-cmd --zone=public --remove-service=https
+
+--To allow any IPAddr or Network in firewall
+# firewall-cmd --permanent --add-source=192.168.0.0/24
+
+--To Remove any IPAddr or Network if firewall
+# firewall-cmd --permanent --remove-source=192.168.0.0/24
+
+
+--To Add any port in firewall
+# firewall-cmd --permanent --add-port=1935/tcp
+
+--To Remove any port in firewall
+# firewall-cmd --permanent --remove-port=1935/tcp
+
+--To reload firewall
+# firewall-cmd --reload 
+
+# firewall-cmd --list-all

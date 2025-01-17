@@ -1,0 +1,107 @@
+## Linux Hardening ##
+
+-- BIOS -Disable unwanted settings in BIOS
+
+-- Set GRUB password
+# grub2-setpassword
+# grub2-mkconfig -o /boot/grub2/grub.cfg
+
+-- Create new ADMIN sudoer user
+# visudo
+<username>    ALL=(ALL)       ALL
+
+-- Disable ssh root login
+#  sudo vim /etc/ssh/sshd_config
+PermitRootLogin no
+
+-- Disable unwanted services
+# ntsysv
+
+-- Enable firewalld
+# systemctl status firewalld
+# systemctl start firewalld
+# systemctl enable firewalld 
+
+ 
+-- Disable selinux policy
+# vim /etc/selinux/config
+SELINUX=disabled
+
+# Prevent USB Storage access
+
+# ls -l /lib/modules/$(uname -r)/kernel/drivers/usb/storage/usb-storage.ko
+# echo 'install usb-storage /bin/true' >> disable-usb-storage.conf
+
+-- Save and close the file. Now the driver will not load. You can also remove USB Storage driver without rebooting the system, enter:
+
+# modprobe -r usb-storage
+# mv -v /lib/modules/$(uname -r)/kernel/drivers/usb/storage/usb-storage.ko /root/
+
+--Verify the configuration
+# modinfo usb-storage
+# lsmod | grep -i usb-storage
+# lsscsi -H
+
+Edit /etc/modprobe.d/blacklist.conf, enter:
+# vi /etc/modprobe.d/blacklist.conf
+blacklist usb-storage
+-----------------------------------------------
+-- Disable Ctrl-Alt-Del Reboot Activation
+# ln -sf /dev/null /etc/systemd/system/ctrl-alt-del.target
+or
+# systemctl mask ctrl-alt-del.target
+------------------------------------------------
+// Warning Banners for System Access
+# vim /etc/issue.net
+Add the following line
+Unauthorised access prohibited. Logs are recorded and monitored.
+
+or 
+
+--Create a /etc/mybanner file
+# vim /etc/mybanner
+Add the following line
+Unauthorized access to this machine is prohibited
+Only authorized System Administrator can access to this system
+
+-- for ssh Edit /etc/ssh/sshd_config, to look like this Banner /etc/mybanne
+End of the file add following lines
+
+# default banner path
+Banner /etc/mybanner
+
+# systemctl restart sshd.service
+--------------------------------------------------
+
+// configuring vnc server
+# sudo yum install tigervnc-server
+
+# su - your_user  
+--If you want to configure VNC server to run under this user directly from CLI without switching users from GUI
+# vncpasswd
+
+# cp /lib/systemd/system/vncserver@.service  /etc/systemd/system/vncserver@:1.service
+
+# vi /etc/systemd/system/vncserver@\:1.service
+
+Unit]
+Description=Remote desktop service (VNC)
+After=syslog.target network.target
+[Service]
+Type=forking
+ExecStartPre=/bin/sh -c '/usr/bin/vncserver -kill %i > /dev/null 2>&1 || :'
+ExecStart=/sbin/runuser -l my_user -c "/usr/bin/vncserver %i -geometry 1280x1024"
+PIDFile=/home/my_user/.vnc/%H%i.pid
+ExecStop=/bin/sh -c '/usr/bin/vncserver -kill %i > /dev/null 2>&1 || :'
+[Install]
+WantedBy=multi-user.target
+
+# systemctl daemon-reload
+# systemctl start vncserver@:1
+# systemctl status vncserver@:1
+# systemctl enable vncserver@:1
+
+# ss -tulpn| grep vnc
+
+# firewall-cmd --add-port=5901/tcp
+# firewall-cmd --add-port=5901/tcp --permanent

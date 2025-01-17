@@ -1,0 +1,33 @@
+// Warning Banners for System Access
+# vim /etc/issue.net
+Add the following line
+Unauthorised access prohibited. Logs are recorded and monitored.
+
+or 
+
+--Create a /etc/skbanner file
+# vim /etc/skbanner
+Add the following line
+~~~ Unauthorized access to this system is prohibited ~~~~
+~~~ Only authorized System Administrator can access to this system ~~~
+
+
+-- for ssh Edit /etc/ssh/sshd_config, to look like this Banner /etc/skbanne
+End of the file add following lines
+# vim /etc/ssh/sshd_config
+# default banner path
+Banner /etc/skbanner
+
+# systemctl restart sshd.service
+
+================================================================================================================================================
+
+Edit /etc/motd and put the following banner to be displayed:                                                             
+# vi /etc/motd	
+
+"WARNING !!!
+This computer system including all related equipment, network devices (specifically including Internet access), are provided only for authorized use.
+
+Unauthorized use may subject you to criminal prosecution. By accessing this system, you have agreed to the term and condition of use and your actions will be 
+monitored and recorded"
+	

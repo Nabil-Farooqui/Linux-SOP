@@ -1,0 +1,25 @@
+## Enable Telnet Port ##
+
+//Edit the file /etc/services
+
+# vim /etc/service
+for e.g
+
+telnet          7900/tcp
+telnet          7900/udp
+
+// Edit following file
+
+# vim /etc/systemd/system/telnet.socket
+
+--add new-lines
+
+ListenStream=7083
+ListenStream=7900
+
+# systemctl daemon-reload
+# systemctl restart telnet.socket
+
+https://www.unixmen.com/installing-telnet-centosrhelscientific-linux-6-7/
+
+

@@ -1,0 +1,54 @@
+Please setup SFTP and create 2 home directories each having 2 user accounts (One user with full access and another user with read-only access) on UANGSFTP 
+1) DMS (dmsfauser, dmsrouser)
+2) ESB (esbfauser, esbrouser)
+
+
+# sudo groupadd DMS
+# sudo groupadd ESB
+
+# mkdir /gtuat/DMS
+# mkdir /gtuat/ESB
+
+# sudo useradd -d /gtuat/DMS -s /bin/nologin dmsfauser
+# sudo useradd -d /gtuat/DMS -s /bin/nologin dmsrouser
+# sudo useradd -d /gtuat/ESB -s /bin/nologin esbfauser
+# sudo useradd -d /gtuat/ESB -s /bin/nologin esbrouser
+
+# sudo chgrp DMS /gtuat/DMS
+# sudo chgrp ESB /gtuat/ESB
+
+# sudo chmod 755 /gtuat 		(default permission for parent directory)
+# sudo chmod 740 /gtuat/* 
+
+# sudo setfacl -m u:dmsfauser:rwx /gtuat/DMS
+# sudo setfacl -m u:esbfauser:rwx /gtuat/ESB
+
+---------------------------------------------------------
+
+# sudo vim /etc/ssh/sshd_config
+
+# change subsystem
+Subsystem sftp internal-sftp
+
+-add following lines
+Match Group DMS
+X11Forwarding no
+AllowTcpForwarding no
+ChrootDirectory /gtuat
+ForceCommand internal-sftp
+PermitTunnerl no
+AllowAgentForwarding no
+
+Match Group ESB
+X11Forwarding no
+AllowTcpForwarding no
+ChrootDirectory /ESB
+ForceCommand internal-sftp
+PermitTunnerl no
+AllowAgentForwarding no
+
+:wq		(save and exit)
+
+# sudo systemctl restart sshd.service
+
+# sftp user1@localhost

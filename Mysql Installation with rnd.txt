@@ -1,0 +1,59 @@
+Refer Link:-
+https://opensourcedbms.com/dbms/installing-mysql-5-7-on-centosredhatfedora/
+
+#### wget get the repo rpm and check file checksum to make sure that rpm is downloaded with out errors. ###
+# wget http://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.rpm
+
+#### Install downloaded rpm ###
+# rpm -ivh mysql57-community-release-el6-7.noarch.rpm
+
+#### Install MySQL 5.7 Server and client libraries ###
+# yum install -y mysql-community-client mysql-community-server
+
+#### Before start service first do the changes in mysql configuration file. ####
+[client]--------------------- For Client.
+port=3306
+socket=/greek/lib/mysql/mysql.sock
+[mysqld]
+#
+# Remove leading # and set to the amount of RAM for the most important data
+# cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.
+# innodb_buffer_pool_size = 128M
+#
+# Remove leading # to turn on a very important data integrity option: logging
+# changes to the binary log between backups.
+# log_bin
+#
+# Remove leading # to set options mainly useful for reporting servers.
+# The server defaults are faster for transactions and fast SELECTs.
+# Adjust sizes as needed, experiment to find the optimal values.
+# join_buffer_size = 128M
+# sort_buffer_size = 2M
+# read_rnd_buffer_size = 2M
+port=3306
+#datadir=/var/lib/mysql
+datadir=/greek/lib/mysql ----------------- Customize data directory.
+#socket=/var/lib/mysql/mysql.sock
+socket=/greek/lib/mysql/mysql.sock ------------ customize mysql.sock file path.
+explicit_defaults_for_timestamp = 1
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+
+log-error=/greek/log/mysqld.log ------------  Customize log directory
+pid-file=/greek/run/mysqld/mysqld.pid --------  Customize mysql pid directory
+
+#### After edit configuration file, Copy data from /var/lib/mysql in customize data directory ####
+# rsync -parv /var/lib/mysql /greek/lib/
+
+#### Also change permission and ownership of customize direcoty.ownership of /greek and lib must be root and permission must be 755 ####
+#### start mysqld service ####
+# service mysqld start
+
+
+
+
+
+
+
+
+

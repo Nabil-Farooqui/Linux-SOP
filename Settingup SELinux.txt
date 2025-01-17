@@ -1,0 +1,25 @@
+## Setting up SELINUX Policy ##
+
+
+Enforcing - Default mode, which defines the policy and according to rules protects the server.
+
+Permissive - TShoot mode but doesn't protect the server, however it maintains labels and keeps the track of logs.
+
+Disable - Completetely disable the SELinux policy.
+
+# sestatus				-to check the status of selinux policy
+
+# getenforce 				-to view current selinux policy mode
+
+# setenforce 1				-it will set temporary Permissive mode
+
+--Note: setenforce command is used to set reset temporary mode of selinux policy
+
+// Disabling Selinux Permanently use following steps
+
+# cp -v /etc/selinux/config /etc/selinux/config_old
+# vi /etc/selinux/config
+--Edit line no 7
+# SELINUX=disabled
+
+:wq					-to save and exit

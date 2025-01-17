@@ -1,0 +1,38 @@
+## Add DNS Server Entry ##
+
+//1st method
+
+# nmtui
+--Select
+Edit Connection
+  |
+ethX
+  |
+edit 
+  | 
+DNS Servers <Add..>
+  |
+<Assign DNS IP Adds>
+  | 
+ OK
+
+//2nd method
+
+# vim /etc/sysconfig/network-scripts/ifcfg-ethX
+Add Following 2 lines
+DNS1=192.168.10.x		-Example
+DNS2=192.168.10.x		-Example	
+
+wq!				-save and exit
+
+# systemctl network restart
+------------------------------------------------
+
+// Edit entry in /etc/resolv.conf
+
+# vi /etc/resolv.conf
+Add following lines
+nameserver 192.168.x.x
+search xyz.com
+
+wq!				-save and exit

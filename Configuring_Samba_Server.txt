@@ -1,0 +1,37 @@
+## How to Install Samba on CentOS 7 for File Sharing on Windows ##
+
+# yum install samba samba-client samba-common
+
+# firewall-cmd --permanent --zone=public --add-service=samba
+# firewall-cmd --reload
+
+# mkdir -p /SMB/Win_Share
+# chmod -R 0775 /SMB/Win_Share
+# chown -R nobody:nobody /SMB/Win_Share	  	-based on user access requirment
+
+# chcon -t samba_share_t /srv/samba/anonymous
+
+# cp -v /etc/samba/smb.conf /etc/samba/smb.conf_date_time
+# vi /etc/samba/smb.conf
+
+[global]
+workgroup = WORKGROUP
+netbios name = centos
+security = user
+
+[SMB_Server]
+comment = File Server 
+path = /SMB/Win_Share
+browsable = yes
+writable = yes
+guest ok = yes
+read only = no
+
+:wq!			-save and exit
+
+# testparm
+
+# systemctl enable smb.service
+# systemctl enable nmb.service
+# systemctl start smb.service
+# systemctl start nmb.service

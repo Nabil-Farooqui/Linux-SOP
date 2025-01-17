@@ -1,0 +1,51 @@
+-- admin user
+
+useradd nukul
+useradd shakir
+useradd pradip
+useradd paresh
+useradd linuxadm
+
+- application user as per requirement
+
+----------------------------------------------------------------------------
+
+## Creating User Account ##
+
+# useradd <UserName>
+
+# passwd <UserName>
+
+-------------------------------------------
+
+//Create a User with Different Home Directory
+# useradd -d /data/projects <UserName>
+
+// Add a User without Home Directory
+# useradd -M shilpi
+
+// Change User Login Shell
+# useradd -s /sbin/nologin tecmint
+
+// Add a User with Specific Home Directory, Default Shell and Custom Comment
+# useradd -m -d /var/www/sharekhan -s /bin/bash -c "SK Owner" -U sharekhan
+
+// Add a User with Home Directory, No Shell
+# useradd -m -d /var/www/avishek -s /usr/sbin/nologin <UserName>
+
+// Add a User without Home Directory, No Shell
+# useradd -M -s /bin/false <UserName>
+
+// Add a User with Specific group mamber 
+# useradd -g <group name> sharekhan
+
+----------------------------------------------------------------------------
+
+## Creating Group and Add User into Group##
+
+# groupadd <GroupName>
+
+//Adding user into group
+#usermod -G <GroupName>
+
+ 

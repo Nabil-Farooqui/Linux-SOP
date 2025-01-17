@@ -1,0 +1,40 @@
+- update
+
+-  a x Settingup_GRUB_password.txt
+
+- LVM_Mount_Point_Creation.txt
+
+- Creat_User_Account_and_Group.txt
+
+- a x  Prevent_root_access_SSH.txt
+
+- Preventing_FTP_access.txt
+
+- Assign_DNS_Entry.txt
+
+- a  x Firewall_configuration_RH_7.txt
+
+- a  x  /etc/services
+disable these services (echo daytime chargen telnet smtp time tftp finger lockd)
+
+- a  x snmp SNMP.docx
+
+- a  x Configuring_TCPWrapper.txt
+
+- a  x SSH_cipher.txt
+
+- a  x USB_Disable.txt
+
+- a  sftp_conf.txt
+
+- a  x Preventing_Su.txt
+
+- a  x Warning_Banner.txt
+
+- a  Creating_Sudo_User.txt
+
+- a  x Settingup_SELinux.txt
+
+-a  x  Disabling_Ctl-Alt-Del.txt
+
+- disabling mdns

@@ -1,0 +1,78 @@
+## Configure Rsyslog in CentOS/RHEL 7 Server ##
+
+Link:
+
+https://www.tecmint.com/create-centralized-log-server-with-rsyslog-in-centos-7/
+
+https://www.tecmint.com/setup-rsyslog-client-to-send-logs-to-rsyslog-server-in-centos-7/
+-----------------------------------------------------------------------------
+
+//Install rsyslog package if it is not installed already.
+# yum install rsyslog
+
+// Then, edit rsyslog config file:
+# vi /etc/rsyslog.conf
+
+--Find and uncomment the following to make your server to listen on the udp and tcp ports.
+
+[...]
+$ModLoad imudp
+$UDPServerRun 514
+
+[...]
+$ModLoad imtcp
+$InputTCPServerRun 514
+[...]
+
+--create a new template that will be used for receiving remote messages
+This template will instruct the local Rsyslog server where to save the received messages send by syslog network clients. The template must be added before the beginning of the GLOBAL DIRECTIVES block as illustrated in the below excerpt.
+
+$template RemoteLogs,"/var/log/%HOSTNAME%/%PROGRAMNAME%.log" 
+. ?RemoteLogs & ~
+
+:wq!				-save and exit
+
+# service rsyslog restart
+
+//To verify Rsyslog network sockets, run netstat command with root privileges and use grep to filter rsyslog string.
+# netstat -tulpn | grep rsyslog 
+
+// if SELinux policy is enabled
+# semanage -a -t syslogd_port_t -p udp 514
+# semanage -a -t syslogd_port_t -p tcp 514 
+
+# firewall-cmd --permanent --add-port=514/tcp
+# firewall-cmd --permanent --add-port=514/tcp
+# firewall-cmd –reload
+
+-----------------------------------------------------------------------------
+
+## Client configuration ##
+
+//Verify Rsyslog Installation
+# rpm -q | grep rsyslog
+# rsyslogd -v
+
+// If the Rsyslog package is not installed in CentOS, execute the below command to install the service.
+# yum install rsyslog
+
+//Configure Rsyslog Service as Client
+# vi /etc/rsyslog.conf
+
+Then, append the below line at the end of the file as illustrated in the below excerpt.
+
+*. *  @192.168.10.254:514		(Rsyslog server IP Adds)
+
+--If the remote log server is configured to listen only on TCP connections or you want to use a reliable transport network protocol, such as TCP, add another @ character in front of the remote host as shown in the below example:
+
+*. *  @@logs.domain.lan:514
+
+Example:
+For instance, assuming you want to send only a specific facility messages to a remote log server, such as all related mail messages regardless of the priority level, add the below line to rsyslog configuration file:
+
+mail.* @192.168.10.254:514 
+
+:wq!				-save and exit
+
+# systemctl restart rsyslog.service
+# systemctl enable rsyslog.service

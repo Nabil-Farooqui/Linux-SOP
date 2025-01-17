@@ -1,0 +1,50 @@
+
+How to setup rsh on Red Hat Enterprise Linux
+
+    Red Hat Enterprise Linux 6
+    Red Hat Enterprise Linux 5
+    Red Hat Enterprise Linux 4
+    rsh-server
+
+// installing from cd
+# mount -t iso9660 /dev/sr0 /media
+
+# cd /media/Packages
+# rpm -ivh rsh-server-*.rpm
+
+and 
+
+# yum -y install rsh rsh-server
+
+# systemctl restart rsh.socket
+# systemctl restart rlogin.socket
+# systemctl restart rexec.socket
+
+# systemctl enable rsh.socket
+# systemctl enable rlogin.socket
+# systemctl enable rexec.socket
+
+Note:
+Remote execution is controled by two files.
+--1. /etc/rhosts.equiv (All users except root)
+--2. $HOME/.rhosts (target server)
+
+The first column is the name of remote machines from which logins are allowed.
+
+The second column is the name of the user who will be running rsh. If this is blank the username on the target is used.
+
+Each of the two fields can be set to + to indicate a wildcard.
+
+For example, to allow the user ram on the machine client.itzgeek.com to log in as raj on the target, add the line on target machine.
+
+Next Step
+# vim /home/<username>
+
+abc.xyz.com	<username>		#Remote server and user_name
+
+wq!			save and exit
+
+--now run the command
+# rsh -l <username> abc.xyz.com uptime
+
+Note:Ensure TCP Port 513/514 are open on the remote server to accept connections

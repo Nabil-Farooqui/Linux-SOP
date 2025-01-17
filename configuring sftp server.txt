@@ -1,0 +1,26 @@
+## Installing and Configuring SFTP server ##
+
+
+// Creating sftp directories
+
+# sudo mkdir -p /sftp/{test2,test3,test4,test5}
+
+// creating groups
+# groupadd grp1 (if you need to create group manually)
+
+// Creating user accounts
+
+# useradd -Mc test2 test2 -s /bin/nologin
+# useradd -Mc test3 test3 -s /bin/nologin
+
+## sudo usermod -aG grp1 test2 (if u need to add user in new group)
+
+# sudo chown root:test2 /sftp/test2
+# sudo chown root:test3 /sftp/test3
+
+# sudo chmod 770 /sftp/test2
+# sudo chmod 770 /sftp/test3
+
+# sudo systemctl restart sshd.service
+
+https://www.thegeekstuff.com/2012/03/chroot-sftp-setup/

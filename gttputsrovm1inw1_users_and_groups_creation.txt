@@ -1,0 +1,24 @@
+## 10.100.50.103 users and groups creation ##
+
+groupadd oinstall
+groupadd dba
+groupadd oper
+groupadd asmdba
+groupadd asmadmin
+groupadd asmoper 
+
+useradd -m -d /oracle -g 1005 oracle
+
+useradd -m -d /gridhome -g 1005 grid
+
+usermod -G oinstall root
+
+gpasswd -M oracle,grid dba
+gpasswd -M oracle,grid asmdba
+gpasswd -M oracle,grid asmadmin
+gpasswd -M oracle,grid asmoper
+
+chmod -R 755 /oracle
+chmod -R 755 /gridhome/
+
+  

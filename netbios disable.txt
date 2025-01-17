@@ -1,0 +1,13 @@
+#### Check port are listen on server ####
+#  ss -tulnp | grep 137
+#  ss -tulnp | grep 138
+
+### Stop nmb service on server ####
+# systemctl stop nmb.service
+
+### Disable service in boot time ###
+# systemctl disable nmb.service
+
+#### Check port, port must be close ####
+#  ss -tulnp | grep 137
+#  ss -tulnp | grep 138

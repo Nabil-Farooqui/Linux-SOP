@@ -1,0 +1,19 @@
+## Disable Unwanted Services ##
+
+# cp -v /etc/services /etc/services_orig
+
+# vi /etc/services
+
+--Comment both TCP/UDP following services
+echo 
+daytime 
+chargen 
+telnet 
+smtp 
+time 
+tftp 
+finger
+
+wq			-save and exit
+
+# systemctl status postfix	- it shuld be disable

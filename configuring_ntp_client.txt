@@ -1,0 +1,66 @@
+### ntp client configuration on centos 7 ###
+
+# ping sunntp.internal.sharekhan.com
+
+# systemctl stop chronyd
+# systemctl disable chronyd
+
+# cp -v /etc/ntp.conf /etc/ntp.conf_Date_Time  --take backup of ntp conf file.
+
+# vi /etc/ntp.conf
+
+# comment(hash) below line
+
+#server 0.centos.pool.ntp.org iburst
+#server 1.centos.pool.ntp.org iburst
+#server 2.centos.pool.ntp.org iburst
+#server 3.centos.pool.ntp.org iburst
+
+## Add below two lines down the above lines.
+server sunntp.internal.sharekhan.com iburst
+server 192.168.40.150 iburst
+
+logfile /var/log/ntp.log  ----- add line end of the file.
+
+# wq! --------------- save and quite.
+
+#  more /etc/redhat-release
+
+# Adding firewall ruls and start NTP deamon.
+
+# systemctl status firewalld.service
+# firewall-cmd --add-service=ntp --permanent
+# firewall-cmd --reload
+# firewall-cmd --list-all
+
+# For centos 5/6 and redhat 5/6
+
+# service iptables status
+
+# iptables -A INPUT -p udp --dport 123 -j ACCEPT
+# iptables-save
+
+
+## restart and enable the ntpd service.
+
+# systemctl status ntpd.service
+# systemctl start ntpd.service
+# systemctl enable ntpd.service
+# systemctl status ntpd.service
+
+centos -6
+service  iptables status
+service  ntpd status
+service  ntpd start
+
+chkconfig ntpd on
+
+# timedatectl   ---check NTP synchronized: yes
+# timedatectl set-ntp 1 ---this command set NTP synchronized: yes
+# ntpstat       ----- check server synchronize with NTP server.
+
+## varify server time sync
+
+# date
+# ntpq -p
+# date -R

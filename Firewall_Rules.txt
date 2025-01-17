@@ -1,0 +1,47 @@
+## Adding and Removing Rich Rules in Linux firewalld ##
+
+//Preventing vnc-server access for specific IP
+
+# firewall-cmd --add-rich-rule 'rule family="ipv4" source address="192.168.26.120/24" service name="vnc-server" reject' --permanent
+
+# firewall-cmd --reload
+# firewall-cmd --list-all
+
+--removing rule
+
+# firewall-cmd --remove-rich-rule 'rule family="ipv4" source address="192.168.26.120/24" service name="vnc-server" reject' --permanent
+
+# firewall-cmd --reload
+# firewall-cmd --list-all
+-------------------------------------------------------------------------------
+
+//Preventing vnc-server access for a specific network_range
+
+# firewall-cmd --add-rich-rule 'rule family="ipv4" source address="192.168.0.0/24" service name="vnc-server" reject' --permanent
+
+# firewall-cmd --reload
+# firewall-cmd --list-all
+
+--removing rule
+
+# firewall-cmd --remove-rich-rule 'rule family="ipv4" source address="192.168.0.0/24" service name="vnc-server" reject' --permanent
+
+# firewall-cmd --reload
+# firewall-cmd --list-all
+--------------------------------------------------------------------------------
+
+//Adding and Removing some rules
+Examples
+
+# firewall-cmd --add-rich-rule 'rule family="ipv4" source address="192.168.0.0/24" service name="http" accept' --permanent
+# firewall-cmd --remove-rich-rule 'rule family="ipv4" source address="192.168.0.0/24" service name="http" accept' --permanent
+
+# firewall-cmd --add-rich-rule 'rule family="ipv4" source address="192.168.0.0/24" service name="https" accept' --permanent
+# firewall-cmd --remove-rich-rule 'rule family="ipv4" source address="192.168.0.0/24" service name="https" accept' --permanent
+
+# firewall-cmd --add-rich-rule 'rule family="ipv4" source address="192.168.0.0/24" service name="vnc-server" accept' --permanent
+# firewall-cmd --remove-rich-rule 'rule family="ipv4" source address="192.168.0.0/24" service name="vnc-server" accept' --permanent
+
+# firewall-cmd --add-rich-rule 'rule family="ipv4" source address="192.168.0.0/24" service name="postgresql" accept' --permanent
+# firewall-cmd --remove-rich-rule 'rule family="ipv4" source address="192.168.0.0/24" service name="postgresql" accept' --permanent
+

@@ -1,0 +1,9 @@
+#### check rpcbind service and socket. If both are running stat, then stop both service ####
+#  systemctl status rpcbind.service
+#  systemctl status rpcbind.socket
+
+#  systemctl stop rpcbind.service
+#  systemctl stop rpcbind.socket
+
+#  systemctl disable rpcbind.service
+#  systemctl disable rpcbind.socket

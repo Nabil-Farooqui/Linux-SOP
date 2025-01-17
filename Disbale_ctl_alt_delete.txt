@@ -1,0 +1,8 @@
+Refer link
+https://www.linuxtechi.com/disable-reboot-using-ctrl-alt-del-keys/
+
+#### Run below command for disable ctl+alt_delete
+
+# ln -sf /dev/null /etc/systemd/system/ctrl-alt-del.target
+or
+# systemctl mask ctrl-alt-del.target

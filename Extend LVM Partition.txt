@@ -1,0 +1,65 @@
+1. create LVM part. 
+
+# fdisk /dev/xvdb
+
+To Create new partition Press n.
+Choose primary partition use p.
+Choose which number of partition to be selected to create the primary partition.
+Press 1 if any other disk available.
+Change the type using t.
+Type 8e to change the partition type to Linux LVM.
+Use p to print the create partition ( here we have not used the option).
+Press w to write the changes.
+
+
+Update kernal table below command
+
+# partx -a /dev/xvdb
+
+
+
+2.create new PV (Physical Volume) using following command.
+
+# pvcreate /dev/xvdb1
+
+Verify the pv using below command.
+
+# pvs
+
+We can even see which PV are used to create particular Volume group using.
+
+# pvscan
+
+
+
+3.Add this pv to centos vg to extend the size of a volume group to get more space for expanding lv.
+
+# vgextend centos /dev/xvdb1
+
+Verify the vg using below command.
+
+# vgs
+
+
+4.Extend the logical volume to the desired size using the “lvextend” command.
+
+# lvextend -L +1.75T /dev/centos/home
+
+Verify the lv using below command.
+
+# lvs
+
+
+5.Growing XFS file system
+
+# xfs_growfs /dev/centos/home
+
+OR Growing ext4 File System
+
+# resize2fs /dev/mapper/vgrhel_opt-lvrhel_opt
+
+Than verify using below command
+
+# df -Th
+
+

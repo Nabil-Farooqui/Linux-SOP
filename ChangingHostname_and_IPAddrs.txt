@@ -1,0 +1,26 @@
+# Setting up IP address and Host name ##
+
+# hostnamectl status			-to view current status and hostname
+
+# hostnamectl set-hostname <newHostname>
+
+# logout and login it back to take effect
+
+// Setting up IP Address
+
+# yum install NetworkManager-tui
+# nmtui					-it will launch NetworkManager-tui
+
+or 
+
+-Edit ifcfg-ethX file
+Note: Copy original file first
+
+# vim /etc/sysconfig/network-scripts/ifcfg-ethX
+
+# systemctl restart network.service	-Restart the service after assighning IP Addr
+
+
+
+
+

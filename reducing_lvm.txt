@@ -1,0 +1,23 @@
+# umount /<mountpnt>
+
+# e2fsck -f /dev/vgname/lvname			- to check file-sys and block size
+
+Now you will reduce file system and volume to 1gb (6-1=5)
+# resize2fs /dev/vgname/lvname 5000M 		–it will reduce 1000M of file-size
+
+# lvreduce –L -1G /dev/vgname/lvname 		-it will reduce 1gb from 6gb
+
+or
+
+# lvreduce -L -1G -r /dev/vgname/lvname 	-r will resize the volume (it acts as resize2fs)
+-------------------------------------------------------------------------------------------------
+
+
+# xfsdump -l 0 -f /path/to/file.dump /var
+# umount /dev/vgname/lvname 
+or edit fstab file and reboot the system
+
+# lvreduce –L -1G /dev/vgname/lvname 
+# mkfs.xfs -f /dev/vgname/lvname
+# mount /dev/vgname/lvname /test
+# xfsrestore -f /tmp/test.dump /test

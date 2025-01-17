@@ -1,0 +1,44 @@
+##Installing and Configuring openVPN##
+
+Link:https://www.digitalocean.com/community/tutorials/how-to-setup-and-configure-an-openvpn-server-on-centos-7
+
+ - CentOS 7 Server
+ - Sudo user
+ - Firewall enalbled
+ - A Domain configured with DNS
+ - A client System 
+
+// Installing OpenVPN
+
+# sudo yom update -y
+
+# sudo yum install epel-release -y
+
+# sudo yum update -y
+
+# sudo yum install -u openvpn wget
+
+# wget -O /tmp/easyrsa https://github.com/OpenVPN/easy-rsa-old/archive/2.3.3.tar.gz
+
+# tar -xfz /tmp/easyrsa
+
+--This will create a new directory on your server called easy-rsa-old-2.3.3. Make a new subdirectory under /etc/openvpn and name it easy-rsa:
+
+# sudo mkdir /etc/openvpn/easy-rsa
+
+-- Copy the extracted Easy RSA files over to the new directory
+
+# cp -rf easy-rsa-old-2.3.3/easy-rsa/2.0/* /etc/openvpn/easy-rsa
+
+--change the directory’s owner to your non-root sudo user:
+# sudo chown user1 /etc/openvpn/easy-rsa/
+---------------------------------------------------------------------------------
+//Step 2 Configuring openVPN
+
+--copy the sample server.conf file as a starting point for your own configuration file.
+
+# sudo cp /usr/share/doc/openvpn-2.4.4/sample/sample-config-files/server.conf /etc/openvpn 
+
+# sudo vim /etc/openvpn/server.conf
+
+# 

@@ -1,0 +1,20 @@
+## configuring ssh protocol v2 in centos 7 b##
+#
+# cd /etc/ssh/
+# cp -v sshd_config sshd_config_orig
+# vi sshd_config
+-- go to line number 17 and add new line no 18
+Port 2022
+
+-- go to line number 21 and add new line no 22
+Protocol 2
+
+:wq			-to save and exit
+
+---------------------------------------------
+// Firewall Settings
+
+# firewall-cmd --add-port=2022/tcp --permanent
+# firewall-cmd --reload
+# firewall-cmd --list-all
+# systemctl reload sshd.service

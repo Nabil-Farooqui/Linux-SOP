@@ -1,0 +1,49 @@
+# sudo groupadd grp1
+# sudo groupadd grp2
+
+# sudo mkdir -p dir1/{upload1,upload2}
+
+# sudo useradd -d /dir1/upload2 -s /bin/nologin user1
+# sudo useradd -d /dir1/upload2 -s /bin/nologin user2  (create atleast 4 user accounts)
+
+# sudo usermod -aG gr1 user1
+# sudo usermod -aG gr1 user2
+# sudo usermod -aG gr2 user3
+# sudo usermod -aG gr2 user4
+
+# sudo chgrp gr1 /dir1/upload1
+# sudo chgrp gr2 /dir2/upload2
+
+# sudo chmod 755 /dir1 		(default permission for parent directory)
+# sudo chmod 750 /dir1/* 	
+
+# sudo setfacl -m u:user1:rwx upload1
+# sudo setfacl -m u:user3:rwx upload2
+
+# sudo vim /etc/ssh/sshd_config
+
+# change subsystem
+Subsystem sftp internal-sftp
+
+-add following lines
+Match Group gr1
+X11Forwarding no
+AllowTcpForwarding no
+ChrootDirectory /dir1
+ForceCommand internal-sftp
+PermitTunnerl no
+AllowAgentForwarding no
+
+Match Group gr2
+X11Forwarding no
+AllowTcpForwarding no
+ChrootDirectory /dir1
+ForceCommand internal-sftp
+PermitTunnerl no
+AllowAgentForwarding no
+
+:wq		(save and exit)
+
+# sudo systemctl restart sshd.service
+
+# sftp user1@localhost

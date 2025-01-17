@@ -1,0 +1,3 @@
+###### change hostname permanently by below command.
+
+# hostnamectl set-hostname it.kalilinux

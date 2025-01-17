@@ -1,0 +1,6 @@
+-- SSH Weak MAC Algorithms Enabled	
+	# vi /etc/ssh/sshd_config	add below 2 line end of the file.
+         Ciphers aes128-ctr,aes192-ctr,aes256-ctr
+         MACs hmac-sha2-256,hmac-sha2-512,hmac-sha1
+-- Restart service 
+     # systemctl restart sshd.service

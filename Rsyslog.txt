@@ -1,0 +1,17 @@
+### First check rsyslog package install or not. ###
+# rpm -qa |grep rsyslog
+
+### If package not install then install rsyslog package.###
+# yum install rsyslog
+
+### Now configure rsyslog, Add below line at end in /etc/rsyslog.conf.###
+# vi /etc/rsyslog.conf
+*.* @SmartConnector_IP:514
+
+### After adding line, restart service.###
+# systemctl restart rsyslog.service
+
+### For start service while booting, Run below command.###
+# systemctl enable rsyslog.service
+
+tcpdump -A -i any dst 10.11.3.11

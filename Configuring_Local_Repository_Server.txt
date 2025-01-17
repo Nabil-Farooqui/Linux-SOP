@@ -1,0 +1,111 @@
+## Configuring Local Repository Server ##
+
+
+# mkdir /media/cdrom
+
+# vim /etc/fstab
+/dev/sr0 /media/cdrom iso9660 ro 0 0
+
+# mount -a
+
+# cd /media/cdrom/Packages
+
+# rpm -ivh vsftpd
+
+# systemctl enable vsftpd
+# systemctl start vsftpd
+
+// Build Local Repository
+
+# mkdir /var/ftp/pub/localrepo
+
+# cd /var/ftp/pub/localrepo
+
+# cp -v /media/cdrom/Packages/* .
+
+# cp -v /media/cdrom/RPM-GPG-KEY-CentOS-7 .
+
+or
+
+# cp -ar /mnt/Packages/*.* /var/ftp/pub/localrepo/
+
+--Again, mount the CentOS installation DVD 2 and copy all the files to /var/ftp/pub/localrepo directory.
+
+--If you did a minimal CentOS installation, then you might need to install the following dependencies first:
+
+# rpm -ivh libxml2-python-2.9.1-5.el7.x86_64.rpm 
+# rpm -ivh deltarpm-3.6-3.el7.x86_64.rpm 
+# rpm -ivh python-deltarpm-3.6-3.el7.x86_64.rpm
+
+--Now install “createrepo” package:
+# cd /var/ftp/pub/localrepo/C7/media/x86_64/
+# rpm -ivh createrepo-0.9.9-23.el7.noarch.rpm
+
+--Once you copied all the files, create a repository file called “localrepo.repo” under /etc/yum.repos.d/ 
+
+# vi /etc/yum.repos.d/localrepo.repo
+
+Add the following lines:
+
+[localrepo]
+name=localrepo server
+baseurl=file:///var/ftp/pub/localrepo
+gpgcheck=0
+enabled=1
+
+or
+
+[localrepo]
+name=localrepo server
+baseurl=file:///var/ftp/pub/localrepo
+gpgkey=RPM-GPG-KEY-CentOS-7
+gpgcheck=1
+enabled=1
+
+wq!				-to save and exit
+
+--Now, start building local repository:
+# createrepo -v /var/ftp/pub/localrepo/
+
+Next rename or disable all default repository
+
+# mv -v CentOS-Base.repo CentOS-Base
+
+# yum clean all
+# yum update
+
+# yum repolist
+
+Alternatively, you can install packages only from the local repository by mentioning the repository as shown below.
+
+# yum install --disablerepo="*" --enablerepo="localrepo" httpd
+
+# yum install httpd
+
+------------------------
+
+Client End Configuration
+
+Next go to client machine and creat new repo in /etc/yum.repos.d/
+
+# vi /etc/yum.repos.d/localrepo.repo
+
+and add the following contents:
+
+[localrepo]
+name=Unixmen Repository
+baseurl=ftp://192.168.10.109/pub/localrepo
+gpgcheck=0
+enabled=1
+
+or 
+
+[localrepo]
+name=Unixmen Repository
+baseurl=ftp://192.168.1.101/pub/localrepo
+gpgcheck=ftp://192.168.1.101/pub/localrepo/RPM-GPG-KEY-CentOS-7
+enabled=1
+
+wq!			-to save and exit
+
+Next disable or rename default repo

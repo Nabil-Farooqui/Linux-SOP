@@ -1,0 +1,3 @@
+#### How to patch server without kernal, redhat-release patch ####
+#### Edit /etc/yum.conf file and add below lines. ####
+# exclude=kernel* redhat-release* initscripts*

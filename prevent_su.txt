@@ -1,0 +1,18 @@
+Reference Link:-
+https://www.techbrown.com/how-to-restricting-logging-sudo-access-on-linux.shtml
+
+For example add existing user rocky to wheel group
+# usermod -G wheel rocky
+
+Now open /etc/pam.d/su PAM config file:
+# vi /etc/pam.d/su
+
+Append line as follows:
+auth required /lib/security/pam_wheel.so use_uid
+
+OR
+auth required pam_wheel.so use_uid
+
+Save and close the file.
+
+Because of above setting only members of the administrative group wheel can use the su command. However I still recommend sudo over su for better control, security and ease of use. This is also default behavior on FreeBSD.

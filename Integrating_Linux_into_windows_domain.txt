@@ -1,0 +1,85 @@
+## How to Integrate RHEL 7 or CentOS 7 with Windows Active Directory ##
+RefLink: https://www.linuxtechi.com/integrate-rhel7-centos7-windows-active-directory/
+https://serverfault.com/questions/648515/sssd-authentication-to-windows-domain-without-domain-com-everywhere
+
+--Require Packages
+sssd
+realmd 
+oddjob 
+oddjob-mkhomedir 
+adcli 
+samba-common 
+samba-common-tools 
+krb5-workstation 
+openldap-clients 
+policycoreutils-python
+
+# rpm -qa <packagename>
+
+# mkdir /media/cdrom
+# mount -t iso9660 /dev/sr0 /media/cdrom
+
+-- now use following command to install packages from mounted DVD
+
+# yum --disablerepo=\* --enablerepo=c7-media install sssd
+
+or we can run following command if internet access 
+# yum install sssd realmd oddjob oddjob-mkhomedir adcli samba-common samba-common-tools krb5-workstation openldap-clients policycoreutils-python
+
+
+--now edit /etc/hosts file
+# vim /etc/hosts
+# 192.168.x.x    adserver.example.com  adserver	(activedirectory server hostname)
+
+--now Add DNS entry using nmtui command
+search sskikt_nt.com
+nameserver 192.168.2.200
+nameserver 192.168.2.201
+
+--next run following command to join into domain
+# realm join --user=linuxadmin sskikt_nt.com                                   
+Password for tech:
+
+-- verify whether our server has joined the Windows domain or not
+# realm list
+
+-- edit following file sssd Authentication to windows domain without @doamin.com
+# vi /etc/sssd/sssd.conf
+
+add_new_line
+[sssd]
+default_domain_suffix = sskikt_nt.com
+
+Edit_line
+[domain/sskikt_nt.com]
+fallback_homedir = /home/%u
+
+# systemctl restart sssd
+# systemctl daemon-reload
+
+#######################################################################
+
+--next create a group to have admin rights for DomainUser
+# groupadd sudoers
+# usermod -aG sudoers linuxadm@sskikt_nt.com
+
+# vim /etc/sudoers.d/sudoers	(create new file in etc/sudoers.d)
+-Add new line
+%sudoers    ALL=(ALL)       ALL	
+wq				-save and exit
+
+
+--next deny ssh remote login for domain_user or sudoers group
+
+# vim /etc/ssh/sshd_config 
+-Add new line next to line 35
+# Authentication:
+DenyGroups sudoers
+
+wq				-save and exit		
+
+# systemctl reload sshd.service
+
+
+
+
